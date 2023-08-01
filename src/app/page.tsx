@@ -27,8 +27,11 @@ export default function Home() {
     <div className="text-white">
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-            Welcome! Looks like you are not signed in...
+          <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-white">
+            Welcome to my Real Estate Analysis Tool! 
+            <br></br>
+            <br></br>
+            Looks like you are not signed in...
           </h2>
         </div>
 
