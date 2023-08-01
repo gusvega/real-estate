@@ -29,9 +29,6 @@ export default function Home() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-white">
             Welcome to my Real Estate Analysis Tool! 
-            <br></br>
-            <br></br>
-            Looks like you are not signed in...
           </h2>
         </div>
 
