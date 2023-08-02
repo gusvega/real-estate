@@ -157,7 +157,7 @@ export default function Home() {
               router.push("/home");
             });
           })
-          .catch((err: unknown) => { // Explicitly specify the type of 'error' as 'unknown'
+          .catch((err) => {
             if (err && typeof err === 'object' && 'message' in err) {
               console.error('Error signing in:', (err as { message: string }).message);
               if ((err as { code?: string }).code === "auth/email-already-in-use") {
@@ -172,6 +172,7 @@ export default function Home() {
       console.error('Error signing in:', error.message);
     }
   };
+  
   
 
   const handleClick = () => {
