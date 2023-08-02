@@ -28,7 +28,7 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null)
 
   let [userInfo, setUserInfo] = useState({
     firstName: 'GUSTAVO',
@@ -105,7 +105,7 @@ export default function Home() {
   };
   
 
-  const register = async (e ) => {
+  const register = async (e: React.MouseEvent<HTMLButtonElement> ) => {
     // console.log(password, name, email)
     e.preventDefault();
 
