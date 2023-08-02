@@ -157,11 +157,14 @@ export default function Home() {
               router.push("/home");
             });
           })
-          .catch((err: FirebaseError) => { // Explicitly specify the type of 'error' as 'FirebaseError'
-            // console.log(err.code)
-            if (err.code === "auth/email-already-in-use") {
-              // console.log('Email already in use')
-              setError("Email already in use");
+          .catch((err: unknown) => { // Explicitly specify the type of 'error' as 'unknown'
+            if (err && typeof err === 'object' && 'message' in err) {
+              console.error('Error signing in:', (err as { message: string }).message);
+              if ((err as { code?: string }).code === "auth/email-already-in-use") {
+                setError("Email already in use");
+              }
+            } else {
+              console.error('Unknown error:', err);
             }
           });
       }
