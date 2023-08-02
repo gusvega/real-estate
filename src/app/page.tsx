@@ -138,39 +138,38 @@ export default function Home() {
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+  
     try {
       // Check if the email/account exists before signing in
       const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-      
+  
       if (signInMethods.length === 0) {
         console.log('Account does not exist. Please sign up first.');
       } else {
         // Account exists, proceed with sign-in
         await signInWithEmailAndPassword(auth, email, password)
-        .then((res) => {
-          const userRes = res.user;
-          // console.log('RES: ', userRes)
-          userRes.getIdToken().then((token) => {
-            handleSignUpCookie(token)
-            console.log('Sign-in successful!');
-            router.push("/home");
-          });
+          .then((res) => {
+            const userRes = res.user;
+            // console.log('RES: ', userRes)
+            userRes.getIdToken().then((token) => {
+              handleSignUpCookie(token);
+              console.log('Sign-in successful!');
+              router.push("/home");
+            });
           })
-        .catch((err) => {
-          // console.log(err.code)
-          if (err.code === "auth/email-already-in-use") {
-            // console.log('Email already in use')
-            setError("Email already in use");
-          }
-        });
-
-
+          .catch((err: Error) => { // Explicitly specify the type of 'error' as 'Error'
+            // console.log(err.code)
+            if (err.code === "auth/email-already-in-use") {
+              // console.log('Email already in use')
+              setError("Email already in use");
+            }
+          });
       }
     } catch (error) {
-      console.error('Error signing in:', error.message);
+      console.error('Error signing in:', (error as Error).message); // Type assertion (as) to 'Error'
     }
   };
+  
 
   const handleClick = () => {
     
