@@ -136,7 +136,7 @@ export default function Home() {
       });
   };
 
-  const handleSignIn = async (e) => {
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     try {
