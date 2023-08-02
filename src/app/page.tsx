@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, addDoc, setDoc, doc } from "firebase/firestore";
 
-import { db, auth } from "../server/firebase.js";
+import { db, auth, FirebaseError } from "../server/firebase.js";
 
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import Cookies from 'js-cookie';
@@ -157,7 +157,7 @@ export default function Home() {
               router.push("/home");
             });
           })
-          .catch((err: Error) => { // Explicitly specify the type of 'error' as 'Error'
+          .catch((err: FirebaseError) => { // Explicitly specify the type of 'error' as 'FirebaseError'
             // console.log(err.code)
             if (err.code === "auth/email-already-in-use") {
               // console.log('Email already in use')
@@ -166,7 +166,7 @@ export default function Home() {
           });
       }
     } catch (error) {
-      console.error('Error signing in:', (error as Error).message); // Type assertion (as) to 'Error'
+      console.error('Error signing in:', error.message);
     }
   };
   
