@@ -69,28 +69,41 @@ export default function Home() {
   const handleSignUpCookie = (token: string | JwtPayload | null) => {
     if (typeof token === 'string') {
       // token is a string, decode it
-      decodedToken = jwt.decode(token) as JwtPayload; // Use a type assertion (as)
+      const decodedToken = jwt.decode(token) as JwtPayload; // Use a type assertion (as)
   
-      // Set the 'user_cookie' with the token and the expiration date
-      Cookies.set('gusvega_cookie', token, {
-        expires: new Date(decodedToken.exp * 1000),
-      });
+      if (decodedToken && typeof decodedToken.exp === 'number') {
+        // decodedToken.exp is a valid number, set the cookie expiration date
+        Cookies.set('gusvega_cookie', token, {
+          expires: new Date(decodedToken.exp * 1000),
+        });
+      } else {
+        console.error('Invalid token or token expiration. Unable to set cookie.');
+      }
     } else {
       console.error('Invalid token. Unable to set cookie.');
     }
   };
 
-  const addDocument = async () => {
-    const usersCollectionRef = collection(db, "users");
-    // console.log('decodedToken', decodedToken)
-
-    try {
-      const documentRef = doc(usersCollectionRef, decodedToken.user_id);
-      await setDoc(documentRef, {name: name, email: email, UID: decodedToken.user_id});
-    } catch (error) {
-      console.error("Error adding document: ", error);
+  const addDocument = async (token: string | JwtPayload | null) => {
+    if (typeof token === 'string') {
+      const decodedToken = jwt.decode(token) as JwtPayload; // Use a type assertion (as)
+  
+      if (decodedToken && typeof decodedToken.exp === 'number') {
+        const usersCollectionRef = collection(db, "users");
+        try {
+          const documentRef = doc(usersCollectionRef, decodedToken.user_id);
+          await setDoc(documentRef, { name: name, email: email, UID: decodedToken.user_id });
+        } catch (error) {
+          console.error("Error adding document: ", error);
+        }
+      } else {
+        console.error('Invalid token or token expiration. Unable to add document.');
+      }
+    } else {
+      console.error('Invalid token. Unable to add document.');
     }
   };
+  
 
   const register = async (e: string ) => {
     // console.log(password, name, email)
@@ -104,7 +117,7 @@ export default function Home() {
           // // console.log(token);
           // createCookie(token)
           handleSignUpCookie(token)
-          addDocument()
+          addDocument(token)
         });
 
         // setData({
