@@ -8,7 +8,7 @@ import { getFirestore, collection, addDoc, setDoc, doc } from "firebase/firestor
 
 import { db, auth } from "../server/firebase.js";
 
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import Cookies from 'js-cookie';
 
 
@@ -66,13 +66,18 @@ export default function Home() {
   };
 
 
-  const handleSignUpCookie = (token: string) => {
-    decodedToken = jwt.decode(token); // Decode the JWT token
-
-    // Set the 'user_cookie' with the token and the expiration date
-    Cookies.set('gusvega_cookie', token, {
-      expires: new Date(decodedToken.exp * 1000),
-    });
+  const handleSignUpCookie = (token: string | JwtPayload | null) => {
+    if (typeof token === 'string') {
+      // token is a string, decode it
+      decodedToken = jwt.decode(token); // Decode the JWT token
+  
+      // Set the 'user_cookie' with the token and the expiration date
+      Cookies.set('gusvega_cookie', token, {
+        expires: new Date(decodedToken.exp * 1000),
+      });
+    } else {
+      console.error('Invalid token. Unable to set cookie.');
+    }
   };
 
   const addDocument = async () => {
