@@ -66,7 +66,7 @@ export default function Home() {
   };
 
 
-  const handleSignUpCookie = (token) => {
+  const handleSignUpCookie = (token: string) => {
     decodedToken = jwt.decode(token); // Decode the JWT token
 
     // Set the 'user_cookie' with the token and the expiration date
@@ -87,7 +87,7 @@ export default function Home() {
     }
   };
 
-  const register = async (e) => {
+  const register = async (e: string ) => {
     // console.log(password, name, email)
     e.preventDefault();
 
