@@ -46,8 +46,8 @@ export default function Home() {
     checkCookie();
   }, []);
   
-  let decodedToken = ''
-  // // // --- Cookies
+  let decodedToken: JwtPayload | null = null;
+    // // // --- Cookies
 
   const checkCookie = () => {
     const userCookie = Cookies.get('gusvega_cookie');
@@ -69,7 +69,7 @@ export default function Home() {
   const handleSignUpCookie = (token: string | JwtPayload | null) => {
     if (typeof token === 'string') {
       // token is a string, decode it
-      const decodedToken = jwt.decode(token) as JwtPayload; // Use a type assertion (as)
+      decodedToken = jwt.decode(token) as JwtPayload; // Use a type assertion (as)
   
       // Set the 'user_cookie' with the token and the expiration date
       Cookies.set('gusvega_cookie', token, {
