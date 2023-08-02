@@ -105,7 +105,7 @@ export default function Home() {
   };
   
 
-  const register = async (e: string ) => {
+  const register = async (e ) => {
     // console.log(password, name, email)
     e.preventDefault();
 
