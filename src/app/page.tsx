@@ -18,21 +18,24 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../server/firebase.js";
 
+import {MyContextProvider, useMyContext} from "../server/appContext.js"
+
 interface AuthInfo {
   isloggedIn: boolean;
 }
 
-interface UserInfo {
-  firstName: string;
-  lastName: string;
-  email: string;
-  UID: string;
-  admin: boolean;
-  analyses: Record<string, any>;
-}
+// interface UserInfo {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   UID: string;
+//   admin: boolean;
+//   analyses: Record<string, any>;
+// }
 
 export default function Home() {
   const router = useRouter();
+
 
   const [authInfo, setAuthInfo] = useState<AuthInfo>({
     isloggedIn: false,
@@ -46,20 +49,96 @@ export default function Home() {
 
   const [error, setError] = useState<string | null>(null);
 
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    firstName: "GUSTAVO",
-    lastName: "",
-    email: "",
-    UID: "",
-    admin: false,
-    analyses: {},
-  });
+  // const [userInfo, setUserInfo] = useState<UserInfo>({
+  //   firstName: "GUSTAVO",
+  //   lastName: "",
+  //   email: "",
+  //   UID: "",
+  //   admin: false,
+  //   analyses: {
+  //     amarillo: {
+  //       values: {
+  //         // property values
+  //         address: "3220 Bedford",
+  //         city: "Amarillo",
+  //         state: "TX",
+  //         zipCode: "79103",
+  //         bedrooms: "3",
+  //         baths: "2",
+  //         squareFeet: "1300",
+  //         yearBuilt: "1965",
+  //         otherInfo: "good conditions",
+
+  //         // purchase values
+  //         askingPrice: "500000",
+  //         offerPrice: "500000",
+  //         downPaymentPercent: "3",
+  //         estimatedClosingCostPercentage: "3",
+  //         renovationCosts: "0",
+  //         setupCosts: "10000",
+
+  //         // income values
+  //         averageNightlyRate: "400",
+  //         averageOccupancyPercentage: "75",
+
+  //         // expenses values
+  //         loanTermInYears: "30",
+  //         interestRatePercentage: "6",
+  //         estimatedPropertyTaxesPerMonth: "150",
+  //         estimatedInsuranceAmountPerMonth: "145",
+  //         privateMortgageInsuranceAmountPerMonth: "86",
+  //         monthlyHOAAmount: "0",
+  //         estimatedMonthlyUtilitiesAmount: "300",
+  //         cleaningFeeAmountPerMonth: "500",
+  //         internetBillPerMonth: "100",
+  //         maintenancePercentagePerMonth: "5",
+  //         managementFeePercentagePerMonth: "0",
+  //       },
+  //       calculations: {
+  //         downPaymentAmount: "",
+  //         estimatedClosingCostAmount: "",
+  //         totalInvestment: "",
+
+  //         // income calculations
+  //         grossIncomePerMonth: "",
+  //         grossIncomePerYear: "",
+  //         netOperatingIncome: "",
+  //         capRatePercentage: "",
+  //         cashFlowPerMonth: "",
+  //         cashFlowPerYear: "",
+  //         cashOnCashReturn: "",
+
+  //         // expenses calculations
+  //         mortgageAmount: "",
+  //         numberOfPayments: "",
+  //         monthlyPrinciplePlusInterest: "",
+  //         estimatedPropertyTaxesPerYear: "",
+  //         estimatedInsuranceAmountPerYear: "",
+  //         privateMortgageInsuranceAmountPerYear: "",
+  //         airBNBFeePercentagePerMonth: "",
+  //         airBNBFeePercentagePerYear: "",
+  //         maintenanceAmountPerMonth: "",
+  //         managementFeeAmountPerMonth: "",
+
+  //         operatingExpensesPerMonth: "",
+  //         operatingExpensesPerYear: "",
+  //         totalExpensesPerMonth: "",
+  //         totalExpensesPerYear: "",
+  //       },
+  //     },
+  //   },
+  // });
+
+  const { state, setState } = useMyContext();
+
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     // On component mount, check for the cookie
     checkCookie();
+    console.log('State: ', state)
+
   }, []);
 
   const checkCookie = () => {
@@ -147,171 +226,173 @@ export default function Home() {
   };
 
   return (
-    <div className="text-white">
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-black">
-            Welcome to my Real Estate Analysis Tool!
-          </h2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <div className="flex mb-6">
-            <button
-              type="submit"
-              className={`flex w-full justify-center rounded-md ${
-                current == false ? "bg-gray-300" : "bg-indigo-600"
-              } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-              onClick={() => handleClick(true)}
-            >
-              Sign In
-            </button>
-            <button
-              type="submit"
-              className={`flex w-full justify-center rounded-md ${
-                current ? "bg-gray-300" : "bg-indigo-600"
-              } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-              onClick={() => handleClick(false)}
-            >
-              Sign Up
-            </button>
+    <MyContextProvider>
+      <div className="text-white">
+        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-black">
+              Welcome to my Real Estate Analysis Tool!
+            </h2>
           </div>
-          <form className="space-y-6" action="#" method="POST">
-            {authInfo.isloggedIn ? (
-              <>dd</>
-            ) : current == true ? (
-              <>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="text-black block text-sm font-medium leading-6 "
-                  >
-                    Email address
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="block w-full rounded-md border-1 border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
 
-                <div>
-                  <div className="flex items-center justify-between">
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="flex mb-6">
+              <button
+                type="submit"
+                className={`flex w-full justify-center rounded-md ${
+                  current == false ? "bg-gray-300" : "bg-indigo-600"
+                } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                onClick={() => handleClick(true)}
+              >
+                Sign In
+              </button>
+              <button
+                type="submit"
+                className={`flex w-full justify-center rounded-md ${
+                  current ? "bg-gray-300" : "bg-indigo-600"
+                } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                onClick={() => handleClick(false)}
+              >
+                Sign Up
+              </button>
+            </div>
+            <form className="space-y-6" action="#" method="POST">
+              {authInfo.isloggedIn ? (
+                <>dd</>
+              ) : current == true ? (
+                <>
+                  <div>
                     <label
-                      htmlFor="password"
+                      htmlFor="email"
                       className="text-black block text-sm font-medium leading-6 "
                     >
-                      Password
+                      Email address
                     </label>
-                    <div className="text-sm">
-                      <a
-                        href="#"
-                        className="font-semibold text-indigo-600 hover:text-indigo-500"
-                      >
-                        Forgot password?
-                      </a>
+                    <div className="mt-2">
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="block w-full rounded-md border-1 border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
                     </div>
                   </div>
-                  <div className="mt-2">
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="block w-full rounded-md border-1 border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
+
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <label
+                        htmlFor="password"
+                        className="text-black block text-sm font-medium leading-6 "
+                      >
+                        Password
+                      </label>
+                      <div className="text-sm">
+                        <a
+                          href="#"
+                          className="font-semibold text-indigo-600 hover:text-indigo-500"
+                        >
+                          Forgot password?
+                        </a>
+                      </div>
+                    </div>
+                    <div className="mt-2">
+                      <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        autoComplete="current-password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className="block w-full rounded-md border-1 border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
                   </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div>
-                  <label className="block text-sm font-medium leading-6 text-black">
-                    Name
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      autoComplete="name"
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                      className="block w-full rounded-md border-1 border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
+                </>
+              ) : (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium leading-6 text-black">
+                      Name
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        autoComplete="name"
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        className="block w-full rounded-md border-1 border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-black"
-                  >
-                    Email address
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="block w-full rounded-md border-1 border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex items-center justify-between">
+                  <div>
                     <label
-                      htmlFor="password"
+                      htmlFor="email"
                       className="block text-sm font-medium leading-6 text-black"
                     >
-                      Password
+                      Email address
                     </label>
+                    <div className="mt-2">
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="block w-full rounded-md border-1 border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
                   </div>
-                  <div className="mt-2">
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="block w-full rounded-md border-1 border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <label
+                        htmlFor="password"
+                        className="block text-sm font-medium leading-6 text-black"
+                      >
+                        Password
+                      </label>
+                    </div>
+                    <div className="mt-2">
+                      <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        autoComplete="current-password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className="block w-full rounded-md border-1 border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
                   </div>
-                </div>
-              </>
-            )}
-          </form>
+                </>
+              )}
+            </form>
 
-          {current ? (
-            <button
-              type="submit"
-              className={`flex w-full justify-center rounded-md bg-indigo-600 mt-10 p-4 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-              onClick={handleSignIn}
-            >
-              Submit
-            </button>
-          ) : (
-            <button
-              type="submit"
-              className={`flex w-full justify-center rounded-md bg-indigo-600 mt-10 p-4 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-              onClick={register}
-            >
-              Submit
-            </button>
-          )}
+            {current ? (
+              <button
+                type="submit"
+                className={`flex w-full justify-center rounded-md bg-indigo-600 mt-10 p-4 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                onClick={handleSignIn}
+              >
+                Submit
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className={`flex w-full justify-center rounded-md bg-indigo-600 mt-10 p-4 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                onClick={register}
+              >
+                Submit
+              </button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </MyContextProvider>
   );
 }

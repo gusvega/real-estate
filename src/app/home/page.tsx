@@ -1,14 +1,14 @@
 "use client";
 
-import Cookies  from "universal-cookie";
+import Cookies from "universal-cookie";
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
+import { useMyContext } from "@/server/appContext";
 
 export default function HomePage() {
   const router = useRouter();
   const cookies = new Cookies();
-
 
   const [token, setToken] = useState(null);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
@@ -23,10 +23,19 @@ export default function HomePage() {
   };
 
   const handleDeleteCookie = () => {
-   cookies.remove("gusvega_cookie");
-   setToken(null);
-   router.push("/");
+    cookies.remove("gusvega_cookie");
+    setToken(null);
+    router.push("/");
   };
+
+  const { state, setState } = useMyContext();
+
+  const steps = [
+    { name: "Step 1", href: "#", status: "complete" },
+    { name: "Step 2", href: "#", status: "current" },
+    { name: "Step 3", href: "#", status: "upcoming" },
+    { name: "Step 4", href: "#", status: "upcoming" },
+  ];
 
   return (
     <>
@@ -49,23 +58,11 @@ export default function HomePage() {
                     >
                       STR
                     </a>
-                    {/* <a href="#" className="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium">Team</a>
-              <a href="#" className="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium">Projects</a>
-              <a href="#" className="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
-              <a href="#" className="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium">Reports</a> */}
                   </div>
                 </div>
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
-                  {/* <button type="button" className="relative rounded-full bg-indigo-600 p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
-              <span className="absolute -inset-1.5"></span>
-              <span className="sr-only">View notifications</span>
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-              </svg>
-            </button> */}
-
                   {/* <!-- Profile dropdown --> */}
                   <div className="relative ml-3">
                     <div>
@@ -75,29 +72,11 @@ export default function HomePage() {
                         id="user-menu-button"
                         aria-expanded="false"
                         onClick={handleDeleteCookie}
-
                         aria-haspopup="true"
                       >
-                         Sign Out
+                        Sign Out
                       </button>
                     </div>
-
-                    {/* <!--
-                Dropdown menu, show/hide based on menu state
-
-                Entering: "transition ease-out duration-100"
-                  From: "transform opacity-0 scale-95"
-                  To: "transform opacity-100 scale-100"
-                Leaving: "transition ease-in duration-75"
-                  From: "transform opacity-100 scale-100"
-                  To: "transform opacity-0 scale-95"
-              --> */}
-                    {/* <!-- Active: "bg-gray-100", Not Active: "" --> */}
-                    {/* <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
-              </div> */}
                   </div>
                 </div>
               </div>
@@ -155,12 +134,8 @@ export default function HomePage() {
                 className="bg-indigo-700 text-white block rounded-md px-3 py-2 text-base font-medium"
                 aria-current="page"
               >
-                Tools
+                STR
               </a>
-              {/* <a href="#" className="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium">Team</a>
-        <a href="#" className="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium">Projects</a>
-        <a href="#" className="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
-        <a href="#" className="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium">Reports</a> */}
             </div>
           </div>
         </nav>
@@ -207,37 +182,68 @@ export default function HomePage() {
                         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                           <div className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                             <div>
-                              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                                <svg
-                                  className="h-6 w-6 text-green-600"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke-width="1.5"
-                                  stroke="currentColor"
-                                  aria-hidden="true"
+                              <nav
+                                className="flex items-center justify-center"
+                                aria-label="Progress"
+                              >
+                                <p className="text-sm font-medium">
+                                  Step{" "}
+                                  {steps.findIndex(
+                                    (step) => step.status === "current"
+                                  ) + 1}{" "}
+                                  of {steps.length}
+                                </p>
+                                <ol
+                                  role="list"
+                                  className="ml-8 flex items-center space-x-5"
                                 >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M4.5 12.75l6 6 9-13.5"
-                                  />
-                                </svg>
-                              </div>
-                              <div className="mt-3 text-center sm:mt-5">
-                                <h3
-                                  className="text-base font-semibold leading-6 text-gray-900"
-                                  id="modal-title"
-                                >
-                                  New Modal
-                                </h3>
-                                <div className="mt-2">
-                                  <p className="text-sm text-gray-500">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Consequatur amet labore.
-                                  </p>
-                                </div>
-                              </div>
+                                  {steps.map((step) => (
+                                    <li key={step.name}>
+                                      {step.status === "complete" ? (
+                                        <a
+                                          href={step.href}
+                                          className="block h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-900"
+                                        >
+                                          <span className="sr-only">
+                                            {step.name}
+                                          </span>
+                                        </a>
+                                      ) : step.status === "current" ? (
+                                        <a
+                                          href={step.href}
+                                          className="relative flex items-center justify-center"
+                                          aria-current="step"
+                                        >
+                                          <span
+                                            className="absolute flex h-5 w-5 p-px"
+                                            aria-hidden="true"
+                                          >
+                                            <span className="h-full w-full rounded-full bg-indigo-200" />
+                                          </span>
+                                          <span
+                                            className="relative block h-2.5 w-2.5 rounded-full bg-indigo-600"
+                                            aria-hidden="true"
+                                          />
+                                          <span className="sr-only">
+                                            {step.name}
+                                          </span>
+                                        </a>
+                                      ) : (
+                                        <a
+                                          href={step.href}
+                                          className="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"
+                                        >
+                                          <span className="sr-only">
+                                            {step.name}
+                                          </span>
+                                        </a>
+                                      )}
+                                    </li>
+                                  ))}
+                                </ol>
+                              </nav>
                             </div>
+                            <div>HEY</div>
                             <div className="mt-5 sm:mt-6">
                               <button
                                 type="button"
@@ -246,7 +252,7 @@ export default function HomePage() {
                                 }
                                 className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                               >
-                                Go back to dashboard
+                                Analyze
                               </button>
                             </div>
                           </div>
@@ -381,38 +387,48 @@ export default function HomePage() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200 bg-white">
-                        <tr>
-                          <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
-                            AAPS0L
-                          </td>
-                          <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                            Chase &amp; Co.
-                          </td>
-                          <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                            CAC
-                          </td>
-                          <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                            +$4.37
-                          </td>
-                          <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                            $3,509.00
-                          </td>
-                          <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                            12.00
-                          </td>
-                          <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                            $4,397.00
-                          </td>
-                          <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                            <a
-                              href="#"
-                              className="text-indigo-600 hover:text-indigo-900"
-                              onClick={openEditModal}
-                            >
-                              Edit<span className="sr-only">, AAPS0L</span>
-                            </a>
-                          </td>
-                        </tr>
+                        {Object.entries(state).map(([key, value]) => (
+                          <>
+                            {Object.entries(value["analyses"]).map(
+                              ([key, value]) => (
+                                <>
+                                  <tr>
+                                    <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
+                                      {value["values"]["address"]}
+                                    </td>
+                                    <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
+                                      {value["values"]["address"]}
+                                    </td>
+                                    <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                                      {value["values"]["address"]}
+                                    </td>
+                                    <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                                      {value["values"]["address"]}
+                                    </td>
+                                    <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                                      {value["values"]["address"]}
+                                    </td>
+                                    <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                                      {value["values"]["address"]}
+                                    </td>
+                                    <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                                      {value["values"]["address"]}
+                                    </td>
+                                    <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                                      <a
+                                        href="#"
+                                        className="text-indigo-600 hover:text-indigo-900"
+                                        onClick={openEditModal}
+                                      >
+                                        Edit
+                                      </a>
+                                    </td>
+                                  </tr>
+                                </>
+                              )
+                            )}
+                          </>
+                        ))}
 
                         {/* <!-- More transactions... --> */}
                       </tbody>
