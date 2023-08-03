@@ -69,7 +69,7 @@ export default function Home() {
   const handleSignUpCookie = (token: string | JwtPayload | null) => {
     if (typeof token === 'string') {
       // token is a string, decode it
-      const decodedToken = jwt.decode(token) as JwtPayload; // Use a type assertion (as)
+      const decodedToken = jwt.decode(token) as JwtPayload; // Use a type assertion (as)h
   
       if (decodedToken && typeof decodedToken.exp === 'number') {
         // decodedToken.exp is a valid number, set the cookie expiration date
