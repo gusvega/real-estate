@@ -140,8 +140,10 @@ export default function Home() {
     }
   };
 
-  const handleClick = () => {
-    setCurrent((prev) => !prev);
+  const handleClick = (currentBtn: boolean) => {
+    if (currentBtn !== current) {
+      setCurrent(currentBtn);
+    }
   };
 
   return (
@@ -160,7 +162,7 @@ export default function Home() {
               className={`flex w-full justify-center rounded-md ${
                 current == false ? "bg-gray-300" : "bg-indigo-600"
               } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-              onClick={handleClick}
+              onClick={() => handleClick(true)}
             >
               Sign In
             </button>
@@ -169,7 +171,7 @@ export default function Home() {
               className={`flex w-full justify-center rounded-md ${
                 current ? "bg-gray-300" : "bg-indigo-600"
               } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-              onClick={handleClick}
+              onClick={() => handleClick(false)}
             >
               Sign Up
             </button>
