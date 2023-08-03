@@ -88,7 +88,7 @@ export default function HomePage() {
                     </div>
 
                     {/* <!--
-                Dropdown menu, show/hide based on menu state.
+                Dropdown menu, show/hide based on menu state
 
                 Entering: "transition ease-out duration-100"
                   From: "transform opacity-0 scale-95"
