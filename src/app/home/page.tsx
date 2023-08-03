@@ -1,12 +1,14 @@
 "use client";
 
-import Cookies from "js-cookie";
+import Cookies  from "universal-cookie";
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const router = useRouter();
+  const cookies = new Cookies();
+
 
   const [token, setToken] = useState(null);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
@@ -21,10 +23,9 @@ export default function HomePage() {
   };
 
   const handleDeleteCookie = () => {
-    // Remove the 'user_cookie' when the button is clicked
-    Cookies.remove("gusvega_cookie");
-    setToken(null); // Update the state to indicate that the token has been removed
-    router.push("/");
+   cookies.remove("gusvega_cookie");
+   setToken(null);
+   router.push("/");
   };
 
   return (
@@ -73,17 +74,11 @@ export default function HomePage() {
                         className="relative flex max-w-xs items-center rounded-full bg-indigo-600 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
                         id="user-menu-button"
                         aria-expanded="false"
+                        onClick={handleDeleteCookie}
+
                         aria-haspopup="true"
                       >
-                        <span className="absolute -inset-1.5"></span>
-                        <span className="sr-only">Open user menu</span>
-                        <button
-                          onClick={handleDeleteCookie}
-                          className=" text-white rounded-md px-3 py-2 text-sm font-medium"
-                          aria-current="page"
-                        >
-                          Sign Out
-                        </button>
+                         Sign Out
                       </button>
                     </div>
 
