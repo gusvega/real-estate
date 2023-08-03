@@ -95,7 +95,7 @@ export default function Home() {
     }
   };
 
-  const register = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const register = async (e) => {
     e.preventDefault();
     await createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
