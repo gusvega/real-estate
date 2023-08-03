@@ -95,8 +95,8 @@ export default function Home() {
     }
   };
 
-  const register = async (e) => {
-    e.preventDefault();
+  const register = async () => {
+    // e.preventDefault();
     await createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
         const userRes = res.user;
@@ -113,8 +113,8 @@ export default function Home() {
       });
   };
 
-  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSignIn = async () => {
+    // e.preventDefault();
     try {
       const signInMethods = await fetchSignInMethodsForEmail(auth, email);
       if (signInMethods.length === 0) {
