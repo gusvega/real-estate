@@ -46,7 +46,6 @@ export default function Home() {
     checkCookie();
   }, []);
   
-  let decodedToken = ''
   // // // --- Cookies
 
   const checkCookie = () => {
@@ -67,7 +66,7 @@ export default function Home() {
 
 
   const handleSignUpCookie = (token) => {
-    decodedToken = jwt.decode(token); // Decode the JWT token
+    const decodedToken = jwt.decode(token); // Decode the JWT token
 
     // Set the 'user_cookie' with the token and the expiration date
     Cookies.set('gusvega_cookie', token, {
@@ -75,7 +74,9 @@ export default function Home() {
     });
   };
 
-  const addDocument = async () => {
+  const addDocument = async (token) => {
+    const decodedToken = jwt.decode(token); // Decode the JWT token
+
     const usersCollectionRef = collection(db, "users");
     // console.log('decodedToken', decodedToken)
 
@@ -99,7 +100,7 @@ export default function Home() {
           // // console.log(token);
           // createCookie(token)
           handleSignUpCookie(token)
-          addDocument()
+          addDocument(token)
         });
 
         // setData({
