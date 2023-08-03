@@ -31,11 +31,14 @@ export default function HomePage() {
   const { state, setState } = useMyContext();
 
   const steps = [
-    { name: "Step 1", href: "#", status: "complete" },
-    { name: "Step 2", href: "#", status: "current" },
-    { name: "Step 3", href: "#", status: "upcoming" },
-    { name: "Step 4", href: "#", status: "upcoming" },
+    { name: "Property", href: "#", status: "complete" },
+    { name: "Purchase", href: "#", status: "current" },
+    { name: "Income", href: "#", status: "upcoming" },
+    { name: "Expenses", href: "#", status: "upcoming" },
   ];
+
+  const [ currentTab, setCurrentTab]  = useState('Purchase');
+
 
   return (
     <>
@@ -187,11 +190,11 @@ export default function HomePage() {
                                 aria-label="Progress"
                               >
                                 <p className="text-sm font-medium">
-                                  Step{" "}
-                                  {steps.findIndex(
-                                    (step) => step.status === "current"
-                                  ) + 1}{" "}
-                                  of {steps.length}
+                                  {
+                                  
+                                  currentTab + ' '
+                                   + 'Values'
+                                   }
                                 </p>
                                 <ol
                                   role="list"
