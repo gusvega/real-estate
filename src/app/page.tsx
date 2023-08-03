@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, addDoc, setDoc, doc } from "firebase/firestore";
 
-import { db, auth, FirebaseError } from "../server/firebase.js";
+import { db, auth } from "../server/firebase.js";
 
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import Cookies from 'js-cookie';
 
 
@@ -28,7 +28,7 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState(null);
 
   let [userInfo, setUserInfo] = useState({
     firstName: 'GUSTAVO',
@@ -46,8 +46,8 @@ export default function Home() {
     checkCookie();
   }, []);
   
-  let decodedToken: JwtPayload | null = null;
-    // // // --- Cookies
+  let decodedToken = ''
+  // // // --- Cookies
 
   const checkCookie = () => {
     const userCookie = Cookies.get('gusvega_cookie');
@@ -66,46 +66,28 @@ export default function Home() {
   };
 
 
-  const handleSignUpCookie = (token: string | JwtPayload | null) => {
-    if (typeof token === 'string') {
-      // token is a string, decode it
-      const decodedToken = jwt.decode(token) as JwtPayload; // Use a type assertion (as)h
-  
-      if (decodedToken && typeof decodedToken.exp === 'number') {
-        // decodedToken.exp is a valid number, set the cookie expiration date
-        Cookies.set('gusvega_cookie', token, {
-          expires: new Date(decodedToken.exp * 1000),
-        });
-      } else {
-        console.error('Invalid token or token expiration. Unable to set cookie.');
-      }
-    } else {
-      console.error('Invalid token. Unable to set cookie.');
+  const handleSignUpCookie = (token) => {
+    decodedToken = jwt.decode(token); // Decode the JWT token
+
+    // Set the 'user_cookie' with the token and the expiration date
+    Cookies.set('gusvega_cookie', token, {
+      expires: new Date(decodedToken.exp * 1000),
+    });
+  };
+
+  const addDocument = async () => {
+    const usersCollectionRef = collection(db, "users");
+    // console.log('decodedToken', decodedToken)
+
+    try {
+      const documentRef = doc(usersCollectionRef, decodedToken.user_id);
+      await setDoc(documentRef, {name: name, email: email, UID: decodedToken.user_id});
+    } catch (error) {
+      console.error("Error adding document: ", error);
     }
   };
 
-  const addDocument = async (token: string | JwtPayload | null) => {
-    if (typeof token === 'string') {
-      const decodedToken = jwt.decode(token) as JwtPayload; // Use a type assertion (as)
-  
-      if (decodedToken && typeof decodedToken.exp === 'number') {
-        const usersCollectionRef = collection(db, "users");
-        try {
-          const documentRef = doc(usersCollectionRef, decodedToken.user_id);
-          await setDoc(documentRef, { name: name, email: email, UID: decodedToken.user_id });
-        } catch (error) {
-          console.error("Error adding document: ", error);
-        }
-      } else {
-        console.error('Invalid token or token expiration. Unable to add document.');
-      }
-    } else {
-      console.error('Invalid token. Unable to add document.');
-    }
-  };
-  
-
-  const register = async (e: React.MouseEvent<HTMLButtonElement> ) => {
+  const register = async (e) => {
     // console.log(password, name, email)
     e.preventDefault();
 
@@ -117,7 +99,7 @@ export default function Home() {
           // // console.log(token);
           // createCookie(token)
           handleSignUpCookie(token)
-          addDocument(token)
+          addDocument()
         });
 
         // setData({
@@ -136,44 +118,41 @@ export default function Home() {
       });
   };
 
-  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-  
+    
     try {
       // Check if the email/account exists before signing in
       const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-  
+      
       if (signInMethods.length === 0) {
         console.log('Account does not exist. Please sign up first.');
       } else {
         // Account exists, proceed with sign-in
         await signInWithEmailAndPassword(auth, email, password)
-          .then((res) => {
-            const userRes = res.user;
-            // console.log('RES: ', userRes)
-            userRes.getIdToken().then((token) => {
-              handleSignUpCookie(token);
-              console.log('Sign-in successful!');
-              router.push("/home");
-            });
-          })
-          .catch((err) => {
-            if (err && typeof err === 'object' && 'message' in err) {
-              console.error('Error signing in:', (err as { message: string }).message);
-              if ((err as { code?: string }).code === "auth/email-already-in-use") {
-                setError("Email already in use");
-              }
-            } else {
-              console.error('Unknown error:', err);
-            }
+        .then((res) => {
+          const userRes = res.user;
+          // console.log('RES: ', userRes)
+          userRes.getIdToken().then((token) => {
+            handleSignUpCookie(token)
+            console.log('Sign-in successful!');
+            router.push("/home");
           });
+          })
+        .catch((err) => {
+          // console.log(err.code)
+          if (err.code === "auth/email-already-in-use") {
+            // console.log('Email already in use')
+            setError("Email already in use");
+          }
+        });
+
+
       }
     } catch (error) {
-      console.error('Error signing in:', error);
+      console.error('Error signing in:', error.message);
     }
   };
-  
-  
 
   const handleClick = () => {
     
@@ -331,7 +310,7 @@ export default function Home() {
             <button
               type="submit"
               className={`flex w-full justify-center rounded-md bg-indigo-600 mt-10 p-4 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-              onClick={(e) => handleSignIn(e)}
+              onClick={handleSignIn}
 
             >
               Submit
