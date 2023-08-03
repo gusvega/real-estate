@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import { firebaseConfig } from "./config";
 
-import { getAuth, createUserWithEmailAndPassword, getIdToken, FirebaseError } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, getIdToken } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 
@@ -31,5 +31,5 @@ const getFile = async () => {
  }
 
 
-export { db, auth, getFile, FirebaseError };
+export { db, auth, getFile };
 
