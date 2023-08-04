@@ -37,48 +37,46 @@ export default function HomePage() {
     { name: "Expenses", href: "#", status: "upcoming" },
   ];
 
-  const [ currentTab, setCurrentTab]  = useState('Property');
+  const [currentTab, setCurrentTab] = useState("Property");
 
   const values = {
-
     property: {
-      address: '3220 Bedford',
-      city: 'Amarillo',
-      state: 'TX',
-      zipCode: '79103',
-      bedrooms: '3',
-      baths: '2',
-      squareFeet: '1300',
-      yearBuilt: '1965',
-      otherInfo: 'good conditions',
+      address: "3220 Bedford",
+      city: "Amarillo",
+      state: "TX",
+      zipCode: "79103",
+      bedrooms: "3",
+      baths: "2",
+      squareFeet: "1300",
+      yearBuilt: "1965",
+      otherInfo: "good conditions",
     },
     purchase: {
-      askingPrice: '500000',
-    offerPrice: '500000',
-    downPaymentPercent: '3',
-    estimatedClosingCostPercentage: '3',
-    renovationCosts: '0',
-    setupCosts: '10000',
+      askingPrice: "500000",
+      offerPrice: "500000",
+      downPaymentPercent: "3",
+      estimatedClosingCostPercentage: "3",
+      renovationCosts: "0",
+      setupCosts: "10000",
     },
     income: {
-      averageNightlyRate: '400',
-    averageOccupancyPercentage: '75',
+      averageNightlyRate: "400",
+      averageOccupancyPercentage: "75",
     },
     expenses: {
-      loanTermInYears: '30',
-    interestRatePercentage: '6',
-    estimatedPropertyTaxesPerMonth: '150',
-    estimatedInsuranceAmountPerMonth: '145',
-    privateMortgageInsuranceAmountPerMonth: '86',
-    monthlyHOAAmount: '0',
-    estimatedMonthlyUtilitiesAmount: '300',
-    cleaningFeeAmountPerMonth: '500',
-    internetBillPerMonth: '100',
-    maintenancePercentagePerMonth: '5',
-    managementFeePercentagePerMonth: '0',
-    }
- }
-
+      loanTermInYears: "30",
+      interestRatePercentage: "6",
+      estimatedPropertyTaxesPerMonth: "150",
+      estimatedInsuranceAmountPerMonth: "145",
+      privateMortgageInsuranceAmountPerMonth: "86",
+      monthlyHOAAmount: "0",
+      estimatedMonthlyUtilitiesAmount: "300",
+      cleaningFeeAmountPerMonth: "500",
+      internetBillPerMonth: "100",
+      maintenancePercentagePerMonth: "5",
+      managementFeePercentagePerMonth: "0",
+    },
+  };
 
   return (
     <>
@@ -88,12 +86,8 @@ export default function HomePage() {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center text-white">
                 GUS
-                {/* <div className="flex-shrink-0">
-            <img className="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300" alt="Your Company"/>
-          </div> */}
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    {/* <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" --> */}
                     <a
                       href="#"
                       className="bg-indigo-700 text-white rounded-md px-3 py-2 text-sm font-medium"
@@ -230,11 +224,7 @@ export default function HomePage() {
                                 aria-label="Progress"
                               >
                                 <p className="text-sm font-medium">
-                                  {
-                                  
-                                  currentTab + ' '
-                                   + 'Values'
-                                   }
+                                  {currentTab + " " + "Values"}
                                 </p>
                                 <ol
                                   role="list"
@@ -286,14 +276,21 @@ export default function HomePage() {
                                 </ol>
                               </nav>
                             </div>
-                            {currentTab == 'Property' ? 
-                            <>
-                            {Object.entries(values).map(([key, value]) => (
-                              <>{Object.entries(value).map(([key, value]) => (
-                                <>{key}</>
-                              ))}</>
-                            ))}
-                            </> : <>Nope</>}
+                            {currentTab == "Property" ? (
+                              <>
+                                {Object.entries(values).map(([key, value]) => (
+                                  <>
+                                    {Object.entries(value).map(
+                                      ([key, value]) => (
+                                        <>{key}</>
+                                      )
+                                    )}
+                                  </>
+                                ))}
+                              </>
+                            ) : (
+                              <>Nope</>
+                            )}
                             <div className="mt-5 sm:mt-6">
                               <button
                                 type="button"
