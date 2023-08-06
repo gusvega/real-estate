@@ -633,7 +633,8 @@ export default function HomePage() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200 bg-white">
-                        {Object.entries(data.analyses).map(([key, value]) => (
+                        {Object.entries(data.analyses).map(([key, value]) => {
+                          return (
                           <tr key={key}>
                             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
                               {value.values.address}
@@ -666,7 +667,7 @@ export default function HomePage() {
                               </a>
                             </td>
                           </tr>
-                        ))}
+)})}
                         {/* <!-- More transactions... --> */}
                       </tbody>
                     </table>
