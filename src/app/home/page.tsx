@@ -84,8 +84,55 @@ export default function HomePage() {
     totalExpensesPerMonth: number;
     totalExpensesPerYear: number;
   }
+
+  interface PropertyValues {
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    bedrooms: string;
+    baths: string;
+    squareFeet: string;
+    yearBuilt: string;
+    otherInfo: string;
+  }
   
-  const values = {
+  interface PurchaseValues {
+    askingPrice: string;
+    offerPrice: string;
+    downPaymentPercent: string;
+    estimatedClosingCostPercentage: string;
+    renovationCosts: string;
+    setupCosts: string;
+  }
+  
+  interface IncomeValues {
+    averageNightlyRate: string;
+    averageOccupancyPercentage: string;
+  }
+  
+  interface ExpensesValues {
+    loanTermInYears: string;
+    interestRatePercentage: string;
+    estimatedPropertyTaxesPerMonth: string;
+    estimatedInsuranceAmountPerMonth: string;
+    privateMortgageInsuranceAmountPerMonth: string;
+    monthlyHOAAmount: string;
+    estimatedMonthlyUtilitiesAmount: string;
+    cleaningFeeAmountPerMonth: string;
+    internetBillPerMonth: string;
+    maintenancePercentagePerMonth: string;
+    managementFeePercentagePerMonth: string;
+  }
+  
+  interface Values {
+    property: PropertyValues;
+    purchase: PurchaseValues;
+    income: IncomeValues;
+    expenses: ExpensesValues;
+  }
+  
+  const values: Values = {
     property: {
       address: "3220 Bedford",
       city: "Amarillo",
