@@ -9,6 +9,8 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useMyContext } from "../../server/MyContext";
 
+import numeral from "numeral";
+
 export default function HomePage() {
   const router = useRouter();
   const cookies = new Cookies();
@@ -318,7 +320,19 @@ export default function HomePage() {
     })
     console.log("Analysis complete...", newAnalysis);
     console.log("ContextState: --- ", data);
+
+    setIsNewModalOpen(false)
   };
+
+  const deleteAnalysis = (id) => {
+    const updatedAnalyses = { ...data };
+    // console.log('---',updatedAnalyses)
+    delete updatedAnalyses.analyses[id];
+    updateData({
+       ...updatedAnalyses
+    })
+    // console.log('+++++',updatedAnalyses)
+ }
 
   return (
     <>
@@ -638,25 +652,25 @@ export default function HomePage() {
                           return (
                           <tr key={key}>
                             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
-                              {analysis.values.address}
+                              {analysis.values.property.address}
                             </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                              {analysis.calculations.totalInvestment}
+                              ${numeral(analysis.calculations.totalInvestment).format("0,0.00")}
                             </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                              {analysis.calculations.netOperatingIncome}
+                              ${numeral(analysis.calculations.netOperatingIncome).format("0,0.00")}
                               </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              {analysis.calculations.cashOnCashReturn}
+                              {analysis.calculations.cashOnCashReturn}%
                               </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              {analysis.calculations.grossIncomePerYear}
+                              ${numeral(analysis.calculations.grossIncomePerYear).format("0,0.00")}
                               </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              {analysis.calculations.totalExpensesPerYear}
+                              ${numeral(analysis.calculations.totalExpensesPerYear).format("0,0.00")}
                               </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              {analysis.calculations.cashFlowPerYear}
+                              ${numeral(analysis.calculations.cashFlowPerYear).format("0,0.00")}
                               </td>
                             <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                               <a
@@ -665,6 +679,14 @@ export default function HomePage() {
                                 onClick={openEditModal}
                               >
                                 Edit
+                              </a>
+                              <span>  </span>
+                              <a
+                                href="#"
+                                className="text-indigo-600 hover:text-indigo-900"
+                                onClick={() => deleteAnalysis(key)}
+                              >
+                                Delete
                               </a>
                             </td>
                           </tr>
