@@ -122,6 +122,7 @@ export default function HomePage() {
       maintenancePercentagePerMonth: string;
       managementFeePercentagePerMonth: string;
     };
+    [key: string]: any; // Index signature
   }
   
   const values: Values = {
