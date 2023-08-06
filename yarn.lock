@@ -1714,6 +1714,24 @@ formdata-polyfill@^4.0.10:
   dependencies:
     fetch-blob "^3.1.2"
 
+formula-errors@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/formula-errors/-/formula-errors-1.0.2.tgz#f62ae7732c6b6ed7be9c55e9e27630d0914c093f"
+  integrity sha512-ULS4Grsn4zSrkM49ys9/8PyuRnBGob5tuOT0XOrZN1h6V5B2dFNEwGeLvzXAf0Vn4Ygc6TSWit/lvQ3Fr53Cmw==
+
+formula-isnumber@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/formula-isnumber/-/formula-isnumber-1.0.1.tgz#cccb928efd2e815a24c2f0fe4fba848c5ed88751"
+  integrity sha512-x6UEtJb5oMCdgXyS9URxDoZPBRHlnKm2dr17aXC6vsNQiIo9GdokNumKGqHtCh3XS+5bS+tl0juhiezTlAjKww==
+
+formula-pmt@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/formula-pmt/-/formula-pmt-1.0.1.tgz#c833da54ff8c2b5b83d3dfd92f74e2f9209a7e57"
+  integrity sha512-dtytCoNHL0jj88aiXi2uwHeqmVn96LLrr2Gr7xjYNQnvYXi4xZ8iQeNgo2O9MaIifYPjan69ZFjCXha/xGXdcw==
+  dependencies:
+    formula-errors "^1.0.2"
+    formula-isnumber "^1.0.0"
+
 fraction.js@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.2.0.tgz#448e5109a313a3527f5a3ab2119ec4cf0e0e2950"
@@ -1933,6 +1951,11 @@ has@^1.0.3:
   integrity sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw==
   dependencies:
     function-bind "^1.1.1"
+
+heroicons@^2.0.18:
+  version "2.0.18"
+  resolved "https://registry.yarnpkg.com/heroicons/-/heroicons-2.0.18.tgz#e4a5d7d0884fb1859f7171d2e41a7d89181c768e"
+  integrity sha512-3iaqznaz5GJ8Mox/eDfKHo7tYKuPiZV4vbg6pB6wjJhBa7ZKQlXT1KuUnsjkEiPy/ezyiqppOX6wUqYguMIq8w==
 
 http-parser-js@>=0.5.1:
   version "0.5.8"
@@ -3315,6 +3338,11 @@ util-deprecate@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 watchpack@2.4.0:
   version "2.4.0"

@@ -4,11 +4,16 @@ import Cookies from "universal-cookie";
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
-import { useMyContext } from "@/server/appContext";
+import pmt from "formula-pmt";
+import { v4 as uuidv4 } from "uuid";
+
+import { useMyContext } from "../../server/MyContext";
 
 export default function HomePage() {
   const router = useRouter();
   const cookies = new Cookies();
+
+  const { data, updateData } = useMyContext();
 
   const [token, setToken] = useState(null);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
@@ -28,16 +33,27 @@ export default function HomePage() {
     router.push("/");
   };
 
-  const { state, setState } = useMyContext();
+  const [currentTab, setCurrentTab] = useState("property");
 
-  const steps = [
-    { name: "Property", href: "#", status: "complete" },
-    { name: "Purchase", href: "#", status: "current" },
-    { name: "Income", href: "#", status: "upcoming" },
-    { name: "Expenses", href: "#", status: "upcoming" },
-  ];
+  const tabs = {
+    property: {
+      name: "Property",
+    },
+    purchase: {
+      name: "Purchase",
+    },
+    income: {
+      name: "Income",
+    },
+    expenses: {
+      name: "Expenses",
+    },
+  };
 
-  const [currentTab, setCurrentTab] = useState("Property");
+  const tabSelect = (tab: string) => {
+    console.log("TAB", tab);
+    setCurrentTab(tab);
+  };
 
   const values = {
     property: {
@@ -76,6 +92,192 @@ export default function HomePage() {
       maintenancePercentagePerMonth: "5",
       managementFeePercentagePerMonth: "0",
     },
+  };
+
+  interface Calculations {
+    downPaymentAmount: number;
+    estimatedClosingCostAmount: number;
+    totalInvestment: number;
+
+    grossIncomePerMonth: number;
+    grossIncomePerYear: number;
+    netOperatingIncome: number;
+    capRatePercentage: number;
+    cashFlowPerMonth: number;
+    cashFlowPerYear: number;
+    cashOnCashReturn: number;
+
+    mortgageAmount: number;
+    numberOfPayments: number;
+    monthlyPrinciplePlusInterest: number;
+    estimatedPropertyTaxesPerYear: number;
+    estimatedInsuranceAmountPerYear: number;
+    privateMortgageInsuranceAmountPerYear: number;
+    airBNBFeePercentagePerMonth: number;
+    airBNBFeePercentagePerYear: number;
+    maintenanceAmountPerMonth: number;
+    managementFeeAmountPerMonth: number;
+
+    operatingExpensesPerMonth: number;
+    operatingExpensesPerYear: number;
+    totalExpensesPerMonth: number;
+    totalExpensesPerYear: number;
+  }
+
+  const doCalcs = (values: {
+    property?: {
+      address: string;
+      city: string;
+      state: string;
+      zipCode: string;
+      bedrooms: string;
+      baths: string;
+      squareFeet: string;
+      yearBuilt: string;
+      otherInfo: string;
+    };
+    purchase: any;
+    income: any;
+    expenses: any;
+  }) => {
+    let calculations: Calculations = {
+      // Initialization of properties
+      downPaymentAmount: 0,
+      estimatedClosingCostAmount: 0,
+      totalInvestment: 0,
+      grossIncomePerMonth: 0,
+      grossIncomePerYear: 0,
+      netOperatingIncome: 0,
+      capRatePercentage: 0,
+      cashFlowPerMonth: 0,
+      cashFlowPerYear: 0,
+      cashOnCashReturn: 0,
+      mortgageAmount: 0,
+      numberOfPayments: 0,
+      monthlyPrinciplePlusInterest: 0,
+      estimatedPropertyTaxesPerYear: 0,
+      estimatedInsuranceAmountPerYear: 0,
+      privateMortgageInsuranceAmountPerYear: 0,
+      airBNBFeePercentagePerMonth: 0,
+      airBNBFeePercentagePerYear: 0,
+      maintenanceAmountPerMonth: 0,
+      managementFeeAmountPerMonth: 0,
+      operatingExpensesPerMonth: 0,
+      operatingExpensesPerYear: 0,
+      totalExpensesPerMonth: 0,
+      totalExpensesPerYear: 0,
+    };
+
+    calculations.downPaymentAmount =
+      parseInt(values.purchase.offerPrice) *
+      (parseInt(values.purchase.downPaymentPercent) / 100);
+    calculations.estimatedClosingCostAmount =
+      parseInt(values.purchase.offerPrice) *
+      (parseInt(values.purchase.estimatedClosingCostPercentage) / 100);
+    calculations.totalInvestment =
+      parseInt(values.purchase.setupCosts) +
+      parseInt(values.purchase.renovationCosts) +
+      calculations.estimatedClosingCostAmount +
+      calculations.downPaymentAmount;
+
+    // expenses calculations
+    calculations.mortgageAmount =
+      parseInt(values.purchase.offerPrice) - calculations.downPaymentAmount;
+    calculations.numberOfPayments =
+      parseInt(values.expenses.loanTermInYears) * 12;
+    calculations.monthlyPrinciplePlusInterest =
+      pmt(
+        parseInt(values.expenses.interestRatePercentage) / 100 / 12,
+        calculations.numberOfPayments,
+        calculations.mortgageAmount
+      ) * -1;
+    calculations.estimatedPropertyTaxesPerYear =
+      parseInt(values.expenses.estimatedPropertyTaxesPerMonth) * 12;
+    calculations.estimatedInsuranceAmountPerYear =
+      parseInt(values.expenses.estimatedInsuranceAmountPerMonth) * 12;
+    calculations.privateMortgageInsuranceAmountPerYear =
+      parseInt(values.expenses.privateMortgageInsuranceAmountPerMonth) * 12;
+
+    calculations.grossIncomePerMonth =
+      ((parseInt(values.income.averageNightlyRate) * 365) / 12) *
+        (parseInt(values.income.averageOccupancyPercentage) / 100) +
+      parseInt(values.expenses.cleaningFeeAmountPerMonth);
+
+    calculations.airBNBFeePercentagePerMonth =
+      calculations.grossIncomePerMonth * 0.03;
+    calculations.airBNBFeePercentagePerYear =
+      calculations.airBNBFeePercentagePerMonth * 12;
+    calculations.maintenanceAmountPerMonth =
+      ((parseInt(values.income.averageNightlyRate) * 365) / 12) *
+      (parseInt(values.income.averageOccupancyPercentage) / 100) *
+      (parseInt(values.expenses.maintenancePercentagePerMonth) / 100);
+    calculations.managementFeeAmountPerMonth =
+      ((parseInt(values.income.averageNightlyRate) * 365) / 12) *
+      (parseInt(values.income.averageOccupancyPercentage) / 100) *
+      (parseInt(values.expenses.managementFeePercentagePerMonth) / 100);
+
+    calculations.operatingExpensesPerMonth =
+      parseInt(values.expenses.estimatedPropertyTaxesPerMonth) +
+      parseInt(values.expenses.estimatedInsuranceAmountPerMonth) +
+      parseInt(values.expenses.privateMortgageInsuranceAmountPerMonth) +
+      parseInt(values.expenses.monthlyHOAAmount) +
+      parseInt(values.expenses.estimatedMonthlyUtilitiesAmount) +
+      calculations.airBNBFeePercentagePerMonth +
+      parseInt(values.expenses.cleaningFeeAmountPerMonth) +
+      calculations.maintenanceAmountPerMonth +
+      parseInt(values.expenses.internetBillPerMonth) +
+      calculations.managementFeeAmountPerMonth;
+    calculations.operatingExpensesPerYear =
+      calculations.operatingExpensesPerMonth * 12;
+    calculations.totalExpensesPerMonth =
+      calculations.operatingExpensesPerMonth +
+      calculations.monthlyPrinciplePlusInterest;
+    calculations.totalExpensesPerYear = calculations.totalExpensesPerMonth * 12;
+
+    // income calculations
+    calculations.grossIncomePerYear = calculations.grossIncomePerMonth * 12;
+    calculations.netOperatingIncome =
+      calculations.grossIncomePerYear - calculations.operatingExpensesPerYear;
+    calculations.capRatePercentage =
+      (calculations.netOperatingIncome / parseInt(values.purchase.offerPrice)) *
+      100;
+    calculations.cashFlowPerMonth =
+      calculations.grossIncomePerMonth - calculations.totalExpensesPerMonth;
+    calculations.cashFlowPerYear = calculations.cashFlowPerMonth * 12;
+    calculations.cashOnCashReturn = Math.ceil(
+      (calculations.cashFlowPerYear / calculations.totalInvestment) * 100
+    );
+
+    console.log(calculations);
+    return calculations;
+  };
+
+  const onAnalyzeClick = () => {
+    console.log("Analyzing...");
+    console.log(values); // Access the values from the global state
+
+    // Perform calculations using doCalcs with state.amarillo.values
+    const analysisResults = doCalcs(values);
+
+    // Create a new analysis object
+    const newAnalysis = {
+      values: values,
+      calculations: analysisResults,
+    };
+
+    const newId = uuidv4();
+
+    updateData({
+      ...data,
+
+      analyses: {
+        ...data.analyses,
+        // Add your new analysis here (replace "new_analysis_id" with the new analysis ID)
+        [newId]: newAnalysis,
+      },
+    })
+    console.log("Analysis complete...", newAnalysis);
+    console.log("ContextState: --- ", data);
   };
 
   return (
@@ -137,8 +339,8 @@ export default function HomePage() {
                     aria-hidden="true"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                     />
                   </svg>
@@ -152,8 +354,8 @@ export default function HomePage() {
                     aria-hidden="true"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M6 18L18 6M6 6l12 12"
                     />
                   </svg>
@@ -213,93 +415,50 @@ export default function HomePage() {
                       aria-modal="true"
                     >
                       {/* New Modal */}
-                      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+                      <div className="fixed  inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
                       <div className="fixed inset-0 z-10 overflow-y-auto">
                         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                           <div className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
-                            <div>
-                              <nav
-                                className="flex items-center justify-center"
-                                aria-label="Progress"
-                              >
-                                <p className="text-sm font-medium">
-                                  {currentTab + " " + "Values"}
-                                </p>
-                                <ol
-                                  role="list"
-                                  className="ml-8 flex items-center space-x-5"
+                            <div className="flex justify-between">
+                              {Object.entries(tabs).map(([key, value]) => (
+                                <div
+                                  key={value.name}
+                                  onClick={() => tabSelect(key)}
                                 >
-                                  {steps.map((step) => (
-                                    <li key={step.name}>
-                                      {step.status === "complete" ? (
-                                        <a
-                                          href={step.href}
-                                          className="block h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-900"
-                                        >
-                                          <span className="sr-only">
-                                            {step.name}
-                                          </span>
-                                        </a>
-                                      ) : step.status === "current" ? (
-                                        <a
-                                          href={step.href}
-                                          className="relative flex items-center justify-center"
-                                          aria-current="step"
-                                        >
-                                          <span
-                                            className="absolute flex h-5 w-5 p-px"
-                                            aria-hidden="true"
-                                          >
-                                            <span className="h-full w-full rounded-full bg-indigo-200" />
-                                          </span>
-                                          <span
-                                            className="relative block h-2.5 w-2.5 rounded-full bg-indigo-600"
-                                            aria-hidden="true"
-                                          />
-                                          <span className="sr-only">
-                                            {step.name}
-                                          </span>
-                                        </a>
-                                      ) : (
-                                        <a
-                                          href={step.href}
-                                          className="block h-2.5 w-2.5 rounded-full bg-gray-200 hover:bg-gray-400"
-                                        >
-                                          <span className="sr-only">
-                                            {step.name}
-                                          </span>
-                                        </a>
-                                      )}
-                                    </li>
-                                  ))}
-                                </ol>
-                              </nav>
+                                  {value.name}
+                                </div>
+                              ))}{" "}
                             </div>
-                            {currentTab == "Property" ? (
-                              <>
-                                {Object.entries(values).map(([key, value]) => (
-                                  <>
-                                    {Object.entries(value).map(
-                                      ([key, value]) => (
-                                        <>{key}</>
-                                      )
-                                    )}
-                                  </>
-                                ))}
-                              </>
-                            ) : (
-                              <>Nope</>
-                            )}
+                            <div>
+                              {Object.entries(values[currentTab]).map(
+                                ([key, value]) => (
+                                  <div
+                                    key={key}
+                                    className="flex justify-between p3 m4"
+                                  >
+                                    <div className="mr-5">{key}</div>
+                                    <div>{value}</div>
+                                  </div>
+                                )
+                              )}
+                            </div>
                             <div className="mt-5 sm:mt-6">
+                              <button
+                                type="button"
+                                onClick={() => onAnalyzeClick()}
+                                className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                              >
+                                Analyze
+                              </button>
                               <button
                                 type="button"
                                 onClick={() =>
                                   setIsNewModalOpen(!isNewModalOpen)
                                 }
-                                className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="inline-flex w-full mt-2 justify-center rounded-md bg-red-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                               >
-                                Analyze
+                                Cancel
                               </button>
                             </div>
                           </div>
@@ -390,8 +549,8 @@ export default function HomePage() {
                                             aria-hidden="true"
                                           >
                                             <path
-                                              stroke-linecap="round"
-                                              stroke-linejoin="round"
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
                                               d="M4.5 12.75l6 6 9-13.5"
                                             />
                                           </svg>
@@ -434,49 +593,40 @@ export default function HomePage() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200 bg-white">
-                        {Object.entries(state).map(([key, value]) => (
-                          <>
-                            {Object.entries(value["analyses"]).map(
-                              ([key, value]) => (
-                                <>
-                                  <tr>
-                                    <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
-                                      {value["values"]["address"]}
-                                    </td>
-                                    <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                                      {value["values"]["address"]}
-                                    </td>
-                                    <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                                      {value["values"]["address"]}
-                                    </td>
-                                    <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                                      {value["values"]["address"]}
-                                    </td>
-                                    <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                                      {value["values"]["address"]}
-                                    </td>
-                                    <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                                      {value["values"]["address"]}
-                                    </td>
-                                    <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                                      {value["values"]["address"]}
-                                    </td>
-                                    <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                      <a
-                                        href="#"
-                                        className="text-indigo-600 hover:text-indigo-900"
-                                        onClick={openEditModal}
-                                      >
-                                        Edit
-                                      </a>
-                                    </td>
-                                  </tr>
-                                </>
-                              )
-                            )}
-                          </>
+                        {Object.entries(data.analyses).map(([key, value]) => (
+                          <tr key={key}>
+                            <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
+                              {value.values.address}
+                            </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
+                              {value.calculations.totalInvestment}
+                            </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                              {value.calculations.netOperatingIncome}
+                              </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                              {value.calculations.cashOnCashReturn}
+                              </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                              {value.calculations.grossIncomePerYear}
+                              </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                              {value.calculations.totalExpensesPerYear}
+                              </td>
+                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                              {value.calculations.cashFlowPerYear}
+                              </td>
+                            <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                              <a
+                                href="#"
+                                className="text-indigo-600 hover:text-indigo-900"
+                                onClick={openEditModal}
+                              >
+                                Edit
+                              </a>
+                            </td>
+                          </tr>
                         ))}
-
                         {/* <!-- More transactions... --> */}
                       </tbody>
                     </table>

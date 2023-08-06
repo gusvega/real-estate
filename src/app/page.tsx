@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
@@ -18,7 +18,10 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../server/firebase.js";
 
-import {MyContextProvider, useMyContext} from "../server/appContext.js"
+import { useMyContext } from '../server/MyContext.js'
+
+
+
 
 interface AuthInfo {
   isloggedIn: boolean;
@@ -36,6 +39,7 @@ interface AuthInfo {
 export default function Home() {
   const router = useRouter();
 
+  const { data, setData } = useMyContext()
 
   const [authInfo, setAuthInfo] = useState<AuthInfo>({
     isloggedIn: false,
@@ -50,12 +54,11 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
 
-  const { state, setState } = useMyContext();
 
   useEffect(() => {
     // On component mount, check for the cookie
     checkCookie();
-    console.log('State: ', state)
+    // console.log('State: ', state)
 
   }, []);
 
@@ -143,10 +146,8 @@ export default function Home() {
     }
   };
 
-  
-
   return (
-    <MyContextProvider>
+    <>
       <div className="text-white">
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -154,7 +155,6 @@ export default function Home() {
               Welcome to my Real Estate Analysis Tool!
             </h2>
           </div>
-
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <div className="flex mb-6">
               <button
@@ -176,6 +176,7 @@ export default function Home() {
                 Sign Up
               </button>
             </div>
+
             <form className="space-y-6" action="#" method="POST">
               {authInfo.isloggedIn ? (
                 <>dd</>
@@ -313,6 +314,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </MyContextProvider>
+    </>
   );
 }
