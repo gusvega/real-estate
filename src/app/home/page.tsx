@@ -130,6 +130,7 @@ export default function HomePage() {
     purchase: PurchaseValues;
     income: IncomeValues;
     expenses: ExpensesValues;
+    [key: string]: any; // Index signature
   }
   
   const values: Values = {
