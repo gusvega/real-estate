@@ -486,7 +486,7 @@ export default function HomePage() {
                                     className="flex justify-between p3 m4"
                                   >
                                     <div className="mr-5">{key}</div>
-                                    <div>{value}</div>
+                                    <div>{value as string}</div>
                                   </div>
                                 )
                               )}
