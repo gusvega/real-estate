@@ -55,6 +55,36 @@ export default function HomePage() {
     setCurrentTab(tab);
   };
 
+  interface Calculations {
+    downPaymentAmount: number;
+    estimatedClosingCostAmount: number;
+    totalInvestment: number;
+
+    grossIncomePerMonth: number;
+    grossIncomePerYear: number;
+    netOperatingIncome: number;
+    capRatePercentage: number;
+    cashFlowPerMonth: number;
+    cashFlowPerYear: number;
+    cashOnCashReturn: number;
+
+    mortgageAmount: number;
+    numberOfPayments: number;
+    monthlyPrinciplePlusInterest: number;
+    estimatedPropertyTaxesPerYear: number;
+    estimatedInsuranceAmountPerYear: number;
+    privateMortgageInsuranceAmountPerYear: number;
+    airBNBFeePercentagePerMonth: number;
+    airBNBFeePercentagePerYear: number;
+    maintenanceAmountPerMonth: number;
+    managementFeeAmountPerMonth: number;
+
+    operatingExpensesPerMonth: number;
+    operatingExpensesPerYear: number;
+    totalExpensesPerMonth: number;
+    totalExpensesPerYear: number;
+  }
+  
   const values = {
     property: {
       address: "3220 Bedford",
@@ -93,36 +123,6 @@ export default function HomePage() {
       managementFeePercentagePerMonth: "0",
     },
   };
-
-  interface Calculations {
-    downPaymentAmount: number;
-    estimatedClosingCostAmount: number;
-    totalInvestment: number;
-
-    grossIncomePerMonth: number;
-    grossIncomePerYear: number;
-    netOperatingIncome: number;
-    capRatePercentage: number;
-    cashFlowPerMonth: number;
-    cashFlowPerYear: number;
-    cashOnCashReturn: number;
-
-    mortgageAmount: number;
-    numberOfPayments: number;
-    monthlyPrinciplePlusInterest: number;
-    estimatedPropertyTaxesPerYear: number;
-    estimatedInsuranceAmountPerYear: number;
-    privateMortgageInsuranceAmountPerYear: number;
-    airBNBFeePercentagePerMonth: number;
-    airBNBFeePercentagePerYear: number;
-    maintenanceAmountPerMonth: number;
-    managementFeeAmountPerMonth: number;
-
-    operatingExpensesPerMonth: number;
-    operatingExpensesPerYear: number;
-    totalExpensesPerMonth: number;
-    totalExpensesPerYear: number;
-  }
 
   const doCalcs = (values: {
     property?: {
