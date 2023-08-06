@@ -634,28 +634,29 @@ export default function HomePage() {
                       </thead>
                       <tbody className="divide-y divide-gray-200 bg-white">
                         {Object.entries(data.analyses).map(([key, value]) => {
+                          const analysis = value as { values: Values; calculations: Calculations };
                           return (
                           <tr key={key}>
                             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
-                              {value.values.address}
+                              {analysis.values.address}
                             </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                              {value.calculations.totalInvestment}
+                              {analysis.calculations.totalInvestment}
                             </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                              {value.calculations.netOperatingIncome}
+                              {analysis.calculations.netOperatingIncome}
                               </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              {value.calculations.cashOnCashReturn}
+                              {analysis.calculations.cashOnCashReturn}
                               </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              {value.calculations.grossIncomePerYear}
+                              {analysis.calculations.grossIncomePerYear}
                               </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              {value.calculations.totalExpensesPerYear}
+                              {analysis.calculations.totalExpensesPerYear}
                               </td>
                             <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              {value.calculations.cashFlowPerYear}
+                              {analysis.calculations.cashFlowPerYear}
                               </td>
                             <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                               <a
