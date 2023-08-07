@@ -208,47 +208,26 @@ export default function HomePage() {
       },
     }));
 
-    console.log("VALUES: ", values);
-  };
+    console.log("VALUES BEFORE: ", data.analyses[id]);
 
-  // const values: Values = {
-  //   property: {
-  //     address: "3220 Bedford",
-  //     city: "Amarillo",
-  //     state: "TX",
-  //     zipCode: "79103",
-  //     bedrooms: "3",
-  //     baths: "2",
-  //     squareFeet: "1300",
-  //     yearBuilt: "1965",
-  //     otherInfo: "good conditions",
-  //   },
-  //   purchase: {
-  //     askingPrice: "500000",
-  //     offerPrice: "500000",
-  //     downPaymentPercent: "3",
-  //     estimatedClosingCostPercentage: "3",
-  //     renovationCosts: "0",
-  //     setupCosts: "10000",
-  //   },
-  //   income: {
-  //     averageNightlyRate: "400",
-  //     averageOccupancyPercentage: "75",
-  //   },
-  //   expenses: {
-  //     loanTermInYears: "30",
-  //     interestRatePercentage: "6",
-  //     estimatedPropertyTaxesPerMonth: "150",
-  //     estimatedInsuranceAmountPerMonth: "145",
-  //     privateMortgageInsuranceAmountPerMonth: "86",
-  //     monthlyHOAAmount: "0",
-  //     estimatedMonthlyUtilitiesAmount: "300",
-  //     cleaningFeeAmountPerMonth: "500",
-  //     internetBillPerMonth: "100",
-  //     maintenancePercentagePerMonth: "5",
-  //     managementFeePercentagePerMonth: "0",
-  //   },
-  // };
+    const vals = data.analyses[id].values
+    const calcs = doCalcs(vals)
+
+    updateData((prevData) => ({
+      ...prevData,
+      analyses: {
+        ...prevData.analyses,
+        [id]: {
+          // ...prevData.analyses[id],
+          values: vals,
+          calculations: calcs
+        },
+      },
+    }));
+
+    console.log("VALUES AFTER: ", data.analyses[id]);
+
+  };
 
   const doCalcs = (values: {
     property?: {
@@ -721,13 +700,13 @@ export default function HomePage() {
                                 ).format("0,0.00")}
                               </td>
                               <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                <a
+                                {/* <a
                                   href="#"
                                   className="text-indigo-600 hover:text-indigo-900"
                                   onClick={() => openEditModal(key)}
                                 >
                                   Edit
-                                </a>
+                                </a> */}
                                 <span> </span>
                                 {isEditModalOpen ? (
                                   <div
