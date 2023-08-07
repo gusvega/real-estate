@@ -20,13 +20,16 @@ export default function HomePage() {
   const [token, setToken] = useState(null);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
 
   const openNewModal = () => {
     setIsNewModalOpen(!isNewModalOpen);
   };
 
-  const openEditModal = () => {
+  const openEditModal = (key: string) => {
     setIsEditModalOpen(!isEditModalOpen);
+    console.log("Opened Analysis: ", key);
+    setSelectedItem(key);
   };
 
   const handleDeleteCookie = () => {
@@ -86,7 +89,7 @@ export default function HomePage() {
     totalExpensesPerMonth: number;
     totalExpensesPerYear: number;
   }
-  
+
   interface Values {
     property: {
       address: string;
@@ -126,8 +129,8 @@ export default function HomePage() {
     };
     [key: string]: any; // Index signature
   }
-  
-  const values: Values = {
+
+  const [values, setValues] = useState({
     property: {
       address: "3220 Bedford",
       city: "Amarillo",
@@ -164,7 +167,105 @@ export default function HomePage() {
       maintenancePercentagePerMonth: "5",
       managementFeePercentagePerMonth: "0",
     },
-  };
+  });
+
+  const handleInputChange = (tab: string, name: string, value: string) => {
+
+    console.log('Changing Value...', name, value, values)
+
+    setValues({
+       ...values,
+       [tab] : {
+        ...values[tab],
+        [name]: value,
+       }
+       
+
+    })
+    console.log('VALUES: ', values)
+
+ };
+
+ const handleValueChange = (id: string, tab: string, name: string, value: string) => {
+
+  console.log('Changing Value...', id, name, value, values)
+
+  // updateData({
+  //   ...data,
+  //   analyses: {
+  //     ...data.analyses,
+  //     [id]: {
+  //       ...data.analyses[id],
+  //       [tab]: {
+  //         ...data.analyses[id][tab],
+  //         [name]: value,
+  //       },
+  //     },
+  //   },
+  // })
+
+  updateData((prevData) => ({
+    ...prevData,
+    analyses: {
+      ...prevData.analyses,
+      [id]: {
+        ...prevData.analyses[id],
+        values: {
+          ...prevData.analyses[id].values,
+          [tab]: {
+            ...prevData.analyses[id].values[tab],
+            [name]: value,
+          },
+        },
+      },
+    },
+  }));
+
+
+  console.log('VALUES: ', values)
+
+};
+
+
+
+  // const values: Values = {
+  //   property: {
+  //     address: "3220 Bedford",
+  //     city: "Amarillo",
+  //     state: "TX",
+  //     zipCode: "79103",
+  //     bedrooms: "3",
+  //     baths: "2",
+  //     squareFeet: "1300",
+  //     yearBuilt: "1965",
+  //     otherInfo: "good conditions",
+  //   },
+  //   purchase: {
+  //     askingPrice: "500000",
+  //     offerPrice: "500000",
+  //     downPaymentPercent: "3",
+  //     estimatedClosingCostPercentage: "3",
+  //     renovationCosts: "0",
+  //     setupCosts: "10000",
+  //   },
+  //   income: {
+  //     averageNightlyRate: "400",
+  //     averageOccupancyPercentage: "75",
+  //   },
+  //   expenses: {
+  //     loanTermInYears: "30",
+  //     interestRatePercentage: "6",
+  //     estimatedPropertyTaxesPerMonth: "150",
+  //     estimatedInsuranceAmountPerMonth: "145",
+  //     privateMortgageInsuranceAmountPerMonth: "86",
+  //     monthlyHOAAmount: "0",
+  //     estimatedMonthlyUtilitiesAmount: "300",
+  //     cleaningFeeAmountPerMonth: "500",
+  //     internetBillPerMonth: "100",
+  //     maintenancePercentagePerMonth: "5",
+  //     managementFeePercentagePerMonth: "0",
+  //   },
+  // };
 
   const doCalcs = (values: {
     property?: {
@@ -317,11 +418,11 @@ export default function HomePage() {
         // Add your new analysis here (replace "new_analysis_id" with the new analysis ID)
         [newId]: newAnalysis,
       },
-    })
+    });
     console.log("Analysis complete...", newAnalysis);
     console.log("ContextState: --- ", data);
 
-    setIsNewModalOpen(false)
+    setIsNewModalOpen(false);
   };
 
   const deleteAnalysis = (id: string) => {
@@ -329,10 +430,10 @@ export default function HomePage() {
     // console.log('---',updatedAnalyses)
     delete updatedAnalyses.analyses[id];
     updateData({
-       ...updatedAnalyses
-    })
+      ...updatedAnalyses,
+    });
     // console.log('+++++',updatedAnalyses)
- }
+  };
 
   return (
     <>
@@ -491,8 +592,14 @@ export default function HomePage() {
                                     key={key}
                                     className="flex justify-between p3 m4"
                                   >
-                                    <div className="mr-5">{key}</div>
-                                    <div>{value as string}</div>
+                                    <div className="mr-5">{key}</div>                                    
+                                    <input
+                                      type="text"
+                                      value={value as string}
+                                      // ................................
+                                      onChange={(e) => handleInputChange(currentTab, key, e.target.value)}
+
+                                    />
                                   </div>
                                 )
                               )}
@@ -578,119 +685,142 @@ export default function HomePage() {
                             className="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0"
                           >
                             <button className="sr-only">Edit</button>
-
-                            {isEditModalOpen ? (
-                              <div
-                                className="relative z-10"
-                                aria-labelledby="modal-title"
-                                role="dialog"
-                                aria-modal="true"
-                              >
-                                {/* Edit Modal */}
-                                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
-                                <div className="fixed inset-0 z-10 overflow-y-auto">
-                                  <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                                    <div className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
-                                      <div>
-                                        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                                          <svg
-                                            className="h-6 w-6 text-green-600"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor"
-                                            aria-hidden="true"
-                                          >
-                                            <path
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                              d="M4.5 12.75l6 6 9-13.5"
-                                            />
-                                          </svg>
-                                        </div>
-                                        <div className="mt-3 text-center sm:mt-5">
-                                          <h3
-                                            className="text-base font-semibold leading-6 text-gray-900"
-                                            id="modal-title"
-                                          >
-                                            Edit Modal
-                                          </h3>
-                                          <div className="mt-2">
-                                            <p className="text-sm text-gray-500">
-                                              Lorem ipsum dolor sit amet
-                                              consectetur adipisicing elit.
-                                              Consequatur amet labore.
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div className="mt-5 sm:mt-6">
-                                        <button
-                                          type="button"
-                                          onClick={() =>
-                                            setIsEditModalOpen(!isEditModalOpen)
-                                          }
-                                          className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                        >
-                                          Go back to dashboard
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            ) : (
-                              ""
-                            )}
                           </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200 bg-white">
                         {Object.entries(data.analyses).map(([key, value]) => {
-                          const analysis = value as { values: Values; calculations: Calculations };
+                          const analysis = value as {
+                            values: Values;
+                            calculations: Calculations;
+                          };
                           return (
-                          <tr key={key}>
-                            <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
-                              {analysis.values.property.address}
-                            </td>
-                            <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                              ${numeral(analysis.calculations.totalInvestment).format("0,0.00")}
-                            </td>
-                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
-                              ${numeral(analysis.calculations.netOperatingIncome).format("0,0.00")}
+                            <tr key={key}>
+                              <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
+                                {analysis.values.property.address}
                               </td>
-                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              {analysis.calculations.cashOnCashReturn}%
+                              <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
+                                $
+                                {numeral(
+                                  analysis.calculations.totalInvestment
+                                ).format("0,0.00")}
                               </td>
-                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              ${numeral(analysis.calculations.grossIncomePerYear).format("0,0.00")}
+                              <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                                $
+                                {numeral(
+                                  analysis.calculations.netOperatingIncome
+                                ).format("0,0.00")}
                               </td>
-                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              ${numeral(analysis.calculations.totalExpensesPerYear).format("0,0.00")}
+                              <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                                {analysis.calculations.cashOnCashReturn}%
                               </td>
-                            <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                              ${numeral(analysis.calculations.cashFlowPerYear).format("0,0.00")}
+                              <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                                $
+                                {numeral(
+                                  analysis.calculations.grossIncomePerYear
+                                ).format("0,0.00")}
                               </td>
-                            <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                              <a
-                                href="#"
-                                className="text-indigo-600 hover:text-indigo-900"
-                                onClick={openEditModal}
-                              >
-                                Edit
-                              </a>
-                              <span>  </span>
-                              <a
-                                href="#"
-                                className="text-indigo-600 hover:text-indigo-900"
-                                onClick={() => deleteAnalysis(key)}
-                              >
-                                Delete
-                              </a>
-                            </td>
-                          </tr>
-)})}
+                              <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                                $
+                                {numeral(
+                                  analysis.calculations.totalExpensesPerYear
+                                ).format("0,0.00")}
+                              </td>
+                              <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                                $
+                                {numeral(
+                                  analysis.calculations.cashFlowPerYear
+                                ).format("0,0.00")}
+                              </td>
+                              <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                                <a
+                                  href="#"
+                                  className="text-indigo-600 hover:text-indigo-900"
+                                  onClick={() => openEditModal(key)}
+                                >
+                                  Edit
+                                </a>
+                                <span> </span>
+                                {isEditModalOpen ? (
+                                  <div
+                                    className="relative z-10"
+                                    aria-labelledby="modal-title"
+                                    role="dialog"
+                                    aria-modal="true"
+                                  >
+                                    {/* Edit Modal */}
+                                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+                                    <div className="fixed inset-0 z-10 overflow-y-auto">
+                                      <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                        <div className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                                          <div className="flex justify-between">
+                                            {Object.entries(tabs).map(
+                                              ([key, value]) => (
+                                                <div
+                                                  key={value.name}
+                                                  onClick={() => tabSelect(key)}
+                                                >
+                                                  {value.name}
+                                                 
+                                                </div>
+                                              )
+                                            )}{" "}
+                                          </div>
+                                          <div>
+                                            {Object.entries(
+                                              data.analyses[selectedItem]
+                                                .values[currentTab]
+                                            ).map(([key, value]) => (
+                                              <div
+                                                key={key}
+                                                className="flex justify-between p3 m4"
+                                              >
+                                                <div className="mr-5">
+                                                  {key}
+                                                </div>
+                                                <input
+                                      type="text"
+                                      value={value as string}
+                                      // ................................
+                                      onChange={(e) => handleValueChange(selectedItem, currentTab, key, e.target.value)}
+
+                                    />
+                                              </div>
+                                            ))}
+                                          </div>
+                                          <div className="mt-5 sm:mt-6 flex justify-center">
+                                            <button
+                                              type="button"
+                                              onClick={() =>
+                                                setIsEditModalOpen(
+                                                  !isEditModalOpen
+                                                )
+                                              }
+                                              className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            >
+                                              Cancel
+                                            </button>
+                                            <button>Save</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                                <a
+                                  href="#"
+                                  className="text-indigo-600 hover:text-indigo-900"
+                                  onClick={() => deleteAnalysis(key)}
+                                >
+                                  Delete
+                                </a>
+                              </td>
+                            </tr>
+                          );
+                        })}
                         {/* <!-- More transactions... --> */}
                       </tbody>
                     </table>
