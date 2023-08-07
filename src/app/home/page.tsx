@@ -324,7 +324,7 @@ export default function HomePage() {
     setIsNewModalOpen(false)
   };
 
-  const deleteAnalysis = (id) => {
+  const deleteAnalysis = (id: string) => {
     const updatedAnalyses = { ...data };
     // console.log('---',updatedAnalyses)
     delete updatedAnalyses.analyses[id];
