@@ -130,7 +130,7 @@ export default function HomePage() {
     [key: string]: any; // Index signature
   }
 
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<Values>({
     property: {
       address: "3220 Bedford",
       city: "Amarillo",
@@ -170,63 +170,45 @@ export default function HomePage() {
   });
 
   const handleInputChange = (tab: string, name: string, value: string) => {
-
-    console.log('Changing Value...', name, value, values)
+    console.log("Changing Value...", name, value, values);
 
     setValues({
-       ...values,
-       [tab] : {
+      ...values,
+      [tab]: {
         ...values[tab],
         [name]: value,
-       }
-       
+      },
+    });
+    console.log("VALUES: ", values);
+  };
 
-    })
-    console.log('VALUES: ', values)
+  const handleValueChange = (
+    id: string,
+    tab: keyof Values,
+    name: keyof Values[keyof Values],
+    value: string
+  ) => {
+    console.log("Changing Value...", id, name, value, values);
 
- };
-
- const handleValueChange = (id: string, tab: string, name: string, value: string) => {
-
-  console.log('Changing Value...', id, name, value, values)
-
-  // updateData({
-  //   ...data,
-  //   analyses: {
-  //     ...data.analyses,
-  //     [id]: {
-  //       ...data.analyses[id],
-  //       [tab]: {
-  //         ...data.analyses[id][tab],
-  //         [name]: value,
-  //       },
-  //     },
-  //   },
-  // })
-
-  updateData((prevData) => ({
-    ...prevData,
-    analyses: {
-      ...prevData.analyses,
-      [id]: {
-        ...prevData.analyses[id],
-        values: {
-          ...prevData.analyses[id].values,
-          [tab]: {
-            ...prevData.analyses[id].values[tab],
-            [name]: value,
+    updateData((prevData) => ({
+      ...prevData,
+      analyses: {
+        ...prevData.analyses,
+        [id]: {
+          ...prevData.analyses[id],
+          values: {
+            ...prevData.analyses[id].values,
+            [tab]: {
+              ...prevData.analyses[id].values[tab],
+              [name]: value,
+            },
           },
         },
       },
-    },
-  }));
+    }));
 
-
-  console.log('VALUES: ', values)
-
-};
-
-
+    console.log("VALUES: ", values);
+  };
 
   // const values: Values = {
   //   property: {
@@ -592,13 +574,18 @@ export default function HomePage() {
                                     key={key}
                                     className="flex justify-between p3 m4"
                                   >
-                                    <div className="mr-5">{key}</div>                                    
+                                    <div className="mr-5">{key}</div>
                                     <input
                                       type="text"
                                       value={value as string}
                                       // ................................
-                                      onChange={(e) => handleInputChange(currentTab, key, e.target.value)}
-
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          currentTab,
+                                          key,
+                                          e.target.value
+                                        )
+                                      }
                                     />
                                   </div>
                                 )
@@ -762,7 +749,6 @@ export default function HomePage() {
                                                   onClick={() => tabSelect(key)}
                                                 >
                                                   {value.name}
-                                                 
                                                 </div>
                                               )
                                             )}{" "}
@@ -780,12 +766,18 @@ export default function HomePage() {
                                                   {key}
                                                 </div>
                                                 <input
-                                      type="text"
-                                      value={value as string}
-                                      // ................................
-                                      onChange={(e) => handleValueChange(selectedItem, currentTab, key, e.target.value)}
-
-                                    />
+                                                  type="text"
+                                                  value={value as string}
+                                                  // ................................
+                                                  onChange={(e) =>
+                                                    handleValueChange(
+                                                      selectedItem,
+                                                      currentTab,
+                                                      key,
+                                                      e.target.value
+                                                    )
+                                                  }
+                                                />
                                               </div>
                                             ))}
                                           </div>
