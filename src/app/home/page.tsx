@@ -184,13 +184,13 @@ export default function HomePage() {
 
   const handleValueChange = (
     id: string,
-    tab: keyof Values,
-    name: keyof Values[keyof Values],
+    tab: keyof MyContextData["analyses"],
+    name: keyof MyContextData["analyses"][keyof MyContextData["analyses"]]["values"][keyof MyContextData["analyses"][keyof MyContextData["analyses"]]["values"]],
     value: string
   ) => {
     console.log("Changing Value...", id, name, value, values);
 
-    
+
     updateData((prevData) => ({
       ...prevData,
       analyses: {
