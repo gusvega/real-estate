@@ -190,6 +190,7 @@ export default function HomePage() {
   ) => {
     console.log("Changing Value...", id, name, value, values);
 
+    
     updateData((prevData) => ({
       ...prevData,
       analyses: {
