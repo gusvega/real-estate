@@ -373,8 +373,36 @@ export default function Page({ params }: { params: { id: string } }) {
                           </>
                         )}
                       </td>
-                      <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">{value * 12 * 5}</td>
-                      <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">{value * 12 * 10}</td>
+                      <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">
+                      {typeof value === 'number' ? (
+                          <>
+                            {value * 12 * 5}
+                          </>
+                        ) : typeof value === 'string' ? (
+                          <>
+                            {parseInt(value) * 12 * 5}
+                          </>
+                        ) : (
+                          <>
+                            {value} {/* Display the non-numeric value */}
+                          </>
+                        )}
+                      </td>
+                      <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">
+                      {typeof value === 'number' ? (
+                          <>
+                            {value * 12 * 10}
+                          </>
+                        ) : typeof value === 'string' ? (
+                          <>
+                            {parseInt(value) * 12 * 10}
+                          </>
+                        ) : (
+                          <>
+                            {value} {/* Display the non-numeric value */}
+                          </>
+                        )}
+                      </td>
 
                     </tr>
                   ))}
