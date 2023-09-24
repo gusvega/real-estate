@@ -221,7 +221,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
               <dl className=" grid grid-cols-4 text-sm leading-6 sm:grid-cols-4">
 
-                
+
 
                 <div className="mt-3 border-t  pt-6 sm:pr-4">
                   <dd className=" text-gray-500">
@@ -358,8 +358,20 @@ export default function Page({ params }: { params: { id: string } }) {
                       <td className="hidden py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700 sm:table-cell">
                         {value as string}
                       </td>
-                      <td className="hidden py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700 sm:table-cell">
-                        {value * 12}
+                      <td className="hidden py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">
+                        {typeof value === 'number' ? (
+                          <>
+                            {value * 12}
+                          </>
+                        ) : typeof value === 'string' ? (
+                          <>
+                            {parseInt(value) * 12}
+                          </>
+                        ) : (
+                          <>
+                            {value} {/* Display the non-numeric value */}
+                          </>
+                        )}
                       </td>
                       <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">{value * 12 * 5}</td>
                       <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">{value * 12 * 10}</td>
