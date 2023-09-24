@@ -302,7 +302,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                       <dt className="text-sm font-medium leading-6 text-gray-900">{formatString(key)}</dt>
                       <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow">${value}</span>
+                        <span className="flex-grow">${value as string}</span>
                       </dd>
                     </div>
                   </div>
