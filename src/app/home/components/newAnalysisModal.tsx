@@ -515,7 +515,7 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
                                                             autoComplete="address-level2"
                                                             className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                             onChange={(e) => handleInputChange(selectedStep, key, e.target.value)}
-                                                            placeholder={value}
+                                                            placeholder={value as string}
                                                         />
                                                     </div>
                                                 </div>
