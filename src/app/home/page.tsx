@@ -40,40 +40,40 @@ export default function HomePage() {
 
   interface Values {
     property: {
-      address: string;
-      city: string;
-      state: string;
-      zipCode: string;
-      bedrooms: string;
-      baths: string;
-      squareFeet: string;
-      yearBuilt: string;
-      otherInfo: string;
+      address: any;
+      city: any;
+      state: any;
+      zipCode: any;
+      bedrooms: any;
+      baths: any;
+      squareFeet: any;
+      yearBuilt: any;
+      otherInfo: any;
     };
     purchase: {
-      askingPrice: string;
-      offerPrice: string;
-      downPaymentPercent: string;
-      estimatedClosingCostPercentage: string;
-      renovationCosts: string;
-      setupCosts: string;
+      askingPrice: any;
+      offerPrice: any;
+      downPaymentPercent: any;
+      estimatedClosingCostPercentage: any;
+      renovationCosts: any;
+      setupCosts: any;
     };
     income: {
-      averageNightlyRate: string;
-      averageOccupancyPercentage: string;
+      averageNightlyRate: any;
+      averageOccupancyPercentage: any;
     };
     expenses: {
-      loanTermInYears: string;
-      interestRatePercentage: string;
-      estimatedPropertyTaxesPerMonth: string;
-      estimatedInsuranceAmountPerMonth: string;
-      privateMortgageInsuranceAmountPerMonth: string;
-      monthlyHOAAmount: string;
-      estimatedMonthlyUtilitiesAmount: string;
-      cleaningFeeAmountPerMonth: string;
-      internetBillPerMonth: string;
-      maintenancePercentagePerMonth: string;
-      managementFeePercentagePerMonth: string;
+      loanTermInYears: any;
+      interestRatePercentage: any;
+      estimatedPropertyTaxesPerMonth: any;
+      estimatedInsuranceAmountPerMonth: any;
+      privateMortgageInsuranceAmountPerMonth: any;
+      monthlyHOAAmount: any;
+      estimatedMonthlyUtilitiesAmount: any;
+      cleaningFeeAmountPerMonth: any;
+      internetBillPerMonth: any;
+      maintenancePercentagePerMonth: any;
+      managementFeePercentagePerMonth: any;
     };
     [key: string]: any; // Index signature
   }

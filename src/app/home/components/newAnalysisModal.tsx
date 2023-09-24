@@ -169,33 +169,33 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
     }
 
     interface Calculations {
-        downPaymentAmount: number;
-        estimatedClosingCostAmount: number;
-        totalInvestment: number;
+        downPaymentAmount: any;
+        estimatedClosingCostAmount: any;
+        totalInvestment: any;
 
-        grossIncomePerMonth: number;
-        grossIncomePerYear: number;
-        netOperatingIncome: number;
-        capRatePercentage: number;
-        cashFlowPerMonth: number;
-        cashFlowPerYear: number;
-        cashOnCashReturn: number;
+        grossIncomePerMonth: any;
+        grossIncomePerYear: any;
+        netOperatingIncome: any;
+        capRatePercentage: any;
+        cashFlowPerMonth: any;
+        cashFlowPerYear: any;
+        cashOnCashReturn: any;
 
-        mortgageAmount: number;
-        numberOfPayments: number;
-        monthlyPrinciplePlusInterest: number;
-        estimatedPropertyTaxesPerYear: number;
-        estimatedInsuranceAmountPerYear: number;
-        privateMortgageInsuranceAmountPerYear: number;
-        airBNBFeePercentagePerMonth: number;
-        airBNBFeePercentagePerYear: number;
-        maintenanceAmountPerMonth: number;
-        managementFeeAmountPerMonth: number;
+        mortgageAmount: any;
+        numberOfPayments: any;
+        monthlyPrinciplePlusInterest: any;
+        estimatedPropertyTaxesPerYear: any;
+        estimatedInsuranceAmountPerYear: any;
+        privateMortgageInsuranceAmountPerYear: any;
+        airBNBFeePercentagePerMonth: any;
+        airBNBFeePercentagePerYear: any;
+        maintenanceAmountPerMonth: any;
+        managementFeeAmountPerMonth: any;
 
-        operatingExpensesPerMonth: number;
-        operatingExpensesPerYear: number;
-        totalExpensesPerMonth: number;
-        totalExpensesPerYear: number;
+        operatingExpensesPerMonth: any;
+        operatingExpensesPerYear: any;
+        totalExpensesPerMonth: any;
+        totalExpensesPerYear: any;
     }
 
     const doCalcs = (values: {
@@ -241,90 +241,91 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
             totalExpensesPerMonth: 0,
             totalExpensesPerYear: 0,
         };
-
+    
         calculations.downPaymentAmount =
-            parseInt(values.purchase.offerPrice) *
-            (parseInt(values.purchase.downPaymentPercent) / 100);
+            parseFloat(values.purchase.offerPrice) *
+            (parseFloat(values.purchase.downPaymentPercent) / 100);
         calculations.estimatedClosingCostAmount =
-            parseInt(values.purchase.offerPrice) *
-            (parseInt(values.purchase.estimatedClosingCostPercentage) / 100);
+            parseFloat(values.purchase.offerPrice) *
+            (parseFloat(values.purchase.estimatedClosingCostPercentage) / 100);
         calculations.totalInvestment =
-            parseInt(values.purchase.setupCosts) +
-            parseInt(values.purchase.renovationCosts) +
+            parseFloat(values.purchase.setupCosts) +
+            parseFloat(values.purchase.renovationCosts) +
             calculations.estimatedClosingCostAmount +
             calculations.downPaymentAmount;
-
+    
         // expenses calculations
         calculations.mortgageAmount =
-            parseInt(values.purchase.offerPrice) - calculations.downPaymentAmount;
+            parseFloat(values.purchase.offerPrice) - calculations.downPaymentAmount;
         calculations.numberOfPayments =
-            parseInt(values.expenses.loanTermInYears) * 12;
+            parseFloat(values.expenses.loanTermInYears) * 12;
         calculations.monthlyPrinciplePlusInterest =
             pmt(
-                parseInt(values.expenses.interestRatePercentage) / 100 / 12,
+                parseFloat(values.expenses.interestRatePercentage) / 100 / 12,
                 calculations.numberOfPayments,
                 calculations.mortgageAmount
             ) * -1;
         calculations.estimatedPropertyTaxesPerYear =
-            parseInt(values.expenses.estimatedPropertyTaxesPerMonth) * 12;
+            parseFloat(values.expenses.estimatedPropertyTaxesPerMonth) * 12;
         calculations.estimatedInsuranceAmountPerYear =
-            parseInt(values.expenses.estimatedInsuranceAmountPerMonth) * 12;
+            parseFloat(values.expenses.estimatedInsuranceAmountPerMonth) * 12;
         calculations.privateMortgageInsuranceAmountPerYear =
-            parseInt(values.expenses.privateMortgageInsuranceAmountPerMonth) * 12;
-
+            parseFloat(values.expenses.privateMortgageInsuranceAmountPerMonth) * 12;
+    
         calculations.grossIncomePerMonth =
-            ((parseInt(values.income.averageNightlyRate) * 365) / 12) *
-            (parseInt(values.income.averageOccupancyPercentage) / 100) +
-            parseInt(values.expenses.cleaningFeeAmountPerMonth);
-
+            ((parseFloat(values.income.averageNightlyRate) * 365) / 12) *
+            (parseFloat(values.income.averageOccupancyPercentage) / 100) +
+            parseFloat(values.expenses.cleaningFeeAmountPerMonth);
+    
         calculations.airBNBFeePercentagePerMonth =
             calculations.grossIncomePerMonth * 0.03;
         calculations.airBNBFeePercentagePerYear =
             calculations.airBNBFeePercentagePerMonth * 12;
         calculations.maintenanceAmountPerMonth =
-            ((parseInt(values.income.averageNightlyRate) * 365) / 12) *
-            (parseInt(values.income.averageOccupancyPercentage) / 100) *
-            (parseInt(values.expenses.maintenancePercentagePerMonth) / 100);
+            ((parseFloat(values.income.averageNightlyRate) * 365) / 12) *
+            (parseFloat(values.income.averageOccupancyPercentage) / 100) *
+            (parseFloat(values.expenses.maintenancePercentagePerMonth) / 100);
         calculations.managementFeeAmountPerMonth =
-            ((parseInt(values.income.averageNightlyRate) * 365) / 12) *
-            (parseInt(values.income.averageOccupancyPercentage) / 100) *
-            (parseInt(values.expenses.managementFeePercentagePerMonth) / 100);
-
+            ((parseFloat(values.income.averageNightlyRate) * 365) / 12) *
+            (parseFloat(values.income.averageOccupancyPercentage) / 100) *
+            (parseFloat(values.expenses.managementFeePercentagePerMonth) / 100);
+    
         calculations.operatingExpensesPerMonth =
-            parseInt(values.expenses.estimatedPropertyTaxesPerMonth) +
-            parseInt(values.expenses.estimatedInsuranceAmountPerMonth) +
-            parseInt(values.expenses.privateMortgageInsuranceAmountPerMonth) +
-            parseInt(values.expenses.monthlyHOAAmount) +
-            parseInt(values.expenses.estimatedMonthlyUtilitiesAmount) +
+            parseFloat(values.expenses.estimatedPropertyTaxesPerMonth) +
+            parseFloat(values.expenses.estimatedInsuranceAmountPerMonth) +
+            parseFloat(values.expenses.privateMortgageInsuranceAmountPerMonth) +
+            parseFloat(values.expenses.monthlyHOAAmount) +
+            parseFloat(values.expenses.estimatedMonthlyUtilitiesAmount) +
             calculations.airBNBFeePercentagePerMonth +
-            parseInt(values.expenses.cleaningFeeAmountPerMonth) +
+            parseFloat(values.expenses.cleaningFeeAmountPerMonth) +
             calculations.maintenanceAmountPerMonth +
-            parseInt(values.expenses.internetBillPerMonth) +
+            parseFloat(values.expenses.internetBillPerMonth) +
             calculations.managementFeeAmountPerMonth;
         calculations.operatingExpensesPerYear =
             calculations.operatingExpensesPerMonth * 12;
         calculations.totalExpensesPerMonth =
             calculations.operatingExpensesPerMonth +
             calculations.monthlyPrinciplePlusInterest;
-        calculations.totalExpensesPerYear = (calculations.totalExpensesPerMonth * 12).toFixed(2)
-
+        calculations.totalExpensesPerYear = (calculations.totalExpensesPerMonth * 12).toFixed(2);
+    
         // income calculations
         calculations.grossIncomePerYear = calculations.grossIncomePerMonth * 12;
         calculations.netOperatingIncome =
             calculations.grossIncomePerYear - calculations.operatingExpensesPerYear;
         calculations.capRatePercentage =
-            (calculations.netOperatingIncome / parseInt(values.purchase.offerPrice)) *
+            (calculations.netOperatingIncome / parseFloat(values.purchase.offerPrice)) *
             100;
         calculations.cashFlowPerMonth =
             calculations.grossIncomePerMonth - calculations.totalExpensesPerMonth;
-        calculations.cashFlowPerYear = (calculations.cashFlowPerMonth * 12).toFixed(2)
+        calculations.cashFlowPerYear = (calculations.cashFlowPerMonth * 12).toFixed(2);
         calculations.cashOnCashReturn = Math.ceil(
-            (calculations.cashFlowPerYear / calculations.totalInvestment) * 100
+            (parseFloat(calculations.cashFlowPerYear) / calculations.totalInvestment) * 100
         );
-
+    
         console.log(calculations);
         return calculations;
     };
+    
 
     const onAnalyzeClick = () => {
 
