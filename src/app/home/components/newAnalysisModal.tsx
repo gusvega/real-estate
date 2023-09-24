@@ -113,8 +113,13 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
         setSelectedStep(step)
 
         setSteps((prevSteps) => {
-            const updatedSteps = {};
-
+            const updatedSteps = {
+                property: { ...prevSteps.property }, // Copy the property object
+                purchase: { ...prevSteps.purchase }, // Copy the purchase object
+                income: { ...prevSteps.income }, // Copy the income object
+                expenses: { ...prevSteps.expenses }, // Copy the expenses object
+              };
+              
             for (const stepName in prevSteps) {
                 if (stepName === step) {
                     const allValuesValid = Object.values(steps[stepName].values).every(
