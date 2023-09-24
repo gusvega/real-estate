@@ -24,6 +24,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/server/appContext.ts", "src/server/MyContext.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/server/appContext.ts", "src/server/MyContext.js", "src/app/analysis/[id]/page.tsx", "src/app/analysis/[id]/page.tsx"],
   "exclude": ["node_modules"]
 }
