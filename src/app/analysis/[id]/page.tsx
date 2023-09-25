@@ -340,21 +340,23 @@ export default function Page({ params }: { params: { id: string } }) {
                   <dl className="divide-y divide-gray-100">
                     {Object.entries(data.analyses.properties[params.id]?.values.purchase).map(([key, value]) => (
                       <>
-                      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">{formatString(key)}</dt>
-                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow">${value as string}</span>
-                        <span className="ml-4 flex-shrink-0">
-                          <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
-                            Update
-                          </button>
-                        </span>
-                      </dd>
-                    </div>
+                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                          <dt className="text-sm font-medium leading-6 text-gray-900">{formatString(key)}</dt>
+                          <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                            <span className="flex-grow">${value as string}</span>
+                            <span className="ml-4 flex-shrink-0">
+                              <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
+                                Update
+                              </button>
+                            </span>
+                          </dd>
+                        </div>
                       </>
                     ))}
 
-                    
+
+
+
 
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                       <dt className="text-lg font-medium leading-6 text-gray-900">Total Investment</dt>
@@ -389,12 +391,22 @@ export default function Page({ params }: { params: { id: string } }) {
                       </>
                     ))}
 
-
+<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                      <dt className="text-sm font-medium leading-6 text-gray-900">Principle Plus Interest</dt>
+                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        <span className="flex-grow">${data.analyses.properties[params.id]?.calculations.monthlyPrinciplePlusInterest}</span>
+                        <span className="ml-4 flex-shrink-0">
+                          <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
+                            Update
+                          </button>
+                        </span>
+                      </dd>
+                    </div>
 
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                       <dt className="text-lg font-medium leading-6 text-gray-900">TOTAL</dt>
                       <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow text-lg">${Object.values(data.analyses.properties[params.id]?.values.expenses).reduce((total, current) => parseInt(total) + parseInt(current))}</span>
+                        <span className="flex-grow text-lg">${data.analyses.properties[params.id]?.calculations.totalExpensesPerMonth}</span>
 
                       </dd>
                     </div>
