@@ -228,12 +228,16 @@ export default function Page({ params }: { params: { id: string } }) {
                     <dd className="text-sm font-medium leading-6 text-gray-900">Gross Income</dd>
                     <dd className="text-sm font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.grossIncomePerYear}</dd>
                   </div>
-                  <div className="mt-4 flex w-full justify-between flex-none gap-x-4 px-6">
-                    <dd className="text-sm font-medium leading-6 text-gray-900">Expenses</dd>
+                  <div className="mt-4 flex justify-between w-full flex-none gap-x-4 px-6">
+                    <dd className="text-sm font-medium leading-6 text-gray-900">Total Expenses</dd>
                     <dd className="text-sm font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.totalExpensesPerYear}</dd>
                   </div>
+                  <div className="mt-4 flex w-full justify-between flex-none gap-x-4 px-6">
+                    <dd className="text-sm font-medium leading-6 text-gray-900">Operating Expenses</dd>
+                    <dd className="text-sm font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.operatingExpensesPerYear}</dd>
+                  </div>
                   <div className="mt-4 flex w-full flex-none justify-between gap-x-4 px-6">
-                    <dd className="text-sm font-medium leading-6 text-gray-900">Net Income</dd>
+                    <dd className="text-sm font-medium leading-6 text-gray-900">Net Operating Income</dd>
                     <dd className="text-sm font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.netOperatingIncome}</dd>
                   </div>
                   <div className="mt-4 mb-5 flex w-full flex-none gap-x-4 px-6  justify-between">
@@ -353,9 +357,9 @@ export default function Page({ params }: { params: { id: string } }) {
                     
 
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                      <dt className="text-lg font-medium leading-6 text-gray-900">TOTAL</dt>
+                      <dt className="text-lg font-medium leading-6 text-gray-900">Total Investment</dt>
                       <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow text-lg">${Object.values(data.analyses.properties[params.id]?.values.purchase).reduce((total, current) => parseInt(total) + parseInt(current))}</span>
+                        <span className="flex-grow text-lg">${data.analyses.properties[params.id]?.calculations.totalInvestment}</span>
                       </dd>
                     </div>
 

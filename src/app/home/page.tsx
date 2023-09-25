@@ -101,7 +101,6 @@ export default function HomePage() {
     income: {
       averageNightlyRate: "400",
       averageOccupancyPercentage: "75",
-
     },
     expenses: {
       loanTermInYears: "30",

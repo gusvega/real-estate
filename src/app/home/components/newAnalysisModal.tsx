@@ -118,8 +118,8 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
                 purchase: { ...prevSteps.purchase }, // Copy the purchase object
                 income: { ...prevSteps.income }, // Copy the income object
                 expenses: { ...prevSteps.expenses }, // Copy the expenses object
-              };
-              
+            };
+
             for (const stepName in prevSteps) {
                 if (stepName === step) {
                     const allValuesValid = Object.values(steps[stepName].values).every(
@@ -241,7 +241,7 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
             totalExpensesPerMonth: 0,
             totalExpensesPerYear: 0,
         };
-    
+
         calculations.downPaymentAmount =
             parseFloat(values.purchase.offerPrice) *
             (parseFloat(values.purchase.downPaymentPercent) / 100);
@@ -253,7 +253,7 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
             parseFloat(values.purchase.renovationCosts) +
             calculations.estimatedClosingCostAmount +
             calculations.downPaymentAmount;
-    
+
         // expenses calculations
         calculations.mortgageAmount =
             parseFloat(values.purchase.offerPrice) - calculations.downPaymentAmount;
@@ -271,12 +271,12 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
             parseFloat(values.expenses.estimatedInsuranceAmountPerMonth) * 12;
         calculations.privateMortgageInsuranceAmountPerYear =
             parseFloat(values.expenses.privateMortgageInsuranceAmountPerMonth) * 12;
-    
+
         calculations.grossIncomePerMonth =
             ((parseFloat(values.income.averageNightlyRate) * 365) / 12) *
             (parseFloat(values.income.averageOccupancyPercentage) / 100) +
             parseFloat(values.expenses.cleaningFeeAmountPerMonth);
-    
+
         calculations.airBNBFeePercentagePerMonth =
             calculations.grossIncomePerMonth * 0.03;
         calculations.airBNBFeePercentagePerYear =
@@ -289,25 +289,28 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
             ((parseFloat(values.income.averageNightlyRate) * 365) / 12) *
             (parseFloat(values.income.averageOccupancyPercentage) / 100) *
             (parseFloat(values.expenses.managementFeePercentagePerMonth) / 100);
-    
+
         calculations.operatingExpensesPerMonth =
-            parseFloat(values.expenses.estimatedPropertyTaxesPerMonth) +
-            parseFloat(values.expenses.estimatedInsuranceAmountPerMonth) +
-            parseFloat(values.expenses.privateMortgageInsuranceAmountPerMonth) +
-            parseFloat(values.expenses.monthlyHOAAmount) +
-            parseFloat(values.expenses.estimatedMonthlyUtilitiesAmount) +
-            calculations.airBNBFeePercentagePerMonth +
-            parseFloat(values.expenses.cleaningFeeAmountPerMonth) +
-            calculations.maintenanceAmountPerMonth +
-            parseFloat(values.expenses.internetBillPerMonth) +
-            calculations.managementFeeAmountPerMonth;
+            parseFloat(values.expenses.estimatedPropertyTaxesPerMonth) + //150
+            parseFloat(values.expenses.estimatedInsuranceAmountPerMonth) + //145
+            parseFloat(values.expenses.privateMortgageInsuranceAmountPerMonth) + //86
+            parseFloat(values.expenses.monthlyHOAAmount) + //0
+            parseFloat(values.expenses.estimatedMonthlyUtilitiesAmount) + //300
+            calculations.airBNBFeePercentagePerMonth + //288.75
+            parseFloat(values.expenses.cleaningFeeAmountPerMonth) + //500
+            calculations.maintenanceAmountPerMonth + //456.25
+            parseFloat(values.expenses.internetBillPerMonth) + //100
+            calculations.managementFeeAmountPerMonth; // 365
+
         calculations.operatingExpensesPerYear =
             calculations.operatingExpensesPerMonth * 12;
+
         calculations.totalExpensesPerMonth =
             calculations.operatingExpensesPerMonth +
             calculations.monthlyPrinciplePlusInterest;
+
         calculations.totalExpensesPerYear = (calculations.totalExpensesPerMonth * 12).toFixed(2);
-    
+
         // income calculations
         calculations.grossIncomePerYear = calculations.grossIncomePerMonth * 12;
         calculations.netOperatingIncome =
@@ -321,11 +324,11 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
         calculations.cashOnCashReturn = Math.ceil(
             (parseFloat(calculations.cashFlowPerYear) / calculations.totalInvestment) * 100
         );
-    
+
         console.log(calculations);
         return calculations;
     };
-    
+
     const onAnalyzeClick = () => {
 
         // Perform calculations using doCalcs with state.amarillo.values

@@ -85,12 +85,13 @@ const Property = ({ analysis }) => {
                   </p>
                 </div>
               </div>
+
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
                   <p className="text-sm font-semibold leading-6 text-gray-900">
                     <a href={analysis.href}>
                       <span className="absolute inset-x-0 -top-px bottom-0" />
-                      Expenses
+                      Total Expenses
                     </a>
                   </p>
                   <p className="mt-1 flex text-xs leading-5 text-gray-500">
@@ -100,12 +101,28 @@ const Property = ({ analysis }) => {
                   </p>
                 </div>
               </div>
+
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
                   <p className="text-sm font-semibold leading-6 text-gray-900">
                     <a href={analysis.href}>
                       <span className="absolute inset-x-0 -top-px bottom-0" />
-                      Net Income
+                      Op Expenses
+                    </a>
+                  </p>
+                  <p className="mt-1 flex text-xs leading-5 text-gray-500">
+                    <a href={`mailto:${analysis.email}`} className="relative truncate hover:underline">
+                      ${data.analyses.properties[analysis].calculations.operatingExpensesPerYear}
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <div className="flex min-w-0 gap-x-4">
+                <div className="min-w-0 flex-auto">
+                  <p className="text-sm font-semibold leading-6 text-gray-900">
+                    <a href={analysis.href}>
+                      <span className="absolute inset-x-0 -top-px bottom-0" />
+                      Net Op Income
                     </a>
                   </p>
                   <p className="mt-1 flex text-xs leading-5 text-gray-500">
@@ -115,6 +132,8 @@ const Property = ({ analysis }) => {
                   </p>
                 </div>
               </div>
+
+
 
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
