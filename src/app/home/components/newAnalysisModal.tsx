@@ -326,7 +326,6 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
         return calculations;
     };
     
-
     const onAnalyzeClick = () => {
 
         // Perform calculations using doCalcs with state.amarillo.values

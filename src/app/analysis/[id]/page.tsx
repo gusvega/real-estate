@@ -2,6 +2,8 @@
 
 import Navigation from "@/app/home/components/navigation"
 import { useMyContext } from "../../../server/MyContext";
+import { useRouter } from "next/navigation";
+
 
 // ---
 import { Fragment, useState } from 'react'
@@ -20,73 +22,8 @@ import {
   UserCircleIcon,
   XMarkIcon as XMarkIconMini,
 } from '@heroicons/react/20/solid'
-import { BellIcon, XMarkIcon as XMarkIconOutline } from '@heroicons/react/24/outline'
-import { CheckCircleIcon } from '@heroicons/react/24/solid'
 
-const navigation = [
-  { name: 'Home', href: '#' },
-  { name: 'Invoices', href: '#' },
-  { name: 'Clients', href: '#' },
-  { name: 'Expenses', href: '#' },
-]
-const invoice = {
-  subTotal: '$8,800.00',
-  tax: '$1,760.00',
-  total: '$10,560.00',
-  items: [
-    {
-      id: 1,
-      title: 'Logo redesign',
-      description: 'New logo and digital asset playbook.',
-      hours: '20.0',
-      rate: '$100.00',
-      price: '$2,000.00',
-    },
-    {
-      id: 2,
-      title: 'Website redesign',
-      description: 'Design and program new company website.',
-      hours: '52.0',
-      rate: '$100.00',
-      price: '$5,200.00',
-    },
-    {
-      id: 3,
-      title: 'Business cards',
-      description: 'Design and production of 3.5" x 2.0" business cards.',
-      hours: '12.0',
-      rate: '$100.00',
-      price: '$1,200.00',
-    },
-    {
-      id: 4,
-      title: 'T-shirt design',
-      description: 'Three t-shirt design concepts.',
-      hours: '4.0',
-      rate: '$100.00',
-      price: '$400.00',
-    },
-  ],
-}
-const activity = [
-  { id: 1, type: 'created', person: { name: 'Chelsea Hagon' }, date: '7d ago', dateTime: '2023-01-23T10:32' },
-  { id: 2, type: 'edited', person: { name: 'Chelsea Hagon' }, date: '6d ago', dateTime: '2023-01-23T11:03' },
-  { id: 3, type: 'sent', person: { name: 'Chelsea Hagon' }, date: '6d ago', dateTime: '2023-01-23T11:24' },
-  {
-    id: 4,
-    type: 'commented',
-    person: {
-      name: 'Chelsea Hagon',
-      imageUrl:
-        'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    comment: 'Called client, they reassured me the invoice would be paid by the 25th.',
-    date: '3d ago',
-    dateTime: '2023-01-23T15:56',
-  },
-  { id: 5, type: 'viewed', person: { name: 'Alex Curren' }, date: '2d ago', dateTime: '2023-01-24T09:12' },
-  { id: 6, type: 'paid', person: { name: 'Alex Curren' }, date: '1d ago', dateTime: '2023-01-24T09:20' },
-]
+
 const moods = [
   { name: 'Excited', value: 'excited', icon: FireIcon, iconColor: 'text-white', bgColor: 'bg-red-500' },
   { name: 'Loved', value: 'loved', icon: HeartIcon, iconColor: 'text-white', bgColor: 'bg-pink-400' },
@@ -129,6 +66,22 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const { data, updateData } = useMyContext();
 
+  const router = useRouter();
+
+  console.log('CURRENT: ', data.analyses.properties[params.id])
+
+  const deleteAnalysis = (id) => {
+    router.push('/home');
+
+    const updatedAnalyses = { ...data };
+    delete data.analyses.properties[id]
+    updateData({
+      ...updatedAnalyses,
+    });
+
+    // console.log('+++++',analysis, data.analyses.properties[id])
+  };
+
   return (
     <>
       <Navigation />
@@ -150,7 +103,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 </h1>
               </div>
               <div className="flex items-center gap-x-4 sm:gap-x-6">
-                <button type="button" className="hidden text-sm font-semibold leading-6 text-gray-900 sm:block">
+                <button onClick={() => deleteAnalysis(params.id)} type="button" className="hidden text-sm font-semibold leading-6 text-gray-900 sm:block">
                   Delete
                 </button>
                 <a href="#" className="hidden text-sm font-semibold leading-6 text-gray-900 sm:block">
@@ -356,100 +309,21 @@ export default function Page({ params }: { params: { id: string } }) {
                         <div className="truncate font-medium text-gray-900">{formatString(key)}</div>
                       </td>
                       <td className="hidden py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700 sm:table-cell">
-                        {value as string}
-                      </td>
-                      <td className="hidden py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">
-                        {typeof value === 'number' ? (
-                          <>
-                            {value * 12}
-                          </>
-                        ) : typeof value === 'string' ? (
-                          <>
-                            {parseInt(value) * 12}
-                          </>
-                        ) : (
-                          <>
-                            {value} {/* Display the non-numeric value */}
-                          </>
-                        )}
+                        ${parseInt(value as string).toFixed(0)}
                       </td>
                       <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">
-                      {typeof value === 'number' ? (
-                          <>
-                            {value * 12 * 5}
-                          </>
-                        ) : typeof value === 'string' ? (
-                          <>
-                            {parseInt(value) * 12 * 5}
-                          </>
-                        ) : (
-                          <>
-                            {value} {/* Display the non-numeric value */}
-                          </>
-                        )}
+                        ${parseInt(value as string) * 12}
                       </td>
                       <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">
-                      {typeof value === 'number' ? (
-                          <>
-                            {value * 12 * 10}
-                          </>
-                        ) : typeof value === 'string' ? (
-                          <>
-                            {parseInt(value) * 12 * 10}
-                          </>
-                        ) : (
-                          <>
-                            {value} {/* Display the non-numeric value */}
-                          </>
-                        )}
+                        ${parseInt(value as string) * 12 * 5}
                       </td>
-
+                      <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">
+                        ${parseInt(value as string) * 12 * 10}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
-                {/* <tfoot>
-                    <tr>
-                      <th scope="row" className="px-0 pb-0 pt-6 font-normal text-gray-700 sm:hidden">
-                        Subtotal
-                      </th>
-                      <th
-                        scope="row"
-                        colSpan={3}
-                        className="hidden px-0 pb-0 pt-6 text-right font-normal text-gray-700 sm:table-cell"
-                      >
-                        Subtotal
-                      </th>
-                      <td className="pb-0 pl-8 pr-0 pt-6 text-right tabular-nums text-gray-900">{invoice.subTotal}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="pt-4 font-normal text-gray-700 sm:hidden">
-                        Tax
-                      </th>
-                      <th
-                        scope="row"
-                        colSpan={3}
-                        className="hidden pt-4 text-right font-normal text-gray-700 sm:table-cell"
-                      >
-                        Tax
-                      </th>
-                      <td className="pb-0 pl-8 pr-0 pt-4 text-right tabular-nums text-gray-900">{invoice.tax}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" className="pt-4 font-semibold text-gray-900 sm:hidden">
-                        Total
-                      </th>
-                      <th
-                        scope="row"
-                        colSpan={3}
-                        className="hidden pt-4 text-right font-semibold text-gray-900 sm:table-cell"
-                      >
-                        Total
-                      </th>
-                      <td className="pb-0 pl-8 pr-0 pt-4 text-right font-semibold tabular-nums text-gray-900">
-                        {invoice.total}
-                      </td>
-                    </tr>
-                  </tfoot> */}
+
               </table>
 
 
@@ -460,10 +334,12 @@ export default function Page({ params }: { params: { id: string } }) {
                 </div>
                 <div className="mt-6 border-t border-gray-100">
                   <dl className="divide-y divide-gray-100">
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">Asking Price</dt>
+                    {Object.entries(data.analyses.properties[params.id]?.values.purchase).map(([key, value]) => (
+                      <>
+                      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                      <dt className="text-sm font-medium leading-6 text-gray-900">{formatString(key)}</dt>
                       <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow">$120,000</span>
+                        <span className="flex-grow">${value as string}</span>
                         <span className="ml-4 flex-shrink-0">
                           <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
                             Update
@@ -471,68 +347,15 @@ export default function Page({ params }: { params: { id: string } }) {
                         </span>
                       </dd>
                     </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">Offer Price</dt>
-                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow">$120,000</span>
-                        <span className="ml-4 flex-shrink-0">
-                          <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
-                            Update
-                          </button>
-                        </span>
-                      </dd>
-                    </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">Down Payment Percent</dt>
-                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow">3%</span>
-                        <span className="ml-4 flex-shrink-0">
-                          <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
-                            Update
-                          </button>
-                        </span>
-                      </dd>
-                    </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">Closing Cost Percentage</dt>
-                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow">3%</span>
-                        <span className="ml-4 flex-shrink-0">
-                          <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
-                            Update
-                          </button>
-                        </span>
-                      </dd>
-                    </div>
+                      </>
+                    ))}
 
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">Renovation Costs</dt>
-                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow">$120,000</span>
-                        <span className="ml-4 flex-shrink-0">
-                          <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
-                            Update
-                          </button>
-                        </span>
-                      </dd>
-                    </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">Setup Costs</dt>
-                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow">$120,000</span>
-                        <span className="ml-4 flex-shrink-0">
-                          <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
-                            Update
-                          </button>
-                        </span>
-                      </dd>
-                    </div>
+                    
 
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                       <dt className="text-lg font-medium leading-6 text-gray-900">TOTAL</dt>
                       <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow text-lg">$120,000</span>
-
+                        <span className="flex-grow text-lg">${Object.values(data.analyses.properties[params.id]?.values.purchase).reduce((total, current) => parseInt(total) + parseInt(current))}</span>
                       </dd>
                     </div>
 
@@ -567,7 +390,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                       <dt className="text-lg font-medium leading-6 text-gray-900">TOTAL</dt>
                       <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow text-lg">$120,000</span>
+                        <span className="flex-grow text-lg">${Object.values(data.analyses.properties[params.id]?.values.expenses).reduce((total, current) => parseInt(total) + parseInt(current))}</span>
 
                       </dd>
                     </div>

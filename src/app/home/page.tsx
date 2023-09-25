@@ -95,12 +95,13 @@ export default function HomePage() {
       offerPrice: "500000",
       downPaymentPercent: "3",
       estimatedClosingCostPercentage: "3",
-      renovationCosts: "0",
+      renovationCosts: "10000",
       setupCosts: "10000",
     },
     income: {
       averageNightlyRate: "400",
       averageOccupancyPercentage: "75",
+
     },
     expenses: {
       loanTermInYears: "30",
@@ -113,7 +114,7 @@ export default function HomePage() {
       cleaningFeeAmountPerMonth: "500",
       internetBillPerMonth: "100",
       maintenancePercentagePerMonth: "5",
-      managementFeePercentagePerMonth: "0",
+      managementFeePercentagePerMonth: "4",
     },
   });
 

@@ -21,6 +21,16 @@ const Property = ({ analysis }) => {
     return classes.filter(Boolean).join(' ')
   }
 
+  const deleteAnalysis = (id) => {
+    const updatedAnalyses = { ...data };
+    delete data.analyses.properties[id]
+    updateData({
+      ...updatedAnalyses,
+    });
+    // console.log('+++++',analysis, data.analyses.properties[id])
+  };
+
+
   return (
     <>
       <li key={analysis.id} className="relative py-5 hover:bg-gray-50 flex justify-between">
@@ -160,6 +170,7 @@ const Property = ({ analysis }) => {
                 {({ active }) => (
                   <a
                     href="#"
+                    onClick={() => deleteAnalysis(analysis)}
                     className={classNames(
                       active ? 'bg-gray-50' : '',
                       'block px-3 py-1 text-sm leading-6 text-gray-900'
@@ -169,7 +180,7 @@ const Property = ({ analysis }) => {
                   </a>
                 )}
               </Menu.Item>
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <a
                     href="#"
@@ -181,7 +192,7 @@ const Property = ({ analysis }) => {
                     Message
                   </a>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu.Items>
           </Transition>
         </Menu>
