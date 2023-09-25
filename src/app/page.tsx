@@ -21,21 +21,9 @@ import { db, auth } from "../server/firebase.js";
 
 import { useMyContext } from '../server/MyContext.js'
 
-
-
-
 interface AuthInfo {
   isloggedIn: boolean;
 }
-
-// interface UserInfo {
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   UID: string;
-//   admin: boolean;
-//   analyses: Record<string, any>;
-// }
 
 export default function Home() {
   const router = useRouter();
@@ -53,8 +41,6 @@ export default function Home() {
   const [name, setName] = useState<string>("");
 
   const [error, setError] = useState<string | null>(null);
-
-
 
   useEffect(() => {
     // On component mount, check for the cookie

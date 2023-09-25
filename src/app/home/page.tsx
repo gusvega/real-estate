@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Property from '../home/components/property'
+import PropertyMobile from '../home/components/property-mobile'
+
 
 import { useMyContext } from "../../server/MyContext";
 
@@ -152,7 +154,7 @@ export default function HomePage() {
                     New Analysis
                   </button>
 
-                  <NewAnalysisModal newData={values} isOpen={isModalOpen} onClose={() => {setIsModalOpen(false)}} />
+                  <NewAnalysisModal newData={values} isOpen={isModalOpen} onClose={() => { setIsModalOpen(false) }} />
 
                 </div>
               </div>
@@ -198,6 +200,50 @@ export default function HomePage() {
                     ))}
                   </ul>
                 </div>
+
+                <div className="block sm:hidden">
+                  <div className="border-b border-gray-200 overflow-x-auto">
+                    <nav className="flex" aria-label="Tabs">
+                      {tabs.map((tab) => (
+                        <a
+                          key={tab.name}
+                          onClick={() => handleTabClick(tab.id)}
+                          className={classNames(
+                            tab.id === activeTab
+                              ? 'text-indigo-600'
+                              : 'text-gray-500 hover:text-gray-700',
+                            'text-xs sm:text-sm font-medium py-2 px-4 whitespace-nowrap'
+                          )}
+                          aria-current={tab.id === activeTab ? 'page' : undefined}
+                        >
+                          {tab.name}
+                          {tab.count ? (
+                            <span
+                              className={classNames(
+                                tab.id === activeTab
+                                  ? 'bg-indigo-100 text-indigo-600'
+                                  : 'bg-gray-100 text-gray-900',
+                                'rounded-full py-0.5 px-2.5 text-xxs sm:text-xs font-medium ml-2 inline-block'
+                              )}
+                            >
+                              {tab.count}
+                            </span>
+                          ) : null}
+                        </a>
+                      ))}
+                    </nav>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4">
+                    {Object.keys(data.analyses[activeTab]).map((analysis) => (
+                      <div key={analysis} className="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div className="px-3 py-3 sm:px-6 sm:py-4">
+                          <PropertyMobile analysis={analysis} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
               </div>
 
             </div>
