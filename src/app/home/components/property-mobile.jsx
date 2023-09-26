@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import { Fragment } from 'react'
-import { useMyContext } from "../../../server/MyContext";
+import { useFirebase } from '../../../server/MyFirebaseContext'
 
 
 import Link from 'next/link';
@@ -11,7 +11,7 @@ const PropertyMobile = ({ analysis }) => {
 
   const router = useRouter();
 
-  const { data, updateData } = useMyContext();
+  const { data, updateData } = useFirebase();
 
   const navigateToAnalysis = (id) => {
     router.push(`/analysis/${id}`);
@@ -38,9 +38,9 @@ const PropertyMobile = ({ analysis }) => {
 
           <div className="px-4 sm:px-6 lg:px-8" onClick={() => navigateToAnalysis(analysis.id)}>
 
-            <div className="mx-auto max-w-4xl justify-between gap-x-6">
+            <div className="mx-auto max-w-4xl gap-x-6">
               <div className="flex min-w-0 gap-x-4">
-                <div className="min-w-0 flex">
+                <div className="min-w-0 flex justify-bewteen">
                   <p className="mr-10 text-sm font-semibold leading-6 text-gray-900">
                     <a href={analysis.href}>
                       <span className="absolute inset-x-0 -top-px bottom-0" />
@@ -54,9 +54,9 @@ const PropertyMobile = ({ analysis }) => {
                   </p>
                 </div>
               </div>
-              <div className="flex min-w-0 gap-x-4">
-                <div className="min-w-0 flex">
-                  <p className="mr-10 text-sm font-semibold leading-6 text-gray-900">
+              <div className="flex justify-between min-w-0 gap-x-4">
+                
+                  <p className="mr-10 text-sm font-semibold leading-6 text-gray-900 align-right">
                     <a href={analysis.href}>
                       <span className="absolute inset-x-0 -top-px bottom-0" />
                       Investment
@@ -67,10 +67,9 @@ const PropertyMobile = ({ analysis }) => {
                       ${data.analyses.properties[analysis].calculations.totalInvestment}
                     </a>
                   </p>
-                </div>
+                
               </div>
-              <div className="flex min-w-0 gap-x-4">
-                <div className="min-w-0 flex">
+              <div className="flex justify-between min-w-0 gap-x-4">
                   <p className="mr-10 text-sm font-semibold leading-6 text-gray-900">
                     <a href={analysis.href}>
                       <span className="absolute inset-x-0 -top-px bottom-0" />
@@ -82,11 +81,9 @@ const PropertyMobile = ({ analysis }) => {
                       ${data.analyses.properties[analysis].calculations.grossIncomePerYear}
                     </a>
                   </p>
-                </div>
               </div>
 
-              <div className="flex min-w-0 gap-x-4">
-                <div className="min-w-0 flex">
+              <div className="flex justify-between min-w-0 gap-x-4">
                   <p className="mr-10 text-sm font-semibold leading-6 text-gray-900">
                     <a href={analysis.href}>
                       <span className="absolute inset-x-0 -top-px bottom-0" />
@@ -98,11 +95,9 @@ const PropertyMobile = ({ analysis }) => {
                       ${data.analyses.properties[analysis].calculations.totalExpensesPerYear}
                     </a>
                   </p>
-                </div>
               </div>
 
-              <div className="flex min-w-0 gap-x-4">
-                <div className="min-w-0 flex">
+              <div className="flex justify-between min-w-0 gap-x-4">
                   <p className="mr-10 text-sm font-semibold leading-6 text-gray-900">
                     <a href={analysis.href}>
                       <span className="absolute inset-x-0 -top-px bottom-0" />
@@ -114,10 +109,8 @@ const PropertyMobile = ({ analysis }) => {
                       ${data.analyses.properties[analysis].calculations.operatingExpensesPerYear}
                     </a>
                   </p>
-                </div>
               </div>
-              <div className="flex min-w-0 gap-x-4">
-                <div className="min-w-0 flex">
+              <div className="flex justify-between min-w-0 gap-x-4">
                   <p className="mr-10 text-sm font-semibold leading-6 text-gray-900">
                     <a href={analysis.href}>
                       <span className="absolute inset-x-0 -top-px bottom-0" />
@@ -129,13 +122,8 @@ const PropertyMobile = ({ analysis }) => {
                       ${data.analyses.properties[analysis].calculations.netOperatingIncome}
                     </a>
                   </p>
-                </div>
               </div>
-
-
-
-              <div className="flex min-w-0 gap-x-4">
-                <div className="min-w-0 flex">
+              <div className="flex justify-between min-w-0 gap-x-4">
                   <p className="mr-10 text-sm font-semibold leading-6 text-gray-900">
                     <a href={analysis.href}>
                       <span className="absolute inset-x-0 -top-px bottom-0" />
@@ -147,10 +135,8 @@ const PropertyMobile = ({ analysis }) => {
                       ${data.analyses.properties[analysis].calculations.cashFlowPerYear}
                     </a>
                   </p>
-                </div>
               </div>
-              <div className="flex min-w-0 gap-x-4">
-                <div className="min-w-0 flex">
+              <div className="flex justify-between min-w-0 gap-x-4">
                   <p className="mr-10 text-sm font-semibold leading-6 text-gray-900">
                     <a href={analysis.href}>
                       <span className="absolute inset-x-0 -top-px bottom-0" />
@@ -162,7 +148,6 @@ const PropertyMobile = ({ analysis }) => {
                       {data.analyses.properties[analysis].calculations.cashOnCashReturn}%
                     </a>
                   </p>
-                </div>
               </div>
 
             </div>

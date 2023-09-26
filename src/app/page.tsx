@@ -1,25 +1,13 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
-import {
-  createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  setDoc,
-  doc,
-} from "firebase/firestore";
 
-import { db, auth } from "../server/firebase.js";
+import { db, firestoreDB, collection, setDoc, doc, auth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, signInWithEmailAndPassword } from "../server/firebase";
 
-import { useMyContext } from '../server/MyContext.js'
+import { useFirebase } from '../server/MyFirebaseContext'
 
 interface AuthInfo {
   isloggedIn: boolean;
@@ -28,7 +16,7 @@ interface AuthInfo {
 export default function Home() {
   const router = useRouter();
 
-  const { data, setData } = useMyContext()
+  const { data, setData } = useFirebase()
 
   const [authInfo, setAuthInfo] = useState<AuthInfo>({
     isloggedIn: false,
@@ -69,7 +57,7 @@ export default function Home() {
 
   const addDocument = async (token: string) => {
     const decodedToken = jwt.decode(token) as jwt.JwtPayload;
-    const usersCollectionRef = collection(db, "users");
+    const usersCollectionRef = collection(firestoreDB, "users");
     try {
       const documentRef = doc(usersCollectionRef, decodedToken.user_id);
       await setDoc(documentRef, {

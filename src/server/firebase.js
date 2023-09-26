@@ -1,16 +1,17 @@
-import "firebase/firestore";
-import { firebaseConfig } from "./config";
-
-import { getAuth, createUserWithEmailAndPassword, getIdToken } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { firebaseConfig } from "./config";
+import { getDatabase } from "firebase/database";
+import {
+    getAuth, createUserWithEmailAndPassword,
+    fetchSignInMethodsForEmail,
+    signInWithEmailAndPassword,
+} from "firebase/auth";
 
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getFirestore, collection, setDoc, doc, getDoc } from "firebase/firestore";
 
 const app = initializeApp(firebaseConfig)
+const db = getDatabase(app)
 const auth = getAuth(app);
-const db = getFirestore(app)
-const storage = getStorage(app)
+const firestoreDB = getFirestore(app)
 
-export { db, auth };
-
+export { db, firestoreDB, collection, setDoc, doc, getDoc, auth, fetchSignInMethodsForEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword };

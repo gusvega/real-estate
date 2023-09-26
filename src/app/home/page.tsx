@@ -5,23 +5,64 @@ import Property from '../home/components/property'
 import PropertyMobile from '../home/components/property-mobile'
 
 
-import { useMyContext } from "../../server/MyContext";
+import { useFirebase } from '../../server/MyFirebaseContext'
 
 import Navigation from "./components/navigation";
 import NewAnalysisModal from './components/newAnalysisModal';
 
 export default function HomePage() {
 
-  const { data, updateData } = useMyContext();
-
-  // console.log('DATA: ', data);
-
+  const { data, updateData } = useFirebase();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('properties')
+  const [values, setValues] = useState<Values>({
+    property: {
+      address: "3220 Bedford",
+      city: "Amarillo",
+      state: "TX",
+      zipCode: "79103",
+      bedrooms: "3",
+      baths: "2",
+      squareFeet: "1300",
+      yearBuilt: "1965",
+      otherInfo: "good conditions",
+    },
+    purchase: {
+      askingPrice: "500000",
+      offerPrice: "500000",
+      downPaymentPercent: "3",
+      estimatedClosingCostPercentage: "3",
+      renovationCosts: "10000",
+      setupCosts: "10000",
+    },
+    income: {
+      averageNightlyRate: "400",
+      averageOccupancyPercentage: "75",
+    },
+    expenses: {
+      loanTermInYears: "30",
+      interestRatePercentage: "6",
+      estimatedPropertyTaxesPerMonth: "150",
+      estimatedInsuranceAmountPerMonth: "145",
+      privateMortgageInsuranceAmountPerMonth: "86",
+      monthlyHOAAmount: "0",
+      estimatedMonthlyUtilitiesAmount: "300",
+      cleaningFeeAmountPerMonth: "500",
+      internetBillPerMonth: "100",
+      maintenancePercentagePerMonth: "5",
+      managementFeePercentagePerMonth: "4",
+    },
+  });
+
 
   const openModal = () => {
     setIsModalOpen(true);
   };
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
   const tabs = [
     { name: 'Properties', id: 'properties', href: '#', count: data.analyses['properties'].length, current: false },
@@ -30,7 +71,6 @@ export default function HomePage() {
     { name: 'Cities', id: 'cities', href: '#', count: data.analyses['cities'].length, current: false },
   ]
 
-  const [activeTab, setActiveTab] = useState('properties')
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
@@ -80,44 +120,7 @@ export default function HomePage() {
     [key: string]: any; // Index signature
   }
 
-  const [values, setValues] = useState<Values>({
-    property: {
-      address: "3220 Bedford",
-      city: "Amarillo",
-      state: "TX",
-      zipCode: "79103",
-      bedrooms: "3",
-      baths: "2",
-      squareFeet: "1300",
-      yearBuilt: "1965",
-      otherInfo: "good conditions",
-    },
-    purchase: {
-      askingPrice: "500000",
-      offerPrice: "500000",
-      downPaymentPercent: "3",
-      estimatedClosingCostPercentage: "3",
-      renovationCosts: "10000",
-      setupCosts: "10000",
-    },
-    income: {
-      averageNightlyRate: "400",
-      averageOccupancyPercentage: "75",
-    },
-    expenses: {
-      loanTermInYears: "30",
-      interestRatePercentage: "6",
-      estimatedPropertyTaxesPerMonth: "150",
-      estimatedInsuranceAmountPerMonth: "145",
-      privateMortgageInsuranceAmountPerMonth: "86",
-      monthlyHOAAmount: "0",
-      estimatedMonthlyUtilitiesAmount: "300",
-      cleaningFeeAmountPerMonth: "500",
-      internetBillPerMonth: "100",
-      maintenancePercentagePerMonth: "5",
-      managementFeePercentagePerMonth: "4",
-    },
-  });
+
 
   return (
     <>

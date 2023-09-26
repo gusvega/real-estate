@@ -5,7 +5,7 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { CheckIcon } from '@heroicons/react/24/outline'
 import pmt from "formula-pmt";
 import { v4 as uuidv4 } from "uuid";
-import { useMyContext } from '@/server/MyContext';
+import { useFirebase } from '../../../server/MyFirebaseContext'
 import { CheckCircleIcon } from '@heroicons/react/20/solid';
 
 const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
@@ -108,7 +108,7 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
         },
     }
 
-    const { data, updateData } = useMyContext()
+    const { data, updateData } = useFirebase()
 
     const handleStepClick = (step) => {
         setSelectedStep(step)

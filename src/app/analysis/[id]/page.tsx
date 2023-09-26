@@ -1,7 +1,7 @@
 'use client'
 
 import Navigation from "@/app/home/components/navigation"
-import { useMyContext } from "../../../server/MyContext";
+import { useFirebase } from '../../../server/MyFirebaseContext'
 import { useRouter } from "next/navigation";
 
 
@@ -37,8 +37,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-// --
-
 function formatString(input) {
   // Convert camelCase to sentence case
   const sentenceCase = input.replace(/([a-z])([A-Z])/g, '$1 $2');
@@ -64,11 +62,9 @@ export default function Page({ params }: { params: { id: string } }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selected, setSelected] = useState(moods[5])
 
-  const { data, updateData } = useMyContext();
+  const { data, updateData } = useFirebase();
 
   const router = useRouter();
-
-  console.log('CURRENT: ', data.analyses.properties[params.id])
 
   const deleteAnalysis = (id) => {
     router.push('/home');

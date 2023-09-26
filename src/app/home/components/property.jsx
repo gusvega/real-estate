@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import { Fragment } from 'react'
-import { useMyContext } from "../../../server/MyContext";
+import { useFirebase } from '../../../server/MyFirebaseContext'
 
 
 import Link from 'next/link';
@@ -11,7 +11,7 @@ const Property = ({ analysis }) => {
 
   const router = useRouter();
 
-  const { data, updateData } = useMyContext();
+  const { data, updateData } = useFirebase();
 
   const navigateToAnalysis = (id) => {
     router.push(`/analysis/${id}`);
@@ -132,9 +132,6 @@ const Property = ({ analysis }) => {
                   </p>
                 </div>
               </div>
-
-
-
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto">
                   <p className="text-sm font-semibold leading-6 text-gray-900">
@@ -199,19 +196,6 @@ const Property = ({ analysis }) => {
                   </a>
                 )}
               </Menu.Item>
-              {/* <Menu.Item>
-                {({ active }) => (
-                  <a
-                    href="#"
-                    className={classNames(
-                      active ? 'bg-gray-50' : '',
-                      'block px-3 py-1 text-sm leading-6 text-gray-900'
-                    )}
-                  >
-                    Message
-                  </a>
-                )}
-              </Menu.Item> */}
             </Menu.Items>
           </Transition>
         </Menu>
