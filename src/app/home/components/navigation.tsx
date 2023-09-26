@@ -18,6 +18,13 @@ const Navigation = () => {
     router.push("/");
   };
 
+  const [isDashboardVisible, setDashboardVisibility] = useState(true);
+
+  // Function to toggle the visibility of the "Dashboard" button
+  const toggleDashboardVisibility = () => {
+    setDashboardVisibility(!isDashboardVisible);
+  };
+
     return (
         <nav className="bg-indigo-600">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -57,9 +64,11 @@ const Navigation = () => {
               </div>
             </div>
             <div className="-mr-2 flex md:hidden">
+
               {/* <!-- Mobile menu button --> */}
               <button
                 type="button"
+                onClick={() => toggleDashboardVisibility()}
                 className="relative inline-flex items-center justify-center rounded-md bg-indigo-600 p-2 text-indigo-200 hover:bg-indigo-500 hover:bg-opacity-75 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
                 aria-controls="mobile-menu"
                 aria-expanded="false"
@@ -102,18 +111,22 @@ const Navigation = () => {
         </div>
 
         {/* <!-- Mobile menu, show/hide based on menu state. --> */}
+        {isDashboardVisible && (
+
         <div className="md:hidden" id="mobile-menu">
           <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             {/* <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" --> */}
             <a
-              href="#"
+              href="/home"
               className="bg-indigo-700 text-white block rounded-md px-3 py-2 text-base font-medium"
               aria-current="page"
             >
-              STR
+              Dashboard
             </a>
           </div>
         </div>
+        )}
+
       </nav>
     )
 }
