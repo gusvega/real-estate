@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Property from '../home/components/property'
 import PropertyMobile from '../home/components/property-mobile'
 
@@ -12,8 +12,7 @@ import NewAnalysisModal from './components/newAnalysisModal';
 
 export default function HomePage() {
 
-  const { data, updateData } = useFirebase();
-
+  const { data, updateData, fetchUpdatedData } = useFirebase();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('properties')
   const [values, setValues] = useState<Values>({
@@ -61,7 +60,15 @@ export default function HomePage() {
   };
 
   if (!data) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-bounce flex space-x-4 animate">
+          <div className="w-3 h-3 bg-black rounded-full"></div>
+          <div className="w-3 h-3 bg-black rounded-full"></div>
+          <div className="w-3 h-3 bg-black rounded-full"></div>
+        </div>
+      </div>
+    )
   }
 
   const tabs = [

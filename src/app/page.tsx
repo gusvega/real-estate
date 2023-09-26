@@ -61,324 +61,345 @@ export default function Home() {
     try {
       const documentRef = doc(usersCollectionRef, decodedToken.user_id);
       await setDoc(documentRef, {
-          firstName: name,
-          lastName: "",
-          email: email,
-          UID: decodedToken.user_id,
-          admin: false,
-          analyses: {
-             properties: {
-                '000': {
-                   id: '1',
-                   values: {
-                      property: {
-                         address: "3220 Bedford",
-                         city: "Amarillo",
-                         state: "TX",
-                         zipCode: "79103",
-                         bedrooms: "3",
-                         baths: "2",
-                         squareFeet: "1300",
-                         yearBuilt: "1965",
-                         otherInfo: "good conditions",
-                      },
-                      purchase: {
-                         askingPrice: "500000",
-                         offerPrice: "500000",
-                         downPaymentPercent: "3",
-                         estimatedClosingCostPercentage: "3",
-                         renovationCosts: "0",
-                         setupCosts: "10000",
-                      },
-                      income: {
-                         averageNightlyRate: "400",
-                         averageOccupancyPercentage: "75",
-                      },
-                      expenses: {
-                         loanTermInYears: "30",
-                         interestRatePercentage: "6",
-                         estimatedPropertyTaxesPerMonth: "150",
-                         estimatedInsuranceAmountPerMonth: "145",
-                         privateMortgageInsuranceAmountPerMonth: "86",
-                         monthlyHOAAmount: "0",
-                         estimatedMonthlyUtilitiesAmount: "300",
-                         cleaningFeeAmountPerMonth: "500",
-                         internetBillPerMonth: "100",
-                         maintenancePercentagePerMonth: "5",
-                         managementFeePercentagePerMonth: "0",
-                      },
-                   },
-                   calculations: {
-                      downPaymentAmount: "",
-                      estimatedClosingCostAmount: "",
-                      totalInvestment: 20000,
-                      grossIncomePerMonth: "",
-                      grossIncomePerYear: 333,
-                      netOperatingIncome: 555,
-                      capRatePercentage: "",
-                      cashFlowPerMonth: "",
-                      cashFlowPerYear: 9999,
-                      cashOnCashReturn: 13,
-                      mortgageAmount: "",
-                      numberOfPayments: "",
-                      monthlyPrinciplePlusInterest: "",
-                      estimatedPropertyTaxesPerYear: "",
-                      estimatedInsuranceAmountPerYear: "",
-                      privateMortgageInsuranceAmountPerYear: "",
-                      airBNBFeePercentagePerMonth: "",
-                      airBNBFeePercentagePerYear: "",
-                      maintenanceAmountPerMonth: "",
-                      managementFeeAmountPerMonth: "",
-                      operatingExpensesPerMonth: "",
-                      operatingExpensesPerYear: "",
-                      totalExpensesPerMonth: "",
-                      totalExpensesPerYear: 444
-                   },
-                }
-             },
-             neighborhoods: {
-                'belmar': {
-                   properties: {
-                      '002': {
-                         id: '1',
-                         values: {
-                            property: {
-                               address: "3220 Bedford",
-                               city: "Amarillo",
-                               state: "TX",
-                               zipCode: "79103",
-                               bedrooms: "3",
-                               baths: "2",
-                               squareFeet: "1300",
-                               yearBuilt: "1965",
-                               otherInfo: "good conditions",
-                            },
-                            purchase: {
-                               askingPrice: "500000",
-                               offerPrice: "500000",
-                               downPaymentPercent: "3",
-                               estimatedClosingCostPercentage: "3",
-                               renovationCosts: "0",
-                               setupCosts: "10000",
-                            },
-                            income: {
-                               averageNightlyRate: "400",
-                               averageOccupancyPercentage: "75",
-                            },
-                            expenses: {
-                               loanTermInYears: "30",
-                               interestRatePercentage: "6",
-                               estimatedPropertyTaxesPerMonth: "150",
-                               estimatedInsuranceAmountPerMonth: "145",
-                               privateMortgageInsuranceAmountPerMonth: "86",
-                               monthlyHOAAmount: "0",
-                               estimatedMonthlyUtilitiesAmount: "300",
-                               cleaningFeeAmountPerMonth: "500",
-                               internetBillPerMonth: "100",
-                               maintenancePercentagePerMonth: "5",
-                               managementFeePercentagePerMonth: "0",
-                            },
-                         },
-                         calculations: {
-                            downPaymentAmount: "",
-                            estimatedClosingCostAmount: "",
-                            totalInvestment: 20000,
-                            grossIncomePerMonth: "",
-                            grossIncomePerYear: 333,
-                            netOperatingIncome: 555,
-                            capRatePercentage: "",
-                            cashFlowPerMonth: "",
-                            cashFlowPerYear: 9999,
-                            cashOnCashReturn: 13,
-                            mortgageAmount: "",
-                            numberOfPayments: "",
-                            monthlyPrinciplePlusInterest: "",
-                            estimatedPropertyTaxesPerYear: "",
-                            estimatedInsuranceAmountPerYear: "",
-                            privateMortgageInsuranceAmountPerYear: "",
-                            airBNBFeePercentagePerMonth: "",
-                            airBNBFeePercentagePerYear: "",
-                            maintenanceAmountPerMonth: "",
-                            managementFeeAmountPerMonth: "",
-                            operatingExpensesPerMonth: "",
-                            operatingExpensesPerYear: "",
-                            totalExpensesPerMonth: "",
-                            totalExpensesPerYear: 444
-                         },
-                      }
-                   }
-                }
-             },
-             zipCodes: {
-                'zipCode1': {
-                   properties: {
-                      '003': {
-                         id: '1',
-                         values: {
-                            property: {
-                               address: "3220 Bedford",
-                               city: "Amarillo",
-                               state: "TX",
-                               zipCode: "79103",
-                               bedrooms: "3",
-                               baths: "2",
-                               squareFeet: "1300",
-                               yearBuilt: "1965",
-                               otherInfo: "good conditions",
-                            },
-                            purchase: {
-                               askingPrice: "500000",
-                               offerPrice: "500000",
-                               downPaymentPercent: "3",
-                               estimatedClosingCostPercentage: "3",
-                               renovationCosts: "0",
-                               setupCosts: "10000",
-                            },
-                            income: {
-                               averageNightlyRate: "400",
-                               averageOccupancyPercentage: "75",
-                            },
-                            expenses: {
-                               loanTermInYears: "30",
-                               interestRatePercentage: "6",
-                               estimatedPropertyTaxesPerMonth: "150",
-                               estimatedInsuranceAmountPerMonth: "145",
-                               privateMortgageInsuranceAmountPerMonth: "86",
-                               monthlyHOAAmount: "0",
-                               estimatedMonthlyUtilitiesAmount: "300",
-                               cleaningFeeAmountPerMonth: "500",
-                               internetBillPerMonth: "100",
-                               maintenancePercentagePerMonth: "5",
-                               managementFeePercentagePerMonth: "0",
-                            },
-                         },
-                         calculations: {
-                            downPaymentAmount: "",
-                            estimatedClosingCostAmount: "",
-                            totalInvestment: 20000,
-                            grossIncomePerMonth: "",
-                            grossIncomePerYear: 333,
-                            netOperatingIncome: 555,
-                            capRatePercentage: "",
-                            cashFlowPerMonth: "",
-                            cashFlowPerYear: 9999,
-                            cashOnCashReturn: 13,
-                            mortgageAmount: "",
-                            numberOfPayments: "",
-                            monthlyPrinciplePlusInterest: "",
-                            estimatedPropertyTaxesPerYear: "",
-                            estimatedInsuranceAmountPerYear: "",
-                            privateMortgageInsuranceAmountPerYear: "",
-                            airBNBFeePercentagePerMonth: "",
-                            airBNBFeePercentagePerYear: "",
-                            maintenanceAmountPerMonth: "",
-                            managementFeeAmountPerMonth: "",
-                            operatingExpensesPerMonth: "",
-                            operatingExpensesPerYear: "",
-                            totalExpensesPerMonth: "",
-                            totalExpensesPerYear: 444
-                         },
-                      }
-                   }
-    
-                }
-             },
-             cities: {
-                'city1': {
-                   properties: {
-                      '004': {
-                         id: '1',
-                         values: {
-                            property: {
-                               address: "3220 Bedford",
-                               city: "Amarillo",
-                               state: "TX",
-                               zipCode: "79103",
-                               bedrooms: "3",
-                               baths: "2",
-                               squareFeet: "1300",
-                               yearBuilt: "1965",
-                               otherInfo: "good conditions",
-                            },
-                            purchase: {
-                               askingPrice: "500000",
-                               offerPrice: "500000",
-                               downPaymentPercent: "3",
-                               estimatedClosingCostPercentage: "3",
-                               renovationCosts: "0",
-                               setupCosts: "10000",
-                            },
-                            income: {
-                               averageNightlyRate: "400",
-                               averageOccupancyPercentage: "75",
-                            },
-                            expenses: {
-                               loanTermInYears: "30",
-                               interestRatePercentage: "6",
-                               estimatedPropertyTaxesPerMonth: "150",
-                               estimatedInsuranceAmountPerMonth: "145",
-                               privateMortgageInsuranceAmountPerMonth: "86",
-                               monthlyHOAAmount: "0",
-                               estimatedMonthlyUtilitiesAmount: "300",
-                               cleaningFeeAmountPerMonth: "500",
-                               internetBillPerMonth: "100",
-                               maintenancePercentagePerMonth: "5",
-                               managementFeePercentagePerMonth: "0",
-                            },
-                         },
-                         calculations: {
-                            downPaymentAmount: "",
-                            estimatedClosingCostAmount: "",
-                            totalInvestment: 20000,
-                            grossIncomePerMonth: "",
-                            grossIncomePerYear: 333,
-                            netOperatingIncome: 555,
-                            capRatePercentage: "",
-                            cashFlowPerMonth: "",
-                            cashFlowPerYear: 9999,
-                            cashOnCashReturn: 13,
-                            mortgageAmount: "",
-                            numberOfPayments: "",
-                            monthlyPrinciplePlusInterest: "",
-                            estimatedPropertyTaxesPerYear: "",
-                            estimatedInsuranceAmountPerYear: "",
-                            privateMortgageInsuranceAmountPerYear: "",
-                            airBNBFeePercentagePerMonth: "",
-                            airBNBFeePercentagePerYear: "",
-                            maintenanceAmountPerMonth: "",
-                            managementFeeAmountPerMonth: "",
-                            operatingExpensesPerMonth: "",
-                            operatingExpensesPerYear: "",
-                            totalExpensesPerMonth: "",
-                            totalExpensesPerYear: 444
-                         },
-                      }
-                   }
+        firstName: name,
+        lastName: "",
+        email: email,
+        UID: decodedToken.user_id,
+        admin: false,
+        analyses: {
+          properties: {
+            '000': {
+              id: '1',
+              values: {
+                property: {
+                  address: "3220 Bedford",
+                  city: "Amarillo",
+                  state: "TX",
+                  zipCode: "79103",
+                  bedrooms: "3",
+                  baths: "2",
+                  squareFeet: "1300",
+                  yearBuilt: "1965",
+                  otherInfo: "good conditions",
                 },
-             },
+                purchase: {
+                  askingPrice: "500000",
+                  offerPrice: "500000",
+                  downPaymentPercent: "3",
+                  estimatedClosingCostPercentage: "3",
+                  renovationCosts: "0",
+                  setupCosts: "10000",
+                },
+                income: {
+                  averageNightlyRate: "400",
+                  averageOccupancyPercentage: "75",
+                },
+                expenses: {
+                  loanTermInYears: "30",
+                  interestRatePercentage: "6",
+                  estimatedPropertyTaxesPerMonth: "150",
+                  estimatedInsuranceAmountPerMonth: "145",
+                  privateMortgageInsuranceAmountPerMonth: "86",
+                  monthlyHOAAmount: "0",
+                  estimatedMonthlyUtilitiesAmount: "300",
+                  cleaningFeeAmountPerMonth: "500",
+                  internetBillPerMonth: "100",
+                  maintenancePercentagePerMonth: "5",
+                  managementFeePercentagePerMonth: "0",
+                },
+              },
+              calculations: {
+                downPaymentAmount: "",
+                estimatedClosingCostAmount: "",
+                totalInvestment: 20000,
+                grossIncomePerMonth: "",
+                grossIncomePerYear: 333,
+                netOperatingIncome: 555,
+                capRatePercentage: "",
+                cashFlowPerMonth: "",
+                cashFlowPerYear: 9999,
+                cashOnCashReturn: 13,
+                mortgageAmount: "",
+                numberOfPayments: "",
+                monthlyPrinciplePlusInterest: "",
+                estimatedPropertyTaxesPerYear: "",
+                estimatedInsuranceAmountPerYear: "",
+                privateMortgageInsuranceAmountPerYear: "",
+                airBNBFeePercentagePerMonth: "",
+                airBNBFeePercentagePerYear: "",
+                maintenanceAmountPerMonth: "",
+                managementFeeAmountPerMonth: "",
+                operatingExpensesPerMonth: "",
+                operatingExpensesPerYear: "",
+                totalExpensesPerMonth: "",
+                totalExpensesPerYear: 444
+              },
+            }
           },
+          neighborhoods: {
+            'belmar': {
+              properties: {
+                '002': {
+                  id: '1',
+                  values: {
+                    property: {
+                      address: "3220 Bedford",
+                      city: "Amarillo",
+                      state: "TX",
+                      zipCode: "79103",
+                      bedrooms: "3",
+                      baths: "2",
+                      squareFeet: "1300",
+                      yearBuilt: "1965",
+                      otherInfo: "good conditions",
+                    },
+                    purchase: {
+                      askingPrice: "500000",
+                      offerPrice: "500000",
+                      downPaymentPercent: "3",
+                      estimatedClosingCostPercentage: "3",
+                      renovationCosts: "0",
+                      setupCosts: "10000",
+                    },
+                    income: {
+                      averageNightlyRate: "400",
+                      averageOccupancyPercentage: "75",
+                    },
+                    expenses: {
+                      loanTermInYears: "30",
+                      interestRatePercentage: "6",
+                      estimatedPropertyTaxesPerMonth: "150",
+                      estimatedInsuranceAmountPerMonth: "145",
+                      privateMortgageInsuranceAmountPerMonth: "86",
+                      monthlyHOAAmount: "0",
+                      estimatedMonthlyUtilitiesAmount: "300",
+                      cleaningFeeAmountPerMonth: "500",
+                      internetBillPerMonth: "100",
+                      maintenancePercentagePerMonth: "5",
+                      managementFeePercentagePerMonth: "0",
+                    },
+                  },
+                  calculations: {
+                    downPaymentAmount: "",
+                    estimatedClosingCostAmount: "",
+                    totalInvestment: 20000,
+                    grossIncomePerMonth: "",
+                    grossIncomePerYear: 333,
+                    netOperatingIncome: 555,
+                    capRatePercentage: "",
+                    cashFlowPerMonth: "",
+                    cashFlowPerYear: 9999,
+                    cashOnCashReturn: 13,
+                    mortgageAmount: "",
+                    numberOfPayments: "",
+                    monthlyPrinciplePlusInterest: "",
+                    estimatedPropertyTaxesPerYear: "",
+                    estimatedInsuranceAmountPerYear: "",
+                    privateMortgageInsuranceAmountPerYear: "",
+                    airBNBFeePercentagePerMonth: "",
+                    airBNBFeePercentagePerYear: "",
+                    maintenanceAmountPerMonth: "",
+                    managementFeeAmountPerMonth: "",
+                    operatingExpensesPerMonth: "",
+                    operatingExpensesPerYear: "",
+                    totalExpensesPerMonth: "",
+                    totalExpensesPerYear: 444
+                  },
+                }
+              }
+            }
+          },
+          zipCodes: {
+            'zipCode1': {
+              properties: {
+                '003': {
+                  id: '1',
+                  values: {
+                    property: {
+                      address: "3220 Bedford",
+                      city: "Amarillo",
+                      state: "TX",
+                      zipCode: "79103",
+                      bedrooms: "3",
+                      baths: "2",
+                      squareFeet: "1300",
+                      yearBuilt: "1965",
+                      otherInfo: "good conditions",
+                    },
+                    purchase: {
+                      askingPrice: "500000",
+                      offerPrice: "500000",
+                      downPaymentPercent: "3",
+                      estimatedClosingCostPercentage: "3",
+                      renovationCosts: "0",
+                      setupCosts: "10000",
+                    },
+                    income: {
+                      averageNightlyRate: "400",
+                      averageOccupancyPercentage: "75",
+                    },
+                    expenses: {
+                      loanTermInYears: "30",
+                      interestRatePercentage: "6",
+                      estimatedPropertyTaxesPerMonth: "150",
+                      estimatedInsuranceAmountPerMonth: "145",
+                      privateMortgageInsuranceAmountPerMonth: "86",
+                      monthlyHOAAmount: "0",
+                      estimatedMonthlyUtilitiesAmount: "300",
+                      cleaningFeeAmountPerMonth: "500",
+                      internetBillPerMonth: "100",
+                      maintenancePercentagePerMonth: "5",
+                      managementFeePercentagePerMonth: "0",
+                    },
+                  },
+                  calculations: {
+                    downPaymentAmount: "",
+                    estimatedClosingCostAmount: "",
+                    totalInvestment: 20000,
+                    grossIncomePerMonth: "",
+                    grossIncomePerYear: 333,
+                    netOperatingIncome: 555,
+                    capRatePercentage: "",
+                    cashFlowPerMonth: "",
+                    cashFlowPerYear: 9999,
+                    cashOnCashReturn: 13,
+                    mortgageAmount: "",
+                    numberOfPayments: "",
+                    monthlyPrinciplePlusInterest: "",
+                    estimatedPropertyTaxesPerYear: "",
+                    estimatedInsuranceAmountPerYear: "",
+                    privateMortgageInsuranceAmountPerYear: "",
+                    airBNBFeePercentagePerMonth: "",
+                    airBNBFeePercentagePerYear: "",
+                    maintenanceAmountPerMonth: "",
+                    managementFeeAmountPerMonth: "",
+                    operatingExpensesPerMonth: "",
+                    operatingExpensesPerYear: "",
+                    totalExpensesPerMonth: "",
+                    totalExpensesPerYear: 444
+                  },
+                }
+              }
+
+            }
+          },
+          cities: {
+            'city1': {
+              properties: {
+                '004': {
+                  id: '1',
+                  values: {
+                    property: {
+                      address: "3220 Bedford",
+                      city: "Amarillo",
+                      state: "TX",
+                      zipCode: "79103",
+                      bedrooms: "3",
+                      baths: "2",
+                      squareFeet: "1300",
+                      yearBuilt: "1965",
+                      otherInfo: "good conditions",
+                    },
+                    purchase: {
+                      askingPrice: "500000",
+                      offerPrice: "500000",
+                      downPaymentPercent: "3",
+                      estimatedClosingCostPercentage: "3",
+                      renovationCosts: "0",
+                      setupCosts: "10000",
+                    },
+                    income: {
+                      averageNightlyRate: "400",
+                      averageOccupancyPercentage: "75",
+                    },
+                    expenses: {
+                      loanTermInYears: "30",
+                      interestRatePercentage: "6",
+                      estimatedPropertyTaxesPerMonth: "150",
+                      estimatedInsuranceAmountPerMonth: "145",
+                      privateMortgageInsuranceAmountPerMonth: "86",
+                      monthlyHOAAmount: "0",
+                      estimatedMonthlyUtilitiesAmount: "300",
+                      cleaningFeeAmountPerMonth: "500",
+                      internetBillPerMonth: "100",
+                      maintenancePercentagePerMonth: "5",
+                      managementFeePercentagePerMonth: "0",
+                    },
+                  },
+                  calculations: {
+                    downPaymentAmount: "",
+                    estimatedClosingCostAmount: "",
+                    totalInvestment: 20000,
+                    grossIncomePerMonth: "",
+                    grossIncomePerYear: 333,
+                    netOperatingIncome: 555,
+                    capRatePercentage: "",
+                    cashFlowPerMonth: "",
+                    cashFlowPerYear: 9999,
+                    cashOnCashReturn: 13,
+                    mortgageAmount: "",
+                    numberOfPayments: "",
+                    monthlyPrinciplePlusInterest: "",
+                    estimatedPropertyTaxesPerYear: "",
+                    estimatedInsuranceAmountPerYear: "",
+                    privateMortgageInsuranceAmountPerYear: "",
+                    airBNBFeePercentagePerMonth: "",
+                    airBNBFeePercentagePerYear: "",
+                    maintenanceAmountPerMonth: "",
+                    managementFeeAmountPerMonth: "",
+                    operatingExpensesPerMonth: "",
+                    operatingExpensesPerYear: "",
+                    totalExpensesPerMonth: "",
+                    totalExpensesPerYear: 444
+                  },
+                }
+              }
+            },
+          },
+        },
       });
     } catch (error) {
       console.error("Error adding document: ", error);
     }
   };
 
+  // const register = async () => {
+  //   // e.preventDefault();
+  //   await createUserWithEmailAndPassword(auth, email, password)
+  //     .then((res) => {
+  //       const userRes = res.user;
+  //       userRes.getIdToken().then((token) => {
+  //         handleSignUpCookie(token);
+  //         addDocument(token);
+  //       });
+  //       router.push("/home");
+  //     })
+  //     .catch((err) => {
+  //       if (err.code === "auth/email-already-in-use") {
+  //         setError("Email already in use");
+  //       }
+  //     });
+  // };
+
   const register = async () => {
-    // e.preventDefault();
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        const userRes = res.user;
-        userRes.getIdToken().then((token) => {
-          handleSignUpCookie(token);
-          addDocument(token);
-        });
-        router.push("/home");
-      })
-      .catch((err) => {
-        if (err.code === "auth/email-already-in-use") {
-          setError("Email already in use");
-        }
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userRes = userCredential.user;
+
+      // You can handle any additional logic here (e.g., updating user profile)
+      userRes.getIdToken().then((token) => {
+        handleSignUpCookie(token);
+        addDocument(token);
       });
+
+      router.push("/home");
+
+      console.log("Registration successful:", userRes);
+      return userRes; // Optionally return the user object
+    } catch (error) {
+      console.error("Error during registration:", error);
+      throw error; // Optionally rethrow the error for further handling
+    }
   };
 
   const handleSignIn = async () => {
@@ -427,18 +448,16 @@ export default function Home() {
             <div className="flex mb-6">
               <button
                 type="submit"
-                className={`flex w-full justify-center rounded-md ${
-                  current == false ? "bg-gray-300" : "bg-indigo-600"
-                } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                className={`flex w-full justify-center rounded-md ${current == false ? "bg-gray-300" : "bg-indigo-600"
+                  } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                 onClick={() => handleClick(true)}
               >
                 Sign In
               </button>
               <button
                 type="submit"
-                className={`flex w-full justify-center rounded-md ${
-                  current ? "bg-gray-300" : "bg-indigo-600"
-                } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                className={`flex w-full justify-center rounded-md ${current ? "bg-gray-300" : "bg-indigo-600"
+                  } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                 onClick={() => handleClick(false)}
               >
                 Sign Up

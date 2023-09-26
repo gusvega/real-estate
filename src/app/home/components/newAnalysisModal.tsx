@@ -8,6 +8,9 @@ import { v4 as uuidv4 } from "uuid";
 import { useFirebase } from '../../../server/MyFirebaseContext'
 import { CheckCircleIcon } from '@heroicons/react/20/solid';
 
+import { db, firestoreDB, updateDoc, collection, setDoc, doc } from "../../../server/firebase";
+
+
 const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
 
     const cancelButtonRef = useRef(null)
@@ -108,7 +111,7 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
         },
     }
 
-    const { data, updateData } = useFirebase()
+    const { data, updateData, fetchDataFromFirebase } = useFirebase();
 
     const handleStepClick = (step) => {
         setSelectedStep(step)
@@ -344,17 +347,9 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
 
         const newId = uuidv4();
 
-        updateData({
-            ...data,
+        addNewPropertyToFirebase(newId, newAnalysis)
+        
 
-            analyses: {
-                ...data.analyses,
-                properties: {
-                    ...data.analyses.properties,
-                    [newId]: newAnalysis
-                }
-            },
-        });
         console.log("Analysis complete...", newAnalysis);
         console.log("ContextState: --- ", data);
 
@@ -364,6 +359,28 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
         setSelectedStep('property')
 
     };
+
+    const addNewPropertyToFirebase = (newId, newAnalysis) => {
+        // Fetch the user's document
+        const userDocumentRef = doc(firestoreDB, "users", data.UID);
+
+        // Update the "analyses" object with the new property
+        updateDoc(userDocumentRef, {
+            [`analyses.properties.${newId}`]: newAnalysis,
+        })
+            .then(() => {
+                console.log("Property added to Firestore successfully.");
+                fetchDataFromFirebase()
+            })
+            .catch((error) => {
+                console.error("Error adding property to Firestore:", error);
+            });
+
+
+        console.log("Property added to Firestore successfully.");
+
+
+    }
 
     const handleInputChange = (stepName, name, value) => {
         const allValuesValid = Object.values(steps[stepName].values).every(
@@ -406,10 +423,6 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
         }
 
     };
-
-    useEffect(() => {
-        console.log(steps);
-    }, [steps]);
 
     return (
 

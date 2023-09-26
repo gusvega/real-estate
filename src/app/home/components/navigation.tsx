@@ -114,7 +114,7 @@ const Navigation = () => {
         {isDashboardVisible && (
 
         <div className="md:hidden" id="mobile-menu">
-          <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+          <div className="space-y-1 px-2 pb-1 pt-1 sm:px-3">
             {/* <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" --> */}
             <a
               href="/home"
@@ -122,6 +122,18 @@ const Navigation = () => {
               aria-current="page"
             >
               Dashboard
+            </a>
+          </div>
+          <div className="space-y-1 px-2 pb-2 pt-1 sm:px-3">
+            {/* <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" --> */}
+            <a
+              href="/"
+              onClick={handleDeleteCookie}
+
+              className="bg-indigo-700 text-white block rounded-md px-3 py-2 text-base font-medium"
+              aria-current="page"
+            >
+              Sign Out
             </a>
           </div>
         </div>
