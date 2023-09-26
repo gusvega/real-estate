@@ -16,7 +16,7 @@ interface AuthInfo {
 export default function Home() {
   const router = useRouter();
 
-  const { data, setData } = useFirebase()
+  const { data, setData, fetchDataFromFirebase } = useFirebase()
 
   const [authInfo, setAuthInfo] = useState<AuthInfo>({
     isloggedIn: false,
@@ -415,14 +415,19 @@ export default function Home() {
             userRes.getIdToken().then((token) => {
               handleSignUpCookie(token);
               console.log("Sign-in successful!");
+              fetchDataFromFirebase()
+
               router.push("/home");
             });
+
+
           })
           .catch((err) => {
             if (err.code === "auth/email-already-in-use") {
               setError("Email already in use");
             }
           });
+
       }
     } catch (error) {
       console.error("Error signing in:", error);
