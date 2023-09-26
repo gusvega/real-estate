@@ -557,7 +557,7 @@ export default function Page({ params }: { params: { id: string } }) {
               {Object.entries(data.analyses.properties[params.id]?.calculations)
                 .filter(([key, value]) => key === 'downPaymentAmount' || key === 'estimatedClosingCostAmount' || key === 'totalInvestment' || key === 'capRatePercentage' || key === 'cashOnCashReturn')
                 .map(([key, value]) => (
-                  <div className=" py-6 flex justify-between mx-10">
+                  <div key={key} className=" py-6 flex justify-between mx-10">
                     <dt className="text-sm font-medium leading-6 text-gray-900">{formatString(key)}</dt>
                     <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                       <span className="flex-grow">${value as string}</span>
@@ -632,7 +632,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   <dl className="divide-y divide-gray-100">
                     {Object.entries(data.analyses.properties[params.id]?.values.purchase).map(([key, value]) => (
 
-                      <div className="px-4 py-6 w-full">
+                      <div key={key} className="px-4 py-6 w-full">
                         <dd className="mt-1 flex text-sm leading-6 text-gray-700 justify-between w-full">
                           <dt className="text-sm font-medium leading-6 text-gray-900">{formatString(key)}</dt>
                           <div className="flex items-center">
@@ -666,7 +666,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   <dl className="divide-y divide-gray-100">
                     {Object.entries(data.analyses.properties[params.id]?.values?.expenses).map(([key, value]) => (
 
-                      <div className="px-4 py-6 w-full">
+                      <div key={key} className="px-4 py-6 w-full">
                         <dd className="mt-1 flex text-sm leading-6 text-gray-700 justify-between w-full">
                           <dt className="text-sm font-medium leading-6 text-gray-900">{formatString(key)}</dt>
                           <div className="flex items-center">

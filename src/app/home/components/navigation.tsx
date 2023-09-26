@@ -18,7 +18,7 @@ const Navigation = () => {
     router.push("/");
   };
 
-  const [isDashboardVisible, setDashboardVisibility] = useState(true);
+  const [isDashboardVisible, setDashboardVisibility] = useState(false);
 
   // Function to toggle the visibility of the "Dashboard" button
   const toggleDashboardVisibility = () => {
