@@ -445,12 +445,13 @@ export default function Page({ params }: { params: { id: string } }) {
                         {({ active }) => (
                           <button
                             type="button"
+                            onClick={() => deleteAnalysis(params.id)}
                             className={classNames(
                               active ? 'bg-gray-50' : '',
                               'block w-full px-3 py-1 text-left text-sm leading-6 text-gray-900'
                             )}
                           >
-                            Copy URL
+                            Delete
                           </button>
                         )}
                       </Menu.Item>
@@ -463,7 +464,7 @@ export default function Page({ params }: { params: { id: string } }) {
                               'block px-3 py-1 text-sm leading-6 text-gray-900'
                             )}
                           >
-                            Edit
+                            Save
                           </a>
                         )}
                       </Menu.Item>

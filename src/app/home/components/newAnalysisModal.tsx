@@ -6,6 +6,7 @@ import { CheckIcon } from '@heroicons/react/24/outline'
 import pmt from "formula-pmt";
 import { v4 as uuidv4 } from "uuid";
 import { useMyContext } from '@/server/MyContext';
+import { CheckCircleIcon } from '@heroicons/react/20/solid';
 
 const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
 
@@ -410,7 +411,15 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
         console.log(steps);
     }, [steps]);
 
+    const steps2 = [
+        { name: 'Create account', href: '#', status: 'complete' },
+        { name: 'Profile information', href: '#', status: 'current' },
+        { name: 'Theme', href: '#', status: 'upcoming' },
+        { name: 'Preview', href: '#', status: 'upcoming' },
+    ];
+
     return (
+
         <Transition.Root show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={onClose}>
                 <Transition.Child
@@ -437,127 +446,236 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
                             <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-[90%] sm:max-w-[800px] sm:p-6">
-                                <div>
-                                    <div className='mb-4'>New Analysis</div>
+                                <div className="hidden sm:block">
+                                    <div>
+                                        <div className='mb-4'>New Analysis</div>
 
-                                    <div className="border-b border-gray-900/10 pb-12">
-                                        <nav aria-label="Progress">
-                                            <ol role="list" className="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0">
-                                                {Object.values(steps).map((step, stepIdx) => (
-                                                    <li key={step.name} className="relative md:flex md:flex-1" onClick={() => handleStepClick(step.name.toLowerCase())}>
-                                                        {step.status === 'complete' ? (
-                                                            <a href={step.href} className="group flex w-full items-center ">
+                                        <div className="border-b border-gray-900/10 pb-12">
+                                            <nav aria-label="Progress">
+                                                <ol role="list" className="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0">
+                                                    {Object.values(steps).map((step, stepIdx) => (
+                                                        <li key={step.name} className="relative md:flex md:flex-1" onClick={() => handleStepClick(step.name.toLowerCase())}>
+                                                            {step.status === 'complete' ? (
+                                                                <a href={step.href} className="group flex w-full items-center ">
 
-                                                                <span className="flex items-center px-6 py-4 text-sm font-medium">
-                                                                    {Object.values(step.values).every((value) => typeof value === 'string') ? (
-                                                                        <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600 group-hover:bg-indigo-800">
-                                                                            <CheckIcon className="h-6 w-6 text-white" aria-hidden="true" />
-                                                                        </span>
-                                                                    ) : null}
-                                                                    <span className={`ml-4 text-sm font-medium ${selectedStep === step.name.toLowerCase() ? 'font-semibold' : 'text-blue-900'}`}>{step.name}</span>
-                                                                </span>
-                                                            </a>
-                                                        ) : step.status === 'current' ? (
-                                                            <a href={step.href} className="flex items-center px-6 py-4 text-sm font-medium" aria-current="step">
-                                                                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-600">
-                                                                    <span className="text-indigo-600">{step.id}</span>
-                                                                </span>
-                                                                <span className={`ml-4 text-sm font-medium ${selectedStep === step.name.toLowerCase() ? 'font-semibold' : 'text-blue-900'}`}>{step.name}</span>
-                                                            </a>
-                                                        ) : (
-                                                            <a href={step.href} className="group flex items-center">
-                                                                <span className="flex items-center px-6 py-4 text-sm font-medium">
-                                                                    <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300 group-hover:border-gray-400">
-                                                                        <span className="text-gray-500 group-hover:text-gray-900">{step.id}</span>
+                                                                    <span className="flex items-center px-6 py-4 text-sm font-medium">
+                                                                        {Object.values(step.values).every((value) => typeof value === 'string') ? (
+                                                                            <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600 group-hover:bg-indigo-800">
+                                                                                <CheckIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                                                                            </span>
+                                                                        ) : null}
+                                                                        <span className={`ml-4 text-sm font-medium ${selectedStep === step.name.toLowerCase() ? 'font-semibold' : 'text-blue-900'}`}>{step.name}</span>
+                                                                    </span>
+                                                                </a>
+                                                            ) : step.status === 'current' ? (
+                                                                <a href={step.href} className="flex items-center px-6 py-4 text-sm font-medium" aria-current="step">
+                                                                    <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-indigo-600">
+                                                                        <span className="text-indigo-600">{step.id}</span>
                                                                     </span>
                                                                     <span className={`ml-4 text-sm font-medium ${selectedStep === step.name.toLowerCase() ? 'font-semibold' : 'text-blue-900'}`}>{step.name}</span>
-                                                                </span>
-                                                            </a>
-                                                        )}
+                                                                </a>
+                                                            ) : (
+                                                                <a href={step.href} className="group flex items-center">
+                                                                    <span className="flex items-center px-6 py-4 text-sm font-medium">
+                                                                        <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-300 group-hover:border-gray-400">
+                                                                            <span className="text-gray-500 group-hover:text-gray-900">{step.id}</span>
+                                                                        </span>
+                                                                        <span className={`ml-4 text-sm font-medium ${selectedStep === step.name.toLowerCase() ? 'font-semibold' : 'text-blue-900'}`}>{step.name}</span>
+                                                                    </span>
+                                                                </a>
+                                                            )}
 
-                                                        {stepIdx !== Object.keys(steps).length - 1 ? (
-                                                            <>
-                                                                {/* Arrow separator for lg screens and up */}
-                                                                <div className="absolute right-0 top-0 hidden h-full w-5 md:block" aria-hidden="true">
-                                                                    <svg
-                                                                        className="h-full w-full text-gray-300"
-                                                                        viewBox="0 0 22 80"
-                                                                        fill="none"
-                                                                        preserveAspectRatio="none"
-                                                                    >
-                                                                        <path
-                                                                            d="M0 -2L20 40L0 82"
-                                                                            vectorEffect="non-scaling-stroke"
-                                                                            stroke="currentcolor"
-                                                                            strokeLinejoin="round"
-                                                                        />
-                                                                    </svg>
-                                                                </div>
-                                                            </>
-                                                        ) : null}
-                                                    </li>
-                                                ))}
+                                                            {stepIdx !== Object.keys(steps).length - 1 ? (
+                                                                <>
+                                                                    {/* Arrow separator for lg screens and up */}
+                                                                    <div className="absolute right-0 top-0 hidden h-full w-5 md:block" aria-hidden="true">
+                                                                        <svg
+                                                                            className="h-full w-full text-gray-300"
+                                                                            viewBox="0 0 22 80"
+                                                                            fill="none"
+                                                                            preserveAspectRatio="none"
+                                                                        >
+                                                                            <path
+                                                                                d="M0 -2L20 40L0 82"
+                                                                                vectorEffect="non-scaling-stroke"
+                                                                                stroke="currentcolor"
+                                                                                strokeLinejoin="round"
+                                                                            />
+                                                                        </svg>
+                                                                    </div>
+                                                                </>
+                                                            ) : null}
+                                                        </li>
+                                                    ))}
 
-                                            </ol>
-                                        </nav>
-                                        <div className="flex flex-wrap">
+                                                </ol>
+                                            </nav>
+                                            <div className="flex flex-wrap">
 
-                                            {Object.entries(steps[selectedStep].values).map(([key, value]) => (
-                                                <div key={key} className="sm:col-span-2 sm:col-start-1 mr-12 mt-10">
-                                                    <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
-                                                        {key.split(/(?=[A-Z])/)
-                                                            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                                                            .join(' ')}
-                                                    </label>
-                                                    <div className="mt-2">
-                                                        <input
-                                                            type="text"
-                                                            name="city"
-                                                            id="city"
-                                                            autoComplete="address-level2"
-                                                            className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                            onChange={(e) => handleInputChange(selectedStep, key, e.target.value)}
-                                                            placeholder={value as string}
-                                                        />
+                                                {Object.entries(steps[selectedStep].values).map(([key, value]) => (
+                                                    <div key={key} className="sm:col-span-2 sm:col-start-1 mr-12 mt-10">
+                                                        <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
+                                                            {key.split(/(?=[A-Z])/)
+                                                                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                                                                .join(' ')}
+                                                        </label>
+                                                        <div className="mt-2">
+                                                            <input
+                                                                type="text"
+                                                                name="city"
+                                                                id="city"
+                                                                autoComplete="address-level2"
+                                                                className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                                onChange={(e) => handleInputChange(selectedStep, key, e.target.value)}
+                                                                placeholder={value as string}
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            ))}
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
+                                    <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                                        <button
+                                            type="button"
+                                            className={`inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm ${
+                                                // Use a conditional class to disable the button based on the statuses
+                                                Object.values(steps).every((step) => step.status === 'complete')
+                                                    ? 'bg-indigo-600 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                                                    : 'bg-gray-400 cursor-not-allowed'
+                                                } sm:col-start-2`}
+                                            onClick={() => {
+                                                if (Object.values(steps).every((step) => step.status === 'complete')) {
+                                                    // Only execute the action if all steps are 'complete'
+                                                    onAnalyzeClick();
+                                                }
+                                            }}
+                                            disabled={!Object.values(steps).every((step) => step.status === 'complete')}
+                                        >
+                                            Analyze
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                                            onClick={onClose}
+                                            ref={cancelButtonRef}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                                    <button
-                                        type="button"
-                                        className={`inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm ${
-                                            // Use a conditional class to disable the button based on the statuses
-                                            Object.values(steps).every((step) => step.status === 'complete')
-                                                ? 'bg-indigo-600 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-                                                : 'bg-gray-400 cursor-not-allowed'
-                                            } sm:col-start-2`}
-                                        onClick={() => {
-                                            if (Object.values(steps).every((step) => step.status === 'complete')) {
-                                                // Only execute the action if all steps are 'complete'
-                                                onAnalyzeClick();
-                                            }
-                                        }}
-                                        disabled={!Object.values(steps).every((step) => step.status === 'complete')}
-                                    >
-                                        Analyze
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                                        onClick={onClose}
-                                        ref={cancelButtonRef}
-                                    >
-                                        Cancel
-                                    </button>
+
+                                <div className="block sm:hidden">
+                                    <div>
+                                        <div className='mb-4'>New Analysis</div>
+
+                                        <div className="border-b border-gray-900/10 pb-12">
+                                            <div className="px-4 py-12 sm:px-6 lg:px-8">
+                                                <nav className="flex ml-10 justify-left" aria-label="Progress">
+                                                    <ol role="list" className="space-y-6">
+                                                        {Object.values(steps).map((step) => (
+                                                            <li key={step.name} onClick={() => handleStepClick(step.name.toLowerCase())}>
+                                                                {step.status === 'complete' ? (
+                                                                    <a href={step.href} className="group">
+                                                                        <span className="flex items-start">
+                                                                            <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
+                                                                                <CheckCircleIcon
+                                                                                    className="h-full w-full text-indigo-600 group-hover:text-indigo-800"
+                                                                                    aria-hidden="true"
+                                                                                />
+                                                                            </span>
+                                                                            <span className="ml-3 text-sm font-medium text-gray-500 group-hover:text-gray-900">
+                                                                                {step.name}
+                                                                            </span>
+                                                                        </span>
+                                                                    </a>
+                                                                ) : step.status === 'current' ? (
+                                                                    <a href={step.href} className="flex items-start" aria-current="step">
+                                                                        <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center" aria-hidden="true">
+                                                                            <span className="absolute h-4 w-4 rounded-full bg-indigo-200" />
+                                                                            <span className="relative block h-2 w-2 rounded-full bg-indigo-600" />
+                                                                        </span>
+                                                                        <span className="ml-3 text-sm font-medium text-indigo-600">{step.name}</span>
+                                                                    </a>
+                                                                ) : (
+                                                                    <a href={step.href} className="group">
+                                                                        <div className="flex items-start">
+                                                                            <div className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center" aria-hidden="true">
+                                                                                <div className="h-2 w-2 rounded-full bg-gray-300 group-hover:bg-gray-400" />
+                                                                            </div>
+                                                                            <p className="ml-3 text-sm font-medium text-gray-500 group-hover:text-gray-900">{step.name}</p>
+                                                                        </div>
+                                                                    </a>
+                                                                )}
+                                                            </li>
+                                                        ))}
+                                                    </ol>
+                                                </nav>
+                                            </div>
+
+
+                                            <div className="flex flex-col"> {/* Flex container for all label-input pairs */}
+  {Object.entries(steps[selectedStep].values).map(([key, value]) => (
+    <div key={key} className="flex justify-between mr-12 mt-5 items-center">
+      <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
+        {key
+          .split(/(?=[A-Z])/)
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')}
+      </label>
+      <div className="mt-2">
+        <input
+          type="text"
+          name="city"
+          id="city"
+          autoComplete="address-level2"
+          className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          onChange={(e) => handleInputChange(selectedStep, key, e.target.value)}
+          placeholder={value as string}
+        />
+      </div>
+    </div>
+  ))}
+</div>
+
+                                        </div>
+                                    </div>
+                                    <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                                        <button
+                                            type="button"
+                                            className={`inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm ${
+                                                // Use a conditional class to disable the button based on the statuses
+                                                Object.values(steps).every((step) => step.status === 'complete')
+                                                    ? 'bg-indigo-600 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                                                    : 'bg-gray-400 cursor-not-allowed'
+                                                } sm:col-start-2`}
+                                            onClick={() => {
+                                                if (Object.values(steps).every((step) => step.status === 'complete')) {
+                                                    // Only execute the action if all steps are 'complete'
+                                                    onAnalyzeClick();
+                                                }
+                                            }}
+                                            disabled={!Object.values(steps).every((step) => step.status === 'complete')}
+                                        >
+                                            Analyze
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                                            onClick={onClose}
+                                            ref={cancelButtonRef}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
                 </div>
             </Dialog>
+
+
         </Transition.Root>
     )
 }
