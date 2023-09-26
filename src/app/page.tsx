@@ -392,6 +392,9 @@ export default function Home() {
         addDocument(token);
       });
 
+      fetchDataFromFirebase()
+
+
       router.push("/home");
 
       console.log("Registration successful:", userRes);
