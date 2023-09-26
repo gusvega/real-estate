@@ -390,9 +390,10 @@ export default function Home() {
       userRes.getIdToken().then((token) => {
         handleSignUpCookie(token);
         addDocument(token);
+        fetchDataFromFirebase()
+
       });
 
-      fetchDataFromFirebase()
 
 
       router.push("/home");
