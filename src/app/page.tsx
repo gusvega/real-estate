@@ -32,7 +32,7 @@ export default function Home() {
 
   useEffect(() => {
     // On component mount, check for the cookie
-    checkCookie();
+    // checkCookie();
     // console.log('State: ', state)
 
   }, []);
