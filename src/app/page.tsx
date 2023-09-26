@@ -32,7 +32,7 @@ export default function Home() {
 
   useEffect(() => {
     // On component mount, check for the cookie
-    // checkCookie();
+    checkCookie();
     // console.log('State: ', state)
 
   }, []);
@@ -363,24 +363,6 @@ export default function Home() {
     }
   };
 
-  // const register = async () => {
-  //   // e.preventDefault();
-  //   await createUserWithEmailAndPassword(auth, email, password)
-  //     .then((res) => {
-  //       const userRes = res.user;
-  //       userRes.getIdToken().then((token) => {
-  //         handleSignUpCookie(token);
-  //         addDocument(token);
-  //       });
-  //       router.push("/home");
-  //     })
-  //     .catch((err) => {
-  //       if (err.code === "auth/email-already-in-use") {
-  //         setError("Email already in use");
-  //       }
-  //     });
-  // };
-
   const register = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -420,10 +402,10 @@ export default function Home() {
               handleSignUpCookie(token);
               console.log("Sign-in successful!");
               fetchDataFromFirebase()
-
               router.push("/home");
             });
 
+            
 
           })
           .catch((err) => {
