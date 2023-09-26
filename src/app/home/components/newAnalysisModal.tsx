@@ -16,7 +16,7 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
 
     const [steps, setSteps] = useState({
         property: {
-            id: '01', name: 'Property', href: '#', status: 'current', values: {
+            id: '01', name: 'Property', href: '#', status: 'complete', values: {
                 address: "3220 Bedford",
                 city: "Amarillo",
                 state: "TX",
@@ -29,7 +29,7 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
             }
         },
         purchase: {
-            id: '02', name: 'Purchase', href: '#', status: 'upcoming', values: {
+            id: '02', name: 'Purchase', href: '#', status: 'complete', values: {
                 askingPrice: "500000",
                 offerPrice: "500000",
                 downPaymentPercent: "3",
@@ -39,13 +39,13 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
             }
         },
         income: {
-            id: '03', name: 'Income', href: '#', status: 'upcoming', values: {
+            id: '03', name: 'Income', href: '#', status: 'complete', values: {
                 averageNightlyRate: "400",
                 averageOccupancyPercentage: "75",
             }
         },
         expenses: {
-            id: '04', name: 'Expenses', href: '#', status: 'upcoming', values: {
+            id: '04', name: 'Expenses', href: '#', status: 'complete', values: {
                 loanTermInYears: "30",
                 interestRatePercentage: "6",
                 estimatedPropertyTaxesPerMonth: "150",
@@ -411,13 +411,6 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
         console.log(steps);
     }, [steps]);
 
-    const steps2 = [
-        { name: 'Create account', href: '#', status: 'complete' },
-        { name: 'Profile information', href: '#', status: 'current' },
-        { name: 'Theme', href: '#', status: 'upcoming' },
-        { name: 'Preview', href: '#', status: 'upcoming' },
-    ];
-
     return (
 
         <Transition.Root show={isOpen} as={Fragment}>
@@ -527,7 +520,7 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
                                                                 autoComplete="address-level2"
                                                                 className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                                 onChange={(e) => handleInputChange(selectedStep, key, e.target.value)}
-                                                                placeholder={value as string}
+                                                                value={value as string}
                                                             />
                                                         </div>
                                                     </div>
@@ -571,40 +564,36 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
 
                                         <div className="border-b border-gray-900/10 pb-12">
                                             <div className="px-4 py-12 sm:px-6 lg:px-8">
-                                                <nav className="flex ml-10 justify-left" aria-label="Progress">
-                                                    <ol role="list" className="space-y-6">
+                                                <nav className="flex justify-center" aria-label="Progress">
+                                                    <ol role="list" className="flex space-x-8">
                                                         {Object.values(steps).map((step) => (
                                                             <li key={step.name} onClick={() => handleStepClick(step.name.toLowerCase())}>
                                                                 {step.status === 'complete' ? (
-                                                                    <a href={step.href} className="group">
-                                                                        <span className="flex items-start">
-                                                                            <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
-                                                                                <CheckCircleIcon
-                                                                                    className="h-full w-full text-indigo-600 group-hover:text-indigo-800"
-                                                                                    aria-hidden="true"
-                                                                                />
-                                                                            </span>
-                                                                            <span className="ml-3 text-sm font-medium text-gray-500 group-hover:text-gray-900">
-                                                                                {step.name}
-                                                                            </span>
+                                                                    <a href={step.href} className="group flex flex-col items-center">
+                                                                        <span className="relative flex h-5 w-5 items-center justify-center">
+                                                                            <CheckCircleIcon
+                                                                                className="h-full w-full text-indigo-600 group-hover:text-indigo-800"
+                                                                                aria-hidden="true"
+                                                                            />
+                                                                        </span>
+                                                                        <span className="text-sm font-medium text-gray-500 group-hover:text-gray-900 mt-1">
+                                                                            {step.name}
                                                                         </span>
                                                                     </a>
                                                                 ) : step.status === 'current' ? (
-                                                                    <a href={step.href} className="flex items-start" aria-current="step">
-                                                                        <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center" aria-hidden="true">
+                                                                    <a href={step.href} className="flex flex-col items-center" aria-current="step">
+                                                                        <span className="relative flex h-5 w-5 items-center justify-center">
                                                                             <span className="absolute h-4 w-4 rounded-full bg-indigo-200" />
                                                                             <span className="relative block h-2 w-2 rounded-full bg-indigo-600" />
                                                                         </span>
-                                                                        <span className="ml-3 text-sm font-medium text-indigo-600">{step.name}</span>
+                                                                        <span className="text-sm font-medium text-indigo-600 mt-1">{step.name}</span>
                                                                     </a>
                                                                 ) : (
-                                                                    <a href={step.href} className="group">
-                                                                        <div className="flex items-start">
-                                                                            <div className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center" aria-hidden="true">
-                                                                                <div className="h-2 w-2 rounded-full bg-gray-300 group-hover:bg-gray-400" />
-                                                                            </div>
-                                                                            <p className="ml-3 text-sm font-medium text-gray-500 group-hover:text-gray-900">{step.name}</p>
+                                                                    <a href={step.href} className="group flex flex-col items-center">
+                                                                        <div className="relative flex h-5 w-5 items-center justify-center">
+                                                                            <div className="h-2 w-2 rounded-full bg-gray-300 group-hover:bg-gray-400" />
                                                                         </div>
+                                                                        <p className="text-sm font-medium text-gray-500 group-hover:text-gray-900 mt-1">{step.name}</p>
                                                                     </a>
                                                                 )}
                                                             </li>
@@ -614,29 +603,30 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
                                             </div>
 
 
+
                                             <div className="flex flex-col"> {/* Flex container for all label-input pairs */}
-  {Object.entries(steps[selectedStep].values).map(([key, value]) => (
-    <div key={key} className="flex justify-between mr-12 mt-5 items-center">
-      <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
-        {key
-          .split(/(?=[A-Z])/)
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ')}
-      </label>
-      <div className="mt-2">
-        <input
-          type="text"
-          name="city"
-          id="city"
-          autoComplete="address-level2"
-          className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          onChange={(e) => handleInputChange(selectedStep, key, e.target.value)}
-          placeholder={value as string}
-        />
-      </div>
-    </div>
-  ))}
-</div>
+                                                {Object.entries(steps[selectedStep].values).map(([key, value]) => (
+                                                    <div key={key} className="flex justify-between mr-12 mt-5 items-center">
+                                                        <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
+                                                            {key
+                                                                .split(/(?=[A-Z])/)
+                                                                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                                                                .join(' ')}
+                                                        </label>
+                                                        <div className="mt-2">
+                                                            <input
+                                                                type="text"
+                                                                name="city"
+                                                                id="city"
+                                                                autoComplete="address-level2"
+                                                                className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                                onChange={(e) => handleInputChange(selectedStep, key, e.target.value)}
+                                                                value={value as string}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
 
                                         </div>
                                     </div>

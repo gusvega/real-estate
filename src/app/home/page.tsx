@@ -204,7 +204,7 @@ export default function HomePage() {
                 <div className="block sm:hidden">
                   <div className="border-b border-gray-200 overflow-x-auto">
                     <nav className="flex" aria-label="Tabs">
-                      {tabs.map((tab) => (
+                      {tabs.filter(el => el.name === 'Properties').map((tab) => (
                         <a
                           key={tab.name}
                           onClick={() => handleTabClick(tab.id)}
