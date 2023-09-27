@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
 
-import { db, firestoreDB, collection, setDoc, doc, auth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, signInWithEmailAndPassword } from "../server/firebase";
+import { firestoreDB, collection, setDoc, doc, auth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, signInWithEmailAndPassword } from "../server/firebase";
 
 import { useFirebase } from '../server/MyFirebaseContext'
 
@@ -60,7 +60,7 @@ export default function Home() {
     const usersCollectionRef = collection(firestoreDB, "users");
     try {
       const documentRef = doc(usersCollectionRef, decodedToken.user_id);
-      console.log('docRed', documentRef)
+      console.log('docRed', documentRef, decodedToken.user_id)
       await setDoc(documentRef, {
         firstName: name,
         lastName: "",

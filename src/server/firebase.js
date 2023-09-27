@@ -10,8 +10,7 @@ import {
 import { getFirestore, collection, setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 
 const app = initializeApp(firebaseConfig)
-const db = getDatabase(app)
 const auth = getAuth(app);
 const firestoreDB = getFirestore(app)
 
-export { db, firestoreDB, collection, setDoc, doc, getDoc, updateDoc, auth, fetchSignInMethodsForEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword };
+export { firestoreDB, collection, setDoc, doc, getDoc, updateDoc, auth, fetchSignInMethodsForEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword };
