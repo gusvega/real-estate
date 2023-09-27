@@ -7,10 +7,10 @@ import {
     signInWithEmailAndPassword,
 } from "firebase/auth";
 
-import { getFirestore, collection, setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, setDoc, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app);
 const firestoreDB = getFirestore(app)
 
-export { firestoreDB, collection, setDoc, doc, getDoc, updateDoc, auth, fetchSignInMethodsForEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword };
+export { firestoreDB, collection, setDoc, addDoc, doc, getDoc, updateDoc, auth, fetchSignInMethodsForEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword };
