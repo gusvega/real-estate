@@ -404,9 +404,6 @@ export default function Home() {
               fetchDataFromFirebase()
               router.push("/home");
             });
-
-            
-
           })
           .catch((err) => {
             if (err.code === "auth/email-already-in-use") {
