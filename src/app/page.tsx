@@ -368,6 +368,7 @@ export default function Home() {
   /// TEST
         const addToFirestore = () => {
           const myCollection = collection(firestoreDB, 'users'); // Replace 'myCollectionName' with your collection name
+          console.log(myCollection)
 
           // Data to be added to the document
           const documentData = {
@@ -378,7 +379,7 @@ export default function Home() {
           // Add the document to the collection
           addDoc(myCollection, documentData)
             .then((docRef) => {
-              console.log('Document written with ID: ', docRef.id);
+              console.log('Document written with ID: ', docRef.id, docRef);
             })
             .catch((error) => {
               console.error('Error adding document: ', error);
