@@ -378,6 +378,8 @@ export default function Home() {
 
       });
 
+      console.log('userRes', userRes)
+
       router.push("/home");
 
       console.log("Registration successful:", userRes);
