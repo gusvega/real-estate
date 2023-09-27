@@ -368,7 +368,7 @@ export default function Home() {
   /// TEST
         const addToFirestore = () => {
           const myCollection = collection(firestoreDB, 'users'); // Replace 'myCollectionName' with your collection name
-          console.log(myCollection)
+          console.log('myCollection', myCollection)
 
           // Data to be added to the document
           const documentData = {
