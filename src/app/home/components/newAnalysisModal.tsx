@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useFirebase } from '../../../server/MyFirebaseContext'
 import { CheckCircleIcon } from '@heroicons/react/20/solid';
 
-import { db, firestoreDB, updateDoc, collection, setDoc, doc } from "../../../server/firebase";
+import { firestoreDB, updateDoc, collection, setDoc, doc } from "../../../server/firebase";
 
 
 const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
