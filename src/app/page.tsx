@@ -60,6 +60,7 @@ export default function Home() {
     const usersCollectionRef = collection(firestoreDB, "users");
     try {
       const documentRef = doc(usersCollectionRef, decodedToken.user_id);
+      console.log('docRed', documentRef)
       await setDoc(documentRef, {
         firstName: name,
         lastName: "",
@@ -358,6 +359,7 @@ export default function Home() {
           },
         },
       });
+
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -375,8 +377,6 @@ export default function Home() {
         fetchDataFromFirebase()
 
       });
-
-
 
       router.push("/home");
 
