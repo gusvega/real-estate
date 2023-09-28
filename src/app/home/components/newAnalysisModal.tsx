@@ -347,7 +347,18 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
 
         const newId = uuidv4();
 
-        addNewPropertyToFirebase(newId, newAnalysis)
+        // addNewPropertyToFirebase(newId, newAnalysis)
+        updateData({
+            ...data,
+
+            analyses: {
+                ...data.analyses,
+                properties: {
+                    ...data.analyses.properties,
+                    [newId]: newAnalysis
+                }
+            },
+        });
         
 
         console.log("Analysis complete...", newAnalysis);
