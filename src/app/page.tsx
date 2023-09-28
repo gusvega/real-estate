@@ -365,28 +365,6 @@ export default function Home() {
     }
   };
 
-  /// TEST
-        const addToFirestore = () => {
-          const myCollection = collection(firestoreDB, 'users'); // Replace 'myCollectionName' with your collection name
-          console.log('myCollection', myCollection)
-
-          // Data to be added to the document
-          const documentData = {
-            field1: 'value1',
-            field2: 'value2',
-          };
-          
-          // Add the document to the collection
-          addDoc(myCollection, documentData)
-            .then((docRef) => {
-              console.log('Document written with ID: ', docRef.id, docRef);
-            })
-            .catch((error) => {
-              console.error('Error adding document: ', error);
-            });  
-        }
-    /// TEST
-
   const register = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -473,14 +451,6 @@ export default function Home() {
                 onClick={() => handleClick(false)}
               >
                 Sign Up
-              </button>
-              <button
-                type="submit"
-                className={`flex w-full justify-center rounded-md ${current ? "bg-gray-300" : "bg-indigo-600"
-                  } m-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-                onClick={() => addToFirestore()}
-              >
-                Test
               </button>
             </div>
 
