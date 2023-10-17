@@ -142,12 +142,8 @@ export default function HomePage() {
             </h1>
           </div>
         </header>
-
-
-
         <main>
           <div className="bg-white mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            {/* <!-- Your content --> */}
             <div className="px-4 sm:px-6 lg:px-8 mt-10">
               <div className="sm:flex sm:items-center mb-5">
                 <div className="sm:flex-auto">
@@ -253,9 +249,7 @@ export default function HomePage() {
                     ))}
                   </div>
                 </div>
-
               </div>
-
             </div>
           </div>
         </main>

@@ -584,10 +584,10 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
 
                                 <div className="block sm:hidden">
                                     <div>
-                                        <div className='mb-4'>New Analysis</div>
+                                        <div className='mb-2'>New Analysis</div>
 
                                         <div className="border-b border-gray-900/10 pb-12">
-                                            <div className="px-4 py-12 sm:px-6 lg:px-8">
+                                            <div className="px-4 py-6 sm:px-6 lg:px-8">
                                                 <nav className="flex justify-center" aria-label="Progress">
                                                     <ol role="list" className="flex space-x-8">
                                                         {Object.values(steps).map((step) => (
@@ -630,8 +630,8 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
 
                                             <div className="flex flex-col"> {/* Flex container for all label-input pairs */}
                                                 {Object.entries(steps[selectedStep].values).map(([key, value]) => (
-                                                    <div key={key} className="flex justify-between mr-12 mt-5 items-center">
-                                                        <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
+                                                    <div key={key} className="flex justify-between mr-12 mt-2 items-center">
+                                                        <label htmlFor="city" className="block text-xs font-medium leading-6 text-gray-900">
                                                             {key
                                                                 .split(/(?=[A-Z])/)
                                                                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -643,7 +643,7 @@ const NewAnalysisModal = ({ isOpen, onClose, newData }) => {
                                                                 name="city"
                                                                 id="city"
                                                                 autoComplete="address-level2"
-                                                                className="block pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                                className="block text-xs pl-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                                 onChange={(e) => handleInputChange(selectedStep, key, e.target.value)}
                                                                 value={value as string}
                                                             />

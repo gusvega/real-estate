@@ -4,8 +4,6 @@ import Navigation from "@/app/home/components/navigation"
 import { useFirebase } from '../../../server/MyFirebaseContext'
 import { useRouter } from "next/navigation";
 
-
-// ---
 import { Fragment, useState } from 'react'
 import { Dialog, Listbox, Menu, Transition } from '@headlessui/react'
 import {
@@ -391,7 +389,7 @@ export default function Page({ params }: { params: { id: string } }) {
       </main>
 
       <main className="block sm:hidden ">
-        <header className="relative isolate pt-16">
+        <header className="relative isolate pt-4">
           <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
             <div className="mx-auto flex max-w-2xl items-center justify-between gap-x-8 lg:mx-0 lg:max-w-none">
               <div className="flex items-center gap-x-6">
@@ -471,9 +469,9 @@ export default function Page({ params }: { params: { id: string } }) {
             </div>
           </div>
         </header>
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-4 mx-2 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            <div className="mb-10">
+            <div className="mb-1">
               <h2 className="text-base font-semibold leading-6 text-gray-900">Property Details</h2>
               <dl className=" grid grid-cols-4 text-sm leading-6 sm:grid-cols-4">
                 <div className="mt-3 border-t  pt-6 sm:pr-4">
@@ -509,59 +507,110 @@ export default function Page({ params }: { params: { id: string } }) {
             <div className="lg:col-start-3 lg:row-end-1">
               <div className="rounded-lg bg-gray-50 shadow-sm ring-1 ring-gray-900/5">
                 <dl className="flex flex-wrap">
-                  <div className="flex-auto pl-6 pt-6">
+                  <div className="flex-auto pl-6 pt-2">
                     <dt className="text-sm font-semibold leading-6 text-gray-900">Return on Investment</dt>
                     <dd className="mt-1 text-base font-semibold leading-6 text-gray-900">{data.analyses.properties[params.id]?.calculations?.cashOnCashReturn}%</dd>
                   </div>
-                  <div className="flex-none self-end px-6 pt-4">
+                  <div className="flex-none self-end px-6 pt-2">
                     <dt className="sr-only">Status</dt>
                     <dd className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
                       Good
                     </dd>
                   </div>
-                  <div className="mt-6 flex justify-between w-full flex-none gap-x-4 border-t border-gray-900/5 px-6 pt-6">
-                    <dd className="text-sm font-medium leading-6 text-gray-900">Investment</dd>
-                    <dd className="text-sm font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.totalInvestment}</dd>
+                  <div className="mt-2 flex justify-between w-full flex-none gap-x-4 border-t border-gray-900/5 px-6 pt-6">
+                    <dd className="text-xs font-medium leading-6 text-gray-900">Investment</dd>
+                    <dd className="text-xs font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.totalInvestment}</dd>
                   </div>
-                  <div className="mt-4 flex justify-between w-full flex-none gap-x-4 px-6">
-                    <dd className="text-sm font-medium leading-6 text-gray-900">Gross Income</dd>
-                    <dd className="text-sm font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.grossIncomePerYear}</dd>
+                  <div className="mt-2 flex justify-between w-full flex-none gap-x-4 px-6">
+                    <dd className="text-xs font-medium leading-6 text-gray-900">Gross Income</dd>
+                    <dd className="text-xs font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.grossIncomePerYear}</dd>
                   </div>
-                  <div className="mt-4 flex justify-between w-full flex-none gap-x-4 px-6">
-                    <dd className="text-sm font-medium leading-6 text-gray-900">Total Expenses</dd>
-                    <dd className="text-sm font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.totalExpensesPerYear}</dd>
+                  <div className="mt-2 flex justify-between w-full flex-none gap-x-4 px-6">
+                    <dd className="text-xs font-medium leading-6 text-gray-900">Total Expenses</dd>
+                    <dd className="text-xs font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.totalExpensesPerYear}</dd>
                   </div>
-                  <div className="mt-4 flex w-full justify-between flex-none gap-x-4 px-6">
-                    <dd className="text-sm font-medium leading-6 text-gray-900">Operating Expenses</dd>
-                    <dd className="text-sm font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.operatingExpensesPerYear}</dd>
+                  <div className="mt-2 flex w-full justify-between flex-none gap-x-4 px-6">
+                    <dd className="text-xs font-medium leading-6 text-gray-900">Operating Expenses</dd>
+                    <dd className="text-xs font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.operatingExpensesPerYear}</dd>
                   </div>
-                  <div className="mt-4 flex w-full flex-none justify-between gap-x-4 px-6">
-                    <dd className="text-sm font-medium leading-6 text-gray-900">Net Operating Income</dd>
-                    <dd className="text-sm font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.netOperatingIncome}</dd>
+                  <div className="mt-2 flex w-full flex-none justify-between gap-x-4 px-6">
+                    <dd className="text-xs font-medium leading-6 text-gray-900">Net Operating Income</dd>
+                    <dd className="text-xs font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.netOperatingIncome}</dd>
                   </div>
-                  <div className="mt-4 mb-5 flex w-full flex-none gap-x-4 px-6  justify-between">
-                    <dd className="text-sm font-medium leading-6 text-gray-900">Cash Flow</dd>
-                    <dd className="text-sm font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.cashFlowPerYear}</dd>
+                  <div className="mt-2 mb-5 flex w-full flex-none gap-x-4 px-6  justify-between">
+                    <dd className="text-xs font-medium leading-6 text-gray-900">Cash Flow</dd>
+                    <dd className="text-xs font-medium leading-6 text-gray-900">${data.analyses.properties[params.id]?.calculations?.cashFlowPerYear}</dd>
                   </div>
                 </dl>
 
               </div>
             </div>
 
-            <div className="-mx-4 px-4 text-xs py-8 shadow-sm ring-1 ring-gray-900/5 sm:mx-0 sm:rounded-lg sm:px-8 sm:pb-14 lg:col-span-2 lg:row-span-2 lg:row-end-2 xl:px-16 xl:pb-20 xl:pt-16">
-              <h2 className="text-base font-semibold leading-6 text-gray-900">Calculations</h2>
-
+            <div className="-mx-4 px-4 text-xs py-4 shadow-sm ring-1 ring-gray-900/5 sm:mx-0 sm:rounded-lg sm:px-8 sm:pb-14 lg:col-span-2 lg:row-span-2 lg:row-end-2 xl:px-16 xl:pb-20 xl:pt-16">
+              <h2 className="text-base mb-2 font-semibold leading-6 text-gray-900">Calculations</h2>
               {Object.entries(data.analyses.properties[params.id]?.calculations)
                 .filter(([key, value]) => key === 'downPaymentAmount' || key === 'estimatedClosingCostAmount' || key === 'totalInvestment' || key === 'capRatePercentage' || key === 'cashOnCashReturn')
                 .map(([key, value]) => (
-                  <div key={key} className=" py-6 flex justify-between mx-10">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">{formatString(key)}</dt>
-                    <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  <div key={key} className=" py-1 flex justify-between mx-2">
+                    <div className="text-xs font-medium leading-6 text-gray-900">{formatString(key)}</div>
+                    <div className=" flex text-xs leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                       <span className="flex-grow">${value as string}</span>
-                    </dd>
+                    </div>
                   </div>
                 ))}
-              <table className="mt-16 w-full whitespace-nowrap text-left leading-6 mx-5 text-xs">
+
+              <div className="border-b border-gray-200 text-gray-900 flex justify-between">
+                <div className="py-3 pl-8 pr-0 font-semibold ">
+                  Month
+                </div>
+                <div className="py-3 pl-8 pr-0 text-right font-semibold sm:table-cell">
+                  1 Year
+                </div>
+                <div className="py-3 pl-8 pr-0 text-right font-semibold">
+                  5 Years
+                </div>
+                <div className="py-3 pl-8 pr-0 text-right font-semibold">
+                  10 Years
+                </div>
+              </div>
+              <div>
+                {(Object.entries(data.analyses.properties[params.id]?.calculations)).filter(([key, value]) =>
+                  key !== 'downPaymentAmount' &&
+                  key !== 'estimatedClosingCostAmount' &&
+                  key !== 'totalInvestment' &&
+                  key !== 'capRatePercentage' &&
+                  key !== 'cashOnCashReturn' &&
+                  key !== 'grossIncomePerYear' &&
+                  key !== 'cashFlowPerYear' &&
+                  key !== 'estimatedPropertyTaxesPerYear' &&
+                  key !== 'estimatedInsuranceAmountPerYear' &&
+                  key !== 'privateMortgageInsuranceAmountPerYear' &&
+                  key !== 'airBNBFeePercentagePerYear' &&
+                  key !== 'operatingExpensesPerYear' &&
+                  key !== 'totalExpensesPerYear'
+                ).map(([key, value]) => (
+                  <div className="border border-gray-200 my-2">
+                    <div className=" font-medium p-1 text-gray-900 py-1 bg-gray-100 text-center">{formatString(key)}</div>
+
+                    <div key={key} className="border-b mt-2 border-gray-100 flex justify-between ">
+                      <div className=" py-1 pl-8 pr-0 text-right align-top tabular-nums text-gray-700 sm:table-cell">
+                        ${parseInt(value as string).toFixed(0)}
+                      </div>
+                      <div key={key} className="border-b border-gray-100 flex justify-between ">
+                        ${parseInt(value as string) * 12}
+                      </div>
+                      <div key={key} className="border-b border-gray-100 flex justify-between ">
+                        ${parseInt(value as string) * 12 * 5}
+                      </div>
+                      <div key={key} className="border-b border-gray-100 flex justify-between ">
+                        ${parseInt(value as string) * 12 * 10}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* <table className="mt-16 w-full whitespace-nowrap text-left leading-6 mx-5 text-xs">
                 <colgroup>
                   <col className="w-full" />
                   <col />
@@ -570,7 +619,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 </colgroup>
                 <thead className="border-b border-gray-200 text-gray-900">
                   <tr>
-                    <th scope="col" className="px-0 py-3"></th> {/* Empty header */}
+                    <th scope="col" className="px-0 py-3"></th>
                     <th scope="col" className="hidden py-3 pl-8 pr-0 text-right font-semibold sm:table-cell">
                       Month
                     </th>
@@ -620,17 +669,17 @@ export default function Page({ params }: { params: { id: string } }) {
                     </tr>
                   ))}
                 </tbody>
-              </table>
-              <div className="mt-16">
-                <div className="px-4 sm:px-0">
+              </table> */}
+              <div className="mt-8">
+                <div className="px-2 sm:px-0">
                   <h3 className="text-base font-semibold leading-7 text-gray-900">Initial Investment Information</h3>
                 </div>
-                <div className="mt-6 border-t border-gray-100">
+                <div className="mt-2 border-t border-gray-100">
                   <dl className="divide-y divide-gray-100">
                     {Object.entries(data.analyses.properties[params.id]?.values.purchase).map(([key, value]) => (
 
-                      <div key={key} className="px-4 py-6 w-full">
-                        <dd className="mt-1 flex text-sm leading-6 text-gray-700 justify-between w-full">
+                      <div key={key} className="px-4 py-1 w-full">
+                        <dd className="mt-1 flex text-xs leading-6 text-gray-700 justify-between w-full">
                           <dt className="text-sm font-medium leading-6 text-gray-900">{formatString(key)}</dt>
                           <div className="flex items-center">
                             <span className="mr-20">${value as string}</span>
@@ -642,33 +691,32 @@ export default function Page({ params }: { params: { id: string } }) {
                       </div>
 
                     ))}
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-  <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 items-center">
-  <dt className="text-lg font-medium leading-6 text-gray-900">Total Investment</dt>
+                    <div className="px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 items-center">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Total Investment</dt>
 
-    <div className="flex-grow text-lg text-right">
-      ${data.analyses.properties[params.id]?.calculations.totalInvestment}
-    </div>
-  </dd>
-</div>
+                        <div className="flex-grow text-sm text-right">
+                          ${data.analyses.properties[params.id]?.calculations.totalInvestment}
+                        </div>
+                      </dd>
+                    </div>
 
                   </dl>
                 </div>
               </div>
-              <div className="mt-16">
-                <div className="px-4 sm:px-0">
+              <div className="mt-8">
+                <div className="px-2 sm:px-0">
                   <h3 className="text-base font-semibold leading-7 text-gray-900">Monthly Expenses</h3>
                 </div>
-                <div className="mt-6 border-t border-gray-100">
+                <div className="mt-2 border-t border-gray-100">
                   <dl className="divide-y divide-gray-100">
                     {Object.entries(data.analyses.properties[params.id]?.values?.expenses).map(([key, value]) => (
-
-                      <div key={key} className="px-4 py-6 w-full">
+                      <div key={key} className="px-4 py-1 w-full">
                         <dd className="mt-1 flex text-sm leading-6 text-gray-700 justify-between w-full">
-                          <dt className="text-sm font-medium leading-6 text-gray-900">{formatString(key)}</dt>
+                          <dt className="text-xs font-medium leading-6 text-gray-900">{formatString(key)}</dt>
                           <div className="flex items-center">
                             <span className="mr-20">${value as string}</span>
-                            <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
+                            <button type="button" className="rounded-md text-xs bg-white font-medium text-indigo-600 hover:text-indigo-500">
                               Update
                             </button>
                           </div>
@@ -676,25 +724,26 @@ export default function Page({ params }: { params: { id: string } }) {
                       </div>
 
                     ))}
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                      <dt className="text-sm font-medium leading-6 text-gray-900">Principle Plus Interest</dt>
-                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        <span className="flex-grow">${data.analyses.properties[params.id]?.calculations.monthlyPrinciplePlusInterest}</span>
-                        <span className="ml-4 flex-shrink-0">
-                          <button type="button" className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
+
+                    <div className="px-4 py-1 w-full">
+                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 justify-between w-full">
+                        <dt className="text-xs font-medium leading-6 text-gray-900">Principle Plus Interest</dt>
+                        <div className="flex items-center">
+                          <span className="mr-20 text-xs">${data.analyses.properties[params.id]?.calculations.monthlyPrinciplePlusInterest.toFixed(0)}</span>
+                          <button type="button" className="text-xs rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">
                             Update
                           </button>
-                        </span>
+                        </div>
                       </dd>
                     </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-  <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 items-center">
-    <dt className="text-lg font-medium leading-6 text-gray-900">TOTAL</dt>
-    <div className="flex-grow text-lg text-right">
-      ${data.analyses.properties[params.id]?.calculations.totalExpensesPerMonth}
-    </div>
-  </dd>
-</div>
+                    <div className="px-4 py-q sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                      <dd className="mt-1 flex text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 items-center">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">TOTAL</dt>
+                        <div className="flex-grow text-sm text-right">
+                          ${data.analyses.properties[params.id]?.calculations.totalExpensesPerMonth.toFixed(0)}
+                        </div>
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
