@@ -589,7 +589,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   key !== 'operatingExpensesPerYear' &&
                   key !== 'totalExpensesPerYear'
                 ).map(([key, value]) => (
-                  <div className="border border-gray-200 my-2">
+                  <div key={key} className="border border-gray-200 my-2">
                     <div className=" font-medium p-1 text-gray-900 py-1 bg-gray-100 text-center">{formatString(key)}</div>
 
                     <div key={key} className="border-b mt-2 border-gray-100 flex justify-between ">
