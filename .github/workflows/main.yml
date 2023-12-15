@@ -1,26 +1,40 @@
-name: Manual Trigger Workflow
-
 on:
+  push:
+    branches:
+      - cicd_pipeline
+  workflow_call:
+    inputs:
+      private_build:
+        description: 'Private Build {true, false}'
+        type: string
+        required: true
+        default: 'true'
   workflow_dispatch:
     inputs:
-      parameter1:
-        description: 'Input Parameter 1'
+      branch:
+        description: 'Target Branch'
         required: true
-        default: 'Default Value 1'
-      parameter2:
-        description: 'Input Parameter 2'
-        required: false
-        default: 'Default Value 2'
-
+        default: 'master'
+      private_build:
+        description: 'Private Build {true, false}'
+        required: true
+        default: 'false'
+ 
 jobs:
-  manual-trigger:
+  enforce_private_build:
     runs-on: ubuntu-latest
-
+    name: CICD Automation Testing
+ 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-
-    - name: Run Manual Trigger Workflow
-      run: |
-        echo "Input Parameter 1: ${{ github.event.inputs.parameter1 }}"
-        echo "Input Parameter 2: ${{ github.event.inputs.parameter2 }}"
+      - name: Set Private Build
+        run: echo "private_build='true'" >> $GITHUB_ENV
+        # Enforce private_build='true' if triggered on 'master'
+        if: github.event.inputs.branch == 'master'
+ 
+      - name: Print Input Values
+        run: |
+          echo "Input values:"
+          echo "Branch: ${{ github.event.inputs.branch }}"
+          echo "Private Build: ${{ github.event.inputs.private_build }}"
+          echo "Actual private_build value: $private_build"
+ 
