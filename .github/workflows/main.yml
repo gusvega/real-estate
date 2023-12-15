@@ -22,7 +22,7 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             if [ "${{ github.event.inputs.branch }}" == "master" ] && [ "${{ github.event.inputs.private_build }}" == "false" ]; then
-              sed -i 's/private_build: '\''false'\''/private_build: '\''true'\''/' $GITHUB_WORKSPACE/.github/workflows/main.yaml
+              sed -i 's/private_build: '\''false'\''/private_build: '\''true'\''/' $GITHUB_WORKSPACE/.github/workflows/main.yml
             fi
           fi
  
