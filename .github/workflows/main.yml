@@ -23,5 +23,4 @@ jobs:
         if: github.event.inputs.branch == 'master' || github.event_name == 'workflow_dispatch'
  
       - name: Use Private Build
-        run: echo "Private Build value:${{ github.event.inputs.private_build && inputs.private_build }}"
-
+        run: echo "Private Build value:${{ github.event.inputs.private_build }}"
