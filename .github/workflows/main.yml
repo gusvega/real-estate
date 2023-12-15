@@ -18,6 +18,11 @@ jobs:
     name: CICD Automation Testing
  
     steps:
+      - name: Simulate 30-Second Delay
+        run: |
+          echo "Simulating a 30-second delay..."
+          sleep 30
+          
       - name: Enforce Private Build
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
