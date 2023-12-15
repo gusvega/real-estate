@@ -19,8 +19,10 @@ jobs:
 
     steps:
       - name: Enforce Private Build
-        run: echo "::set-input name=private_build::true"
+        run: echo "private_build=true" >> $GITHUB_ENV
         if: github.event.inputs.branch == 'master' || github.event_name == 'workflow_dispatch'
  
       - name: Use Private Build
-        run: echo "Private Build value:${{ github.event.inputs.private_build }}"
+        run: echo "Private Build value: ${{ env.private_build }}"
+        env:
+          private_build: ${{ github.event.inputs.private_build }}
