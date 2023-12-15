@@ -1,14 +1,6 @@
+name: CICD Automation Testing
+ 
 on:
-  push:
-    branches:
-      - cicd_pipeline
-  workflow_call:
-    inputs:
-      private_build:
-        description: 'Private Build {true, false}'
-        type: string
-        required: true
-        default: 'true'
   workflow_dispatch:
     inputs:
       branch:
@@ -26,15 +18,16 @@ jobs:
     name: CICD Automation Testing
  
     steps:
-      - name: Set Private Build
-        run: echo "private_build='true'" >> $GITHUB_ENV
-        # Enforce private_build='true' if triggered on 'master'
-        if: github.event.inputs.branch == 'master'
+      - name: Enforce Private Build
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            if [ "${{ github.event.inputs.branch }}" == "master" ] && [ "${{ github.event.inputs.private_build }}" == "false" ]; then
+              sed -i 's/private_build: '\''false'\''/private_build: '\''true'\''/' $GITHUB_WORKSPACE/.github/workflows/your_workflow_file.yaml
+            fi
+          fi
  
       - name: Print Input Values
         run: |
           echo "Input values:"
           echo "Branch: ${{ github.event.inputs.branch }}"
           echo "Private Build: ${{ github.event.inputs.private_build }}"
-          echo "Actual private_build value: $private_build"
- 
