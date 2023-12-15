@@ -18,21 +18,9 @@ jobs:
     name: CICD Automation Testing
  
     steps:
-      - name: Simulate 30-Second Delay
-        run: |
-          echo "Simulating a 30-second delay..."
-          sleep 30
-          
       - name: Enforce Private Build
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            if [ "${{ github.event.inputs.branch }}" == "master" ] && [ "${{ github.event.inputs.private_build }}" == "false" ]; then
-              sed -i 's/private_build: '\''false'\''/private_build: '\''true'\''/' $GITHUB_WORKSPACE/.github/workflows/main.yml
-            fi
-          fi
+        run: echo "::set-input name=private_build::'true'"
+        if: github.event.inputs.branch == 'master' || github.event_name == 'workflow_dispatch'
  
-      - name: Print Input Values
-        run: |
-          echo "Input values:"
-          echo "Branch: ${{ github.event.inputs.branch }}"
-          echo "Private Build: ${{ github.event.inputs.private_build }}"
+      - name: Use Private Build
+        run: echo "Private Build value:${{ github.event.inputs.private_build || inputs.private_build }}"
