@@ -10,7 +10,7 @@ on:
       private_build:
         description: 'Private Build {true, false}'
         required: true
-        default: 'false'  # Default to false
+        default: 'false'  # Default to false, but will be overridden to true
 
 jobs:
   enforce_private_build:
