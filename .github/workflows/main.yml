@@ -18,9 +18,8 @@ jobs:
     name: CICD Automation Testing
 
     steps:
-      - name: Enforce Private Build
-        run: echo "private_build=true" >> $GITHUB_ENV
-        if: github.event.inputs.branch == 'master' || github.event_name == 'workflow_dispatch'
+      - name: Set Private Build
+        run: echo "private_build=${{ github.event.inputs.branch == 'master' || github.event_name == 'workflow_dispatch' }}" >> $GITHUB_ENV
  
       - name: Use Private Build
         run: echo "Private Build value:${{ env.private_build }}"
