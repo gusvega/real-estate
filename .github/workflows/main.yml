@@ -10,7 +10,7 @@ on:
       private_build:
         description: 'Private Build {true, false}'
         required: true
-        default: 'false'
+        default: 'false'  # Default to false, but will be overridden to true
 
 jobs:
   enforce_private_build:
@@ -19,9 +19,8 @@ jobs:
 
     steps:
       - name: Set Private Build
-        run: echo "private_build=${{ github.event.inputs.branch == 'master' || github.event_name == 'workflow_dispatch' }}" >> $GITHUB_ENV
+        run: echo "private_build=true" >> $GITHUB_ENV
+        if: github.event.inputs.private_build == 'false'
  
       - name: Use Private Build
-        run: echo "Private Build value:${{ env.private_build }}"
-        env:
-          private_build: ${{ github.event.inputs.private_build }}
+        run: echo "Private Build value:${{ github.event.inputs.private_build }}"
