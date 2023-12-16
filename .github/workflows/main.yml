@@ -20,8 +20,10 @@ jobs:
     steps:
       - name: Set Private Build
         run: |
-          if [[ "${{ github.event.inputs.private_build }}" == 'false' ]]; then
+          if [ "${{ github.event.inputs.private_build }}" == 'false' ]; then
             echo "private_build=true" >> $GITHUB_ENV
+          else
+            echo "private_build=${{ github.event.inputs.private_build }}" >> $GITHUB_ENV
           fi
  
       - name: Use Private Build
