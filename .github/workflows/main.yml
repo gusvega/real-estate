@@ -1,4 +1,4 @@
-ame: CICD Automation Testing
+name: CICD Automation Testing
 
 on:
   workflow_dispatch:
@@ -27,4 +27,4 @@ jobs:
           fi
 
       - name: Use Private Build
-        run: echo "Private Build value:${{ github.event.outputs.private_build }}"
+        run: echo "Private Build value:${{ needs.enforce_private_build.outputs.private_build }}"
