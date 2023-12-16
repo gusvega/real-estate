@@ -1,4 +1,4 @@
-name: CICD Automation Testing
+ame: CICD Automation Testing
 
 on:
   workflow_dispatch:
