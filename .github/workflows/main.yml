@@ -18,13 +18,9 @@ jobs:
     name: CICD Automation Testing
 
     steps:
-      - name: Enforce Private Build
-        run: |
-          if [ "${{ github.event.inputs.private_build }}" == 'false' ]; then
-            echo "::set-output name=private_build::true"
-          else
-            echo "::set-output name=private_build::${{ github.event.inputs.private_build }}"
-          fi
+      - name: Set Private Build
+        run: echo "::set-output name=private_build::true"
+          if: github.event.inputs.private_build == 'false'
 
       - name: Use Private Build
         run: echo "Private Build value:${{ needs.enforce_private_build.outputs.private_build }}"
