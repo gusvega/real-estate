@@ -10,7 +10,7 @@ on:
       private_build:
         description: 'Private Build {true, false}'
         required: true
-        default: 'false'  # Default to false, but will be overridden to true
+        default: 'false'  # Default to false
 
 jobs:
   enforce_private_build:
@@ -19,8 +19,10 @@ jobs:
 
     steps:
       - name: Set Private Build
-        run: echo "private_build=true" >> $GITHUB_ENV
-        if: github.event.inputs.private_build == 'false'
+        run: |
+          if [[ "${{ github.event.inputs.private_build }}" == 'false' ]]; then
+            echo "private_build=true" >> $GITHUB_ENV
+          fi
  
       - name: Use Private Build
         run: echo "Private Build value:${{ github.event.inputs.private_build }}"
