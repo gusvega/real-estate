@@ -48,6 +48,7 @@ jobs:
           if [ "${{ github.ref }}" == "refs/heads/master" ] && [ "${{ github.event.inputs.private_build || inputs.private_build }}" == "false" ]; then
             # If it's the master branch and private_build is false, set private_build to true
             readonly private_build='true'
+            echo "Working on MASTER brnch - private_build set to TRUE"
           else
             # For other branches or when private_build is not false, use the default value
             readonly private_build=${{ github.event.inputs.private_build || inputs.private_build }}
