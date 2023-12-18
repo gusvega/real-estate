@@ -44,13 +44,13 @@ jobs:
           readonly build_type=${{ github.event.inputs.build_type || inputs.build_type }}
           readonly device_type=${{ github.event.inputs.device_type || inputs.device_type }}
 
-          # Check if the branch is master and private_build is false
-          if [ "${{ github.ref }}" == "refs/heads/master" ] && [ "${{ github.event.inputs.private_build || inputs.private_build }}" == "false" ]; then
-            # If it's the master branch and private_build is false, set private_build to true
+          # Check if the branch is not master
+          if [ "${{ github.ref }}" != "refs/heads/master" ]; then
+            # If it's not the master branch, set private_build to true
             readonly private_build='true'
-            echo "Working on MASTER brnch - private_build set to TRUE"
+            echo "Not on MASTER branch - private_build set to TRUE"
           else
-            # For other branches or when private_build is not false, use the default value
+            # For the master branch, use the input value of private_build
             readonly private_build=${{ github.event.inputs.private_build || inputs.private_build }}
           fi
 
