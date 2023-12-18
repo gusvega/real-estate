@@ -15,14 +15,21 @@ on:
         default: 'true'
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Target Branch'
+      device_type:
+        description: 'Device Type {CWCE, Eric, Finia, Orion, Orville, Quantum, Reveos}'
         required: true
-        default: 'master'
+        default: 'Eric'
+      build_type:
+        description: 'Build Type {Dev, Rel, RC}'
+        required: true
+        default: 'Dev'
       private_build:
         description: 'Private Build {true, false}'
         required: true
-        default: 'false'
+        default: 'true'
+      requested_sha:
+        description: 'Requested SHA, leave blank for HEAD'
+        required: false
  
 jobs:
   enforce_private_build:
@@ -38,7 +45,7 @@ jobs:
           readonly device_type=${{ github.event.inputs.device_type || inputs.device_type }}
  
           # Check if the branch is master
-          if [ "${{ github.event.inputs.branch || inputs.branch }}" == "master" ]; then
+          if [ "${{ github.ref }}" == "refs/heads/master" ]; then
             # If it's the master branch, set private_build to true
             readonly private_build='true'
           else
@@ -51,7 +58,7 @@ jobs:
           echo "Setting environment variables:"
           echo "build_type=${build_type}" >> $GITHUB_ENV
           echo "device_type=${device_type}" >> $GITHUB_ENV
-          echo "private_build=${private_build}" >> $GITHUB_ENV
+          echo "private_build='${private_build}'" >> $GITHUB_ENV
           echo "requested_sha=${requested_sha}" >> $GITHUB_ENV
  
       - name: Print Variable Values
