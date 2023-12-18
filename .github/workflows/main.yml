@@ -1,6 +1,18 @@
 name: CICD Automation Testing
-
+ 
 on:
+  workflow_call:
+    inputs:
+      branch:
+        description: 'Target Branch'
+        type: string
+        required: true
+        default: 'master'
+      private_build:
+        description: 'Private Build {true, false}'
+        type: string
+        required: true
+        default: 'true'
   workflow_dispatch:
     inputs:
       branch:
@@ -11,20 +23,41 @@ on:
         description: 'Private Build {true, false}'
         required: true
         default: 'false'
-
+ 
 jobs:
   enforce_private_build:
     runs-on: ubuntu-latest
     name: CICD Automation Testing
-
+ 
     steps:
-      - name: Enforce Private Build
+      - name: Merge inputs
+        shell: bash
         run: |
-          if [ "${{ github.event.inputs.private_build }}" == 'false' ]; then
-            echo "::set-output name=private_build::true"
+          # merge inputs from workflow_call and workflow_dispatch into env
+          readonly build_type=${{ github.event.inputs.build_type || inputs.build_type }}
+          readonly device_type=${{ github.event.inputs.device_type || inputs.device_type }}
+ 
+          # Check if the branch is master
+          if [ "${{ github.event.inputs.branch || inputs.branch }}" == "master" ]; then
+            # If it's the master branch, set private_build to true
+            readonly private_build='true'
           else
-            echo "::set-output name=private_build::${{ github.event.inputs.private_build }}"
+            # For other branches, use the default value
+            readonly private_build=${{ github.event.inputs.private_build || inputs.private_build }}
           fi
-
-      - name: Use Private Build
-        run: echo "Private Build value:${{ github.event.outputs.private_build }}"
+                   
+          readonly requested_sha=${{ github.event.inputs.requested_sha || inputs.requested_sha }}
+ 
+          echo "Setting environment variables:"
+          echo "build_type=${build_type}" >> $GITHUB_ENV
+          echo "device_type=${device_type}" >> $GITHUB_ENV
+          echo "private_build=${private_build}" >> $GITHUB_ENV
+          echo "requested_sha=${requested_sha}" >> $GITHUB_ENV
+ 
+      - name: Print Variable Values
+        run: |
+          echo "Printing variable values:"
+          echo "build_type=${{ env.build_type }}"
+          echo "device_type=${{ env.device_type }}"
+          echo "private_build=${{ env.private_build }}"
+          echo "requested_sha=${{ env.requested_sha }}"
