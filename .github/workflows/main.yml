@@ -48,7 +48,7 @@ jobs:
           if [ "${{ github.ref }}" != "refs/heads/master" ]; then
             # If it's not the master branch, set private_build to true
             readonly private_build='true'
-            echo "Not on MASTER branch - private_build set to TRUE"
+            echo "Workflow NOT executed on MASTER branch - private_build set to TRUE"
           else
             # For the master branch, use the input value of private_build
             readonly private_build=${{ github.event.inputs.private_build || inputs.private_build }}
