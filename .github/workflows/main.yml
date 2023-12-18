@@ -43,24 +43,24 @@ jobs:
           # merge inputs from workflow_call and workflow_dispatch into env
           readonly build_type=${{ github.event.inputs.build_type || inputs.build_type }}
           readonly device_type=${{ github.event.inputs.device_type || inputs.device_type }}
- 
-          # Check if the branch is master
-          if [ "${{ github.ref }}" == "refs/heads/master" ]; then
-            # If it's the master branch, set private_build to true
+
+          # Check if the branch is master and private_build is false
+          if [ "${{ github.ref }}" == "refs/heads/master" ] && [ "${{ github.event.inputs.private_build || inputs.private_build }}" == "false" ]; then
+            # If it's the master branch and private_build is false, set private_build to true
             readonly private_build='true'
           else
-            # For other branches, use the default value
+            # For other branches or when private_build is not false, use the default value
             readonly private_build=${{ github.event.inputs.private_build || inputs.private_build }}
           fi
-                   
+
           readonly requested_sha=${{ github.event.inputs.requested_sha || inputs.requested_sha }}
- 
+
           echo "Setting environment variables:"
           echo "build_type=${build_type}" >> $GITHUB_ENV
           echo "device_type=${device_type}" >> $GITHUB_ENV
           echo "private_build='${private_build}'" >> $GITHUB_ENV
           echo "requested_sha=${requested_sha}" >> $GITHUB_ENV
- 
+
       - name: Print Variable Values
         run: |
           echo "Printing variable values:"
